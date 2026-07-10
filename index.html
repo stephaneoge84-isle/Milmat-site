@@ -1,0 +1,685 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MILMAT Formation & Conseil - L'outil répond ; l'esprit questionne</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen', 'Ubuntu', sans-serif;
+            line-height: 1.6;
+            color: #333;
+            background-color: #fff;
+        }
+
+        /* Navigation */
+        nav {
+            background: #1F3864;
+            padding: 1.5rem 2rem;
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+        }
+
+        .nav-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            font-size: 1.5rem;
+            font-weight: bold;
+            color: #ED7D31;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 2rem;
+            list-style: none;
+        }
+
+        .nav-links a {
+            color: white;
+            text-decoration: none;
+            font-size: 0.95rem;
+            transition: color 0.3s;
+        }
+
+        .nav-links a:hover {
+            color: #ED7D31;
+        }
+
+        .cta-button {
+            background-color: #ED7D31;
+            color: white;
+            padding: 0.75rem 1.5rem;
+            border-radius: 4px;
+            text-decoration: none;
+            font-weight: 600;
+            transition: background-color 0.3s;
+        }
+
+        .cta-button:hover {
+            background-color: #d96e26;
+        }
+
+        /* Hero Section */
+        .hero {
+            background: linear-gradient(135deg, #1F3864 0%, #2d4f7a 100%);
+            color: white;
+            padding: 6rem 2rem;
+            text-align: center;
+        }
+
+        .hero-container {
+            max-width: 1000px;
+            margin: 0 auto;
+        }
+
+        .hero h1 {
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+            font-weight: 700;
+        }
+
+        .hero-tagline {
+            font-size: 1.3rem;
+            color: #ED7D31;
+            margin-bottom: 2rem;
+            font-style: italic;
+        }
+
+        .hero p {
+            font-size: 1.1rem;
+            margin-bottom: 2.5rem;
+            line-height: 1.8;
+            color: #e0e0e0;
+        }
+
+        .hero-buttons {
+            display: flex;
+            gap: 1.5rem;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+
+        .btn-primary {
+            background-color: #ED7D31;
+            color: white;
+            padding: 1rem 2.5rem;
+            border: none;
+            border-radius: 4px;
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+
+        .btn-primary:hover {
+            background-color: #d96e26;
+        }
+
+        .btn-secondary {
+            background-color: transparent;
+            color: white;
+            padding: 1rem 2.5rem;
+            border: 2px solid white;
+            border-radius: 4px;
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .btn-secondary:hover {
+            background-color: white;
+            color: #1F3864;
+        }
+
+        /* Services Section */
+        .services {
+            padding: 5rem 2rem;
+            background-color: #f8f9fa;
+        }
+
+        .services-container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .section-title {
+            text-align: center;
+            font-size: 2rem;
+            margin-bottom: 3rem;
+            color: #1F3864;
+        }
+
+        .services-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+        }
+
+        .service-card {
+            background: white;
+            padding: 2rem;
+            border-radius: 6px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+            border-left: 4px solid #ED7D31;
+            transition: transform 0.3s, box-shadow 0.3s;
+        }
+
+        .service-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 20px rgba(0,0,0,0.15);
+        }
+
+        .service-card h3 {
+            color: #1F3864;
+            margin-bottom: 1rem;
+            font-size: 1.3rem;
+        }
+
+        .service-card p {
+            color: #666;
+            line-height: 1.7;
+        }
+
+        /* About Section */
+        .about {
+            padding: 5rem 2rem;
+            background: white;
+        }
+
+        .about-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 3rem;
+            align-items: center;
+        }
+
+        .about-photo {
+            text-align: center;
+        }
+
+        .about-photo img {
+            width: 100%;
+            max-width: 400px;
+            border-radius: 8px;
+            box-shadow: 0 8px 24px rgba(0,0,0,0.15);
+        }
+
+        .about-content h2 {
+            font-size: 2rem;
+            color: #1F3864;
+            margin-bottom: 1.5rem;
+        }
+
+        .about-content p {
+            color: #666;
+            margin-bottom: 1.5rem;
+            line-height: 1.8;
+        }
+
+        .credentials {
+            background: #f8f9fa;
+            padding: 1.5rem;
+            border-left: 4px solid #7BA098;
+            margin: 2rem 0;
+        }
+
+        .credentials h4 {
+            color: #1F3864;
+            margin-bottom: 0.75rem;
+        }
+
+        .credentials ul {
+            list-style: none;
+            padding-left: 0;
+        }
+
+        .credentials li {
+            padding: 0.5rem 0;
+            color: #666;
+        }
+
+        .credentials li:before {
+            content: "▸ ";
+            color: #ED7D31;
+            font-weight: bold;
+            margin-right: 0.5rem;
+        }
+
+        /* Contact Section */
+        .contact-section {
+            padding: 5rem 2rem;
+            background: #f8f9fa;
+            text-align: center;
+        }
+
+        .contact-section h2 {
+            font-size: 2rem;
+            color: #1F3864;
+            margin-bottom: 2rem;
+        }
+
+        .contact-info {
+            display: flex;
+            justify-content: center;
+            gap: 3rem;
+            flex-wrap: wrap;
+            margin-bottom: 2rem;
+        }
+
+        .contact-item {
+            text-align: center;
+        }
+
+        .contact-item h4 {
+            color: #ED7D31;
+            margin-bottom: 0.5rem;
+        }
+
+        .contact-item p {
+            color: #666;
+            font-size: 0.95rem;
+        }
+
+        /* Modal */
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 2000;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0,0,0,0.5);
+            animation: fadeIn 0.3s;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        .modal-content {
+            background-color: white;
+            margin: 5% auto;
+            padding: 2rem;
+            border-radius: 8px;
+            width: 90%;
+            max-width: 500px;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.3);
+            animation: slideIn 0.3s;
+        }
+
+        @keyframes slideIn {
+            from { transform: translateY(-50px); opacity: 0; }
+            to { transform: translateY(0); opacity: 1; }
+        }
+
+        .close-btn {
+            color: #999;
+            float: right;
+            font-size: 2rem;
+            font-weight: bold;
+            cursor: pointer;
+            transition: color 0.3s;
+        }
+
+        .close-btn:hover {
+            color: #1F3864;
+        }
+
+        .form-group {
+            margin-bottom: 1.5rem;
+            text-align: left;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 0.5rem;
+            color: #1F3864;
+            font-weight: 600;
+        }
+
+        .form-group input,
+        .form-group select,
+        .form-group textarea {
+            width: 100%;
+            padding: 0.75rem;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            font-family: inherit;
+            font-size: 1rem;
+            transition: border-color 0.3s;
+        }
+
+        .form-group input:focus,
+        .form-group select:focus,
+        .form-group textarea:focus {
+            outline: none;
+            border-color: #ED7D31;
+            box-shadow: 0 0 0 3px rgba(237, 125, 49, 0.1);
+        }
+
+        .form-group textarea {
+            resize: vertical;
+            min-height: 120px;
+        }
+
+        .submit-btn {
+            width: 100%;
+            background-color: #ED7D31;
+            color: white;
+            padding: 1rem;
+            border: none;
+            border-radius: 4px;
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+
+        .submit-btn:hover {
+            background-color: #d96e26;
+        }
+
+        /* Footer */
+        footer {
+            background-color: #1F3864;
+            color: white;
+            padding: 2rem;
+            text-align: center;
+        }
+
+        .footer-content {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .footer-links {
+            display: flex;
+            justify-content: center;
+            gap: 2rem;
+            margin-bottom: 1.5rem;
+            flex-wrap: wrap;
+        }
+
+        .footer-links a {
+            color: #ED7D31;
+            text-decoration: none;
+            transition: color 0.3s;
+        }
+
+        .footer-links a:hover {
+            color: white;
+        }
+
+        .footer-copy {
+            font-size: 0.85rem;
+            color: #999;
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .nav-links {
+                display: none;
+            }
+
+            .hero h1 {
+                font-size: 1.8rem;
+            }
+
+            .hero-tagline {
+                font-size: 1rem;
+            }
+
+            .section-title {
+                font-size: 1.5rem;
+            }
+
+            .about-container {
+                grid-template-columns: 1fr;
+            }
+
+            .hero-buttons {
+                flex-direction: column;
+            }
+
+            .btn-primary, .btn-secondary {
+                width: 100%;
+            }
+
+            .contact-info {
+                gap: 1.5rem;
+            }
+
+            .footer-links {
+                gap: 1rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Navigation -->
+    <nav>
+        <div class="nav-container">
+            <div class="logo">MILMAT</div>
+            <ul class="nav-links">
+                <li><a href="#accueil">Accueil</a></li>
+                <li><a href="#services">Offres</a></li>
+                <li><a href="#about">Qui suis-je</a></li>
+                <li><a href="#contact">Contact</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="hero" id="accueil">
+        <div class="hero-container">
+            <h1>MILMAT Formation & Conseil</h1>
+            <div class="hero-tagline">L'outil répond ; l'esprit questionne</div>
+            <p>Formations professionnelles en IA générative, microlearning sur mesure, et conseil administratif pour TPE/artisans en Provence.</p>
+            <div class="hero-buttons">
+                <button class="btn-primary" onclick="openModal()">Me contacter</button>
+                <button class="btn-secondary" onclick="document.getElementById('services').scrollIntoView({ behavior: 'smooth' })">En savoir plus</button>
+            </div>
+        </div>
+    </section>
+
+    <!-- Services Section -->
+    <section class="services" id="services">
+        <div class="services-container">
+            <h2 class="section-title">Nos Offres</h2>
+            <div class="services-grid">
+                <div class="service-card">
+                    <h3>Formations IA générative</h3>
+                    <p>Donner une voix et une méthode à l'IA. Programmes sur mesure pour manager, vendre, et piloter avec l'intelligence artificielle. Approche comprendre → structurer → transformer.</p>
+                </div>
+                <div class="service-card">
+                    <h3>Microlearning</h3>
+                    <p>Capsules de formation vidéo courtes et ciblées. Idéales pour la montée en compétences rapide : négociation, appels professionnels, gestion administrative. Tickets d'entrée accessibles.</p>
+                </div>
+                <div class="service-card">
+                    <h3>Services TPE/PME</h3>
+                    <p>Conseil administratif et gestion commerciale pour petites entreprises et artisans. Accompagnement sur le pilotage, l'organisation, et la stratégie de développement.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- About Section -->
+    <section class="about" id="about">
+        <div class="about-container">
+            <div class="about-photo">
+                <img src="photo-stephane.jpg" alt="Stéphane Ogé - Fondateur MILMAT">
+            </div>
+            <div class="about-content">
+                <h2>Qui suis-je</h2>
+                <p>Je suis Stéphane Ogé, fondateur de MILMAT. Après plus de 30 ans de carrière en gestion commerciale et direction d'équipes (CDC Habitat, courtage, immobilier), j'ai choisi de transmettre : former les esprits à poser les bonnes questions face aux outils.</p>
+                
+                <div class="credentials">
+                    <h4>Formation</h4>
+                    <ul>
+                        <li>DESS (Bac+5) - Institut d'Administration des Entreprises (IAE Metz)</li>
+                        <li>Management stratégique et gestion d'équipes</li>
+                        <li>Maîtrise des outils d'IA générative</li>
+                    </ul>
+                </div>
+
+                <div class="credentials">
+                    <h4>Expérience</h4>
+                    <ul>
+                        <li>30+ ans en gestion commerciale et management</li>
+                        <li>Direction d'agences (jusqu'à 25 collaborateurs)</li>
+                        <li>Environ 200 heures de formation professionnelle</li>
+                        <li>Basé en Provence (L'Isle-sur-la-Sorgue, Vaucluse)</li>
+                    </ul>
+                </div>
+
+                <p><strong>Philosophie :</strong> "L'outil répond ; l'esprit questionne." Mon objectif est de vous aider à utiliser les technologies comme des leviers de clarté et de stratégie, pas comme des fins en soi.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Contact Section -->
+    <section class="contact-section" id="contact">
+        <div class="contact-section">
+            <h2>Prêt à avancer ?</h2>
+            <p style="margin-bottom: 2rem; color: #666; font-size: 1.05rem;">Parlez-moi de votre projet. Je vous recontacterai rapidement.</p>
+            <button class="btn-primary" onclick="openModal()">Me contacter</button>
+        </div>
+    </section>
+
+    <!-- Contact Modal -->
+    <div id="contactModal" class="modal">
+        <div class="modal-content">
+            <span class="close-btn" onclick="closeModal()">&times;</span>
+            <h2 style="color: #1F3864; margin-bottom: 1.5rem;">Parlons de votre projet</h2>
+            
+            <form onsubmit="handleSubmit(event)">
+                <div class="form-group">
+                    <label for="nom">Nom *</label>
+                    <input type="text" id="nom" name="nom" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="prenom">Prénom *</label>
+                    <input type="text" id="prenom" name="prenom" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="telephone">Téléphone *</label>
+                    <input type="tel" id="telephone" name="telephone" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="email">Email *</label>
+                    <input type="email" id="email" name="email" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="interet">Vous m'intéressez pour *</label>
+                    <select id="interet" name="interet" required>
+                        <option value="">-- Sélectionnez une option --</option>
+                        <option value="Formations IA générative">Formations IA générative</option>
+                        <option value="Microlearning">Microlearning</option>
+                        <option value="Services TPE">Services TPE/PME</option>
+                        <option value="Autre">Autre</option>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label for="message">Message (optionnel)</label>
+                    <textarea id="message" name="message" placeholder="Décrivez brièvement votre besoin..."></textarea>
+                </div>
+
+                <button type="submit" class="submit-btn">Envoyer ma demande</button>
+            </form>
+
+            <div style="margin-top: 1.5rem; padding-top: 1.5rem; border-top: 1px solid #ddd; text-align: center; color: #999; font-size: 0.9rem;">
+                <p>Ou contactez-moi directement :</p>
+                <p><strong>Tél/SMS :</strong> <a href="tel:0784374106" style="color: #ED7D31; text-decoration: none;">0784 37 41 06</a></p>
+                <p><strong>Email :</strong> <a href="mailto:stephane.oge@milmat-formations.com" style="color: #ED7D31; text-decoration: none;">stephane.oge@milmat-formations.com</a></p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer>
+        <div class="footer-content">
+            <div class="footer-links">
+                <a href="https://www.linkedin.com/in/stephane-oge/" target="_blank">LinkedIn</a>
+                <a href="https://www.instagram.com/milmat.formation/" target="_blank">Instagram</a>
+                <a href="mailto:stephane.oge@milmat-formations.com">Email</a>
+            </div>
+            <p class="footer-copy">© 2026 MILMAT Formation & Conseil. Tous droits réservés.</p>
+        </div>
+    </footer>
+
+    <script>
+        function openModal() {
+            document.getElementById('contactModal').style.display = 'block';
+        }
+
+        function closeModal() {
+            document.getElementById('contactModal').style.display = 'none';
+        }
+
+        window.onclick = function(event) {
+            const modal = document.getElementById('contactModal');
+            if (event.target === modal) {
+                modal.style.display = 'none';
+            }
+        }
+
+        function handleSubmit(event) {
+            event.preventDefault();
+
+            const nom = document.getElementById('nom').value;
+            const prenom = document.getElementById('prenom').value;
+            const telephone = document.getElementById('telephone').value;
+            const email = document.getElementById('email').value;
+            const interet = document.getElementById('interet').value;
+            const message = document.getElementById('message').value;
+
+            // Email mailto
+            const emailBody = `Nom: ${prenom} ${nom}\nTéléphone: ${telephone}\nEmail: ${email}\nIntérêt: ${interet}\n\nMessage: ${message}`;
+            const emailLink = `mailto:stephane.oge@milmat-formations.com?subject=Demande%20de%20contact%20MILMAT&body=${encodeURIComponent(emailBody)}`;
+
+            // SMS avec données
+            const smsBody = `${prenom} ${nom} (${email}) - Intérêt: ${interet}`;
+            const smsLink = `sms:0784374106?body=${encodeURIComponent(smsBody)}`;
+
+            // Affiche les options
+            alert(`Merci ${prenom} ! Cliquez sur votre moyen de contact préféré :\n\n📧 Email ou 📱 SMS (répondez au lien qui va s'ouvrir)`);
+
+            // Ouvre l'email par défaut
+            window.location.href = emailLink;
+            
+            // L'utilisateur peut aussi envoyer un SMS manuellement
+            setTimeout(() => {
+                if (confirm('Voulez-vous aussi m\'envoyer un SMS ?')) {
+                    window.location.href = smsLink;
+                }
+            }, 500);
+
+            closeModal();
+        }
+    </script>
+</body>
+</html>
