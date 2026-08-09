@@ -1,18 +1,15 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 430" role="img" aria-label="MILMAT Formation & Conseil">
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 220 135" role="img" aria-labelledby="title desc">
+<title id="title">MILMAT Formation &amp; Conseil</title>
+<desc id="desc">Logo MILMAT avec symbole abstrait et nom de l'entreprise</desc>
+<rect width="220" height="135" fill="#1F3864"/>
 <g fill="none" stroke-linecap="round" stroke-linejoin="round">
-<path d="M72 170 L178 28 L274 164" stroke="#6f9bd6" stroke-width="30"/>
-<path d="M112 210 L180 104" stroke="#7fa69d" stroke-width="10"/>
-<path d="M302 156 L430 40 L466 184" stroke="#e8bd67" stroke-width="30"/>
-<path d="M430 40 L430 184" stroke="#e8bd67" stroke-width="8"/>
-<path d="M438 54 C516 30 575 66 594 124 C610 174 594 238 552 276 C513 311 457 319 413 291 C379 270 368 232 388 207 C405 186 435 187 449 205 C464 224 456 249 438 257" stroke="#7fa69d" stroke-width="7"/>
-<path d="M438 54 C490 45 542 57 577 83" stroke="#7fa69d" stroke-width="7"/>
-<path d="M577 83 L591 125" stroke="#7fa69d" stroke-width="5"/>
-<path d="M552 276 C533 297 509 310 479 315" stroke="#7fa69d" stroke-width="7"/>
-<path d="M420 105 H548 M420 176 H548" stroke="#c8d5d1" stroke-width="2"/>
-<path d="M342 85 V282" stroke="#c8d5d1" stroke-width="2"/>
+<path d="M18 78 L58 18 L91 78" stroke="#79A6DD" stroke-width="8"/>
+<path d="M73 72 L119 16 L101 79" stroke="#E8B74F" stroke-width="8"/>
+<path d="M48 79 C76 45 112 43 145 21 C164 9 185 17 190 34 C194 49 185 60 172 58 C160 56 157 45 165 38 C173 31 183 35 183 43" stroke="#7BA098" stroke-width="3"/>
+<path d="M113 72 C132 62 151 66 158 78 C165 90 159 104 146 107 C132 110 121 101 124 90 C126 81 137 77 145 82" stroke="#7BA098" stroke-width="3"/>
 </g>
-<circle cx="588" cy="84" r="13" fill="#e8bd67"/><circle cx="594" cy="142" r="11" fill="#7fa69d"/><circle cx="590" cy="198" r="11" fill="#7fa69d"/><circle cx="550" cy="255" r="11" fill="#6f9bd6"/><circle cx="430" cy="258" r="11" fill="#7fa69d"/>
-<text x="320" y="350" text-anchor="middle" font-family="Georgia,Times New Roman,serif" font-size="82" letter-spacing="15" fill="#4f6f9d">MILMAT</text>
-<g fill="#7fa69d"><rect x="70" y="379" width="72" height="3" rx="1.5"/><rect x="498" y="379" width="72" height="3" rx="1.5"/></g>
-<text x="320" y="386" text-anchor="middle" font-family="Arial,Helvetica,sans-serif" font-size="24" letter-spacing="5" fill="#7fa69d">FORMATION &amp; CONSEIL</text>
+<text x="110" y="107" text-anchor="middle" font-family="Georgia,serif" font-size="35" letter-spacing="6" fill="#FFFFFF">MILMAT</text>
+<line x1="22" y1="120" x2="62" y2="120" stroke="#9AB9B3" stroke-width="2"/>
+<line x1="158" y1="120" x2="198" y2="120" stroke="#9AB9B3" stroke-width="2"/>
+<text x="110" y="125" text-anchor="middle" font-family="Arial,sans-serif" font-size="10" letter-spacing="3" fill="#9AB9B3">FORMATION &amp; CONSEIL</text>
 </svg>
