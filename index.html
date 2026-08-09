@@ -1,685 +1,266 @@
 <!DOCTYPE html>
 <html lang="fr">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>MILMAT Formation & Conseil - L'outil répond ; l'esprit questionne</title>
-    <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-
-        body {
-            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen', 'Ubuntu', sans-serif;
-            line-height: 1.6;
-            color: #333;
-            background-color: #fff;
-        }
-
-        /* Navigation */
-        nav {
-            background: #1F3864;
-            padding: 1.5rem 2rem;
-            position: sticky;
-            top: 0;
-            z-index: 1000;
-            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
-        }
-
-        .nav-container {
-            max-width: 1200px;
-            margin: 0 auto;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-        }
-
-        .logo {
-            font-size: 1.5rem;
-            font-weight: bold;
-            color: #ED7D31;
-        }
-
-        .nav-links {
-            display: flex;
-            gap: 2rem;
-            list-style: none;
-        }
-
-        .nav-links a {
-            color: white;
-            text-decoration: none;
-            font-size: 0.95rem;
-            transition: color 0.3s;
-        }
-
-        .nav-links a:hover {
-            color: #ED7D31;
-        }
-
-        .cta-button {
-            background-color: #ED7D31;
-            color: white;
-            padding: 0.75rem 1.5rem;
-            border-radius: 4px;
-            text-decoration: none;
-            font-weight: 600;
-            transition: background-color 0.3s;
-        }
-
-        .cta-button:hover {
-            background-color: #d96e26;
-        }
-
-        /* Hero Section */
-        .hero {
-            background: linear-gradient(135deg, #1F3864 0%, #2d4f7a 100%);
-            color: white;
-            padding: 6rem 2rem;
-            text-align: center;
-        }
-
-        .hero-container {
-            max-width: 1000px;
-            margin: 0 auto;
-        }
-
-        .hero h1 {
-            font-size: 2.5rem;
-            margin-bottom: 1rem;
-            font-weight: 700;
-        }
-
-        .hero-tagline {
-            font-size: 1.3rem;
-            color: #ED7D31;
-            margin-bottom: 2rem;
-            font-style: italic;
-        }
-
-        .hero p {
-            font-size: 1.1rem;
-            margin-bottom: 2.5rem;
-            line-height: 1.8;
-            color: #e0e0e0;
-        }
-
-        .hero-buttons {
-            display: flex;
-            gap: 1.5rem;
-            justify-content: center;
-            flex-wrap: wrap;
-        }
-
-        .btn-primary {
-            background-color: #ED7D31;
-            color: white;
-            padding: 1rem 2.5rem;
-            border: none;
-            border-radius: 4px;
-            font-size: 1rem;
-            font-weight: 600;
-            cursor: pointer;
-            transition: background-color 0.3s;
-        }
-
-        .btn-primary:hover {
-            background-color: #d96e26;
-        }
-
-        .btn-secondary {
-            background-color: transparent;
-            color: white;
-            padding: 1rem 2.5rem;
-            border: 2px solid white;
-            border-radius: 4px;
-            font-size: 1rem;
-            font-weight: 600;
-            cursor: pointer;
-            transition: all 0.3s;
-        }
-
-        .btn-secondary:hover {
-            background-color: white;
-            color: #1F3864;
-        }
-
-        /* Services Section */
-        .services {
-            padding: 5rem 2rem;
-            background-color: #f8f9fa;
-        }
-
-        .services-container {
-            max-width: 1200px;
-            margin: 0 auto;
-        }
-
-        .section-title {
-            text-align: center;
-            font-size: 2rem;
-            margin-bottom: 3rem;
-            color: #1F3864;
-        }
-
-        .services-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-            gap: 2rem;
-        }
-
-        .service-card {
-            background: white;
-            padding: 2rem;
-            border-radius: 6px;
-            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
-            border-left: 4px solid #ED7D31;
-            transition: transform 0.3s, box-shadow 0.3s;
-        }
-
-        .service-card:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 8px 20px rgba(0,0,0,0.15);
-        }
-
-        .service-card h3 {
-            color: #1F3864;
-            margin-bottom: 1rem;
-            font-size: 1.3rem;
-        }
-
-        .service-card p {
-            color: #666;
-            line-height: 1.7;
-        }
-
-        /* About Section */
-        .about {
-            padding: 5rem 2rem;
-            background: white;
-        }
-
-        .about-container {
-            max-width: 1200px;
-            margin: 0 auto;
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 3rem;
-            align-items: center;
-        }
-
-        .about-photo {
-            text-align: center;
-        }
-
-        .about-photo img {
-            width: 100%;
-            max-width: 400px;
-            border-radius: 8px;
-            box-shadow: 0 8px 24px rgba(0,0,0,0.15);
-        }
-
-        .about-content h2 {
-            font-size: 2rem;
-            color: #1F3864;
-            margin-bottom: 1.5rem;
-        }
-
-        .about-content p {
-            color: #666;
-            margin-bottom: 1.5rem;
-            line-height: 1.8;
-        }
-
-        .credentials {
-            background: #f8f9fa;
-            padding: 1.5rem;
-            border-left: 4px solid #7BA098;
-            margin: 2rem 0;
-        }
-
-        .credentials h4 {
-            color: #1F3864;
-            margin-bottom: 0.75rem;
-        }
-
-        .credentials ul {
-            list-style: none;
-            padding-left: 0;
-        }
-
-        .credentials li {
-            padding: 0.5rem 0;
-            color: #666;
-        }
-
-        .credentials li:before {
-            content: "▸ ";
-            color: #ED7D31;
-            font-weight: bold;
-            margin-right: 0.5rem;
-        }
-
-        /* Contact Section */
-        .contact-section {
-            padding: 5rem 2rem;
-            background: #f8f9fa;
-            text-align: center;
-        }
-
-        .contact-section h2 {
-            font-size: 2rem;
-            color: #1F3864;
-            margin-bottom: 2rem;
-        }
-
-        .contact-info {
-            display: flex;
-            justify-content: center;
-            gap: 3rem;
-            flex-wrap: wrap;
-            margin-bottom: 2rem;
-        }
-
-        .contact-item {
-            text-align: center;
-        }
-
-        .contact-item h4 {
-            color: #ED7D31;
-            margin-bottom: 0.5rem;
-        }
-
-        .contact-item p {
-            color: #666;
-            font-size: 0.95rem;
-        }
-
-        /* Modal */
-        .modal {
-            display: none;
-            position: fixed;
-            z-index: 2000;
-            left: 0;
-            top: 0;
-            width: 100%;
-            height: 100%;
-            background-color: rgba(0,0,0,0.5);
-            animation: fadeIn 0.3s;
-        }
-
-        @keyframes fadeIn {
-            from { opacity: 0; }
-            to { opacity: 1; }
-        }
-
-        .modal-content {
-            background-color: white;
-            margin: 5% auto;
-            padding: 2rem;
-            border-radius: 8px;
-            width: 90%;
-            max-width: 500px;
-            box-shadow: 0 10px 40px rgba(0,0,0,0.3);
-            animation: slideIn 0.3s;
-        }
-
-        @keyframes slideIn {
-            from { transform: translateY(-50px); opacity: 0; }
-            to { transform: translateY(0); opacity: 1; }
-        }
-
-        .close-btn {
-            color: #999;
-            float: right;
-            font-size: 2rem;
-            font-weight: bold;
-            cursor: pointer;
-            transition: color 0.3s;
-        }
-
-        .close-btn:hover {
-            color: #1F3864;
-        }
-
-        .form-group {
-            margin-bottom: 1.5rem;
-            text-align: left;
-        }
-
-        .form-group label {
-            display: block;
-            margin-bottom: 0.5rem;
-            color: #1F3864;
-            font-weight: 600;
-        }
-
-        .form-group input,
-        .form-group select,
-        .form-group textarea {
-            width: 100%;
-            padding: 0.75rem;
-            border: 1px solid #ddd;
-            border-radius: 4px;
-            font-family: inherit;
-            font-size: 1rem;
-            transition: border-color 0.3s;
-        }
-
-        .form-group input:focus,
-        .form-group select:focus,
-        .form-group textarea:focus {
-            outline: none;
-            border-color: #ED7D31;
-            box-shadow: 0 0 0 3px rgba(237, 125, 49, 0.1);
-        }
-
-        .form-group textarea {
-            resize: vertical;
-            min-height: 120px;
-        }
-
-        .submit-btn {
-            width: 100%;
-            background-color: #ED7D31;
-            color: white;
-            padding: 1rem;
-            border: none;
-            border-radius: 4px;
-            font-size: 1rem;
-            font-weight: 600;
-            cursor: pointer;
-            transition: background-color 0.3s;
-        }
-
-        .submit-btn:hover {
-            background-color: #d96e26;
-        }
-
-        /* Footer */
-        footer {
-            background-color: #1F3864;
-            color: white;
-            padding: 2rem;
-            text-align: center;
-        }
-
-        .footer-content {
-            max-width: 1200px;
-            margin: 0 auto;
-        }
-
-        .footer-links {
-            display: flex;
-            justify-content: center;
-            gap: 2rem;
-            margin-bottom: 1.5rem;
-            flex-wrap: wrap;
-        }
-
-        .footer-links a {
-            color: #ED7D31;
-            text-decoration: none;
-            transition: color 0.3s;
-        }
-
-        .footer-links a:hover {
-            color: white;
-        }
-
-        .footer-copy {
-            font-size: 0.85rem;
-            color: #999;
-        }
-
-        /* Responsive */
-        @media (max-width: 768px) {
-            .nav-links {
-                display: none;
-            }
-
-            .hero h1 {
-                font-size: 1.8rem;
-            }
-
-            .hero-tagline {
-                font-size: 1rem;
-            }
-
-            .section-title {
-                font-size: 1.5rem;
-            }
-
-            .about-container {
-                grid-template-columns: 1fr;
-            }
-
-            .hero-buttons {
-                flex-direction: column;
-            }
-
-            .btn-primary, .btn-secondary {
-                width: 100%;
-            }
-
-            .contact-info {
-                gap: 1.5rem;
-            }
-
-            .footer-links {
-                gap: 1rem;
-            }
-        }
-    </style>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="MILMAT Formation & Conseil accompagne les TPE et artisans en gestion administrative, pilotage commercial, IA générative et microlearning.">
+  <title>MILMAT — Formation & Conseil pour TPE et professionnels</title>
+  <style>
+    :root {
+      --navy:#1F3864;
+      --navy-2:#294d7c;
+      --orange:#ED7D31;
+      --orange-dark:#d96e26;
+      --ink:#263238;
+      --muted:#667085;
+      --light:#f5f7fa;
+      --line:#e6e9ee;
+      --green:#7BA098;
+      --white:#fff;
+      --shadow:0 12px 32px rgba(31,56,100,.10);
+    }
+    *{box-sizing:border-box;margin:0;padding:0}
+    html{scroll-behavior:smooth}
+    body{font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Arial,sans-serif;color:var(--ink);line-height:1.6;background:#fff}
+    a{text-decoration:none;color:inherit}
+    .container{width:min(1120px,92%);margin:auto}
+    nav{position:sticky;top:0;z-index:1000;background:rgba(31,56,100,.98);box-shadow:0 2px 12px rgba(0,0,0,.10)}
+    .nav-inner{height:72px;display:flex;align-items:center;justify-content:space-between}
+    .logo{font-size:1.45rem;font-weight:800;color:var(--orange);letter-spacing:.02em}
+    .nav-links{display:flex;gap:2rem;list-style:none;color:#fff;font-size:.95rem}
+    .nav-links a:hover{color:var(--orange)}
+    .nav-cta{background:var(--orange);padding:.65rem 1rem;border-radius:5px;font-weight:700;color:#fff}
+    .nav-cta:hover{background:var(--orange-dark)}
+
+    .hero{background:linear-gradient(135deg,var(--navy),var(--navy-2));color:#fff;padding:92px 0 86px}
+    .hero-grid{display:grid;grid-template-columns:1.15fr .85fr;gap:56px;align-items:center}
+    .eyebrow{display:inline-block;color:var(--orange);font-weight:800;letter-spacing:.08em;text-transform:uppercase;font-size:.82rem;margin-bottom:16px}
+    h1{font-size:clamp(2.4rem,5vw,4.2rem);line-height:1.05;margin-bottom:20px;letter-spacing:-.03em}
+    .hero h1 span{color:var(--orange)}
+    .tagline{font-size:1.25rem;font-style:italic;color:#f4a46d;margin-bottom:22px}
+    .hero-copy{font-size:1.12rem;color:#e8edf5;max-width:720px;margin-bottom:30px}
+    .actions{display:flex;gap:14px;flex-wrap:wrap}
+    .btn{display:inline-flex;align-items:center;justify-content:center;padding:13px 22px;border-radius:5px;font-weight:750;transition:.2s;border:2px solid transparent}
+    .btn-primary{background:var(--orange);color:#fff}.btn-primary:hover{background:var(--orange-dark);transform:translateY(-1px)}
+    .btn-light{border-color:#fff;color:#fff}.btn-light:hover{background:#fff;color:var(--navy)}
+    .hero-card{background:#fff;color:var(--ink);padding:28px;border-radius:10px;box-shadow:0 20px 50px rgba(0,0,0,.18)}
+    .hero-card h3{color:var(--navy);font-size:1.3rem;margin-bottom:10px}
+    .hero-card p{color:var(--muted);margin-bottom:18px}
+    .hero-card strong{font-size:2.2rem;color:var(--orange)}
+    .hero-card small{display:block;color:var(--muted);margin-top:-4px}
+    .mini-list{list-style:none;margin-top:18px}.mini-list li{padding:8px 0;border-top:1px solid var(--line);font-size:.95rem}.mini-list li::before{content:"✓";color:var(--orange);font-weight:800;margin-right:8px}
+
+    section{padding:82px 0}
+    .section-head{text-align:center;max-width:760px;margin:0 auto 46px}
+    .section-head h2{font-size:clamp(2rem,4vw,2.8rem);line-height:1.15;color:var(--navy);margin-bottom:14px}
+    .section-head p{color:var(--muted);font-size:1.05rem}
+
+    .problem{background:var(--light)}
+    .problem-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:20px}
+    .problem-card{background:#fff;padding:26px;border-radius:8px;border-top:4px solid var(--green);box-shadow:var(--shadow)}
+    .problem-card h3{color:var(--navy);margin-bottom:9px;font-size:1.15rem}.problem-card p{color:var(--muted)}
+
+    .offers{background:#fff}
+    .offer-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:22px;align-items:stretch}
+    .offer{position:relative;border:1px solid var(--line);border-radius:10px;padding:30px;background:#fff;box-shadow:var(--shadow);display:flex;flex-direction:column}
+    .offer.featured{border:2px solid var(--orange);transform:translateY(-8px)}
+    .badge{position:absolute;top:-13px;left:24px;background:var(--orange);color:#fff;padding:5px 12px;border-radius:20px;font-size:.78rem;font-weight:800}
+    .offer h3{font-size:1.45rem;color:var(--navy);margin-bottom:6px}.offer .price{font-size:2.25rem;font-weight:850;color:var(--orange);line-height:1.15;margin:10px 0 3px}.offer .price span{font-size:.95rem;font-weight:500;color:var(--muted)}
+    .hours{font-size:.88rem;color:var(--muted);margin-bottom:18px}.offer ul{list-style:none;margin-bottom:24px;flex:1}.offer li{padding:8px 0;border-top:1px solid var(--line);font-size:.94rem}.offer li::before{content:"✓";color:var(--orange);font-weight:800;margin-right:8px}.offer .btn{width:100%}
+    .note{max-width:760px;margin:32px auto 0;text-align:center;color:var(--muted);font-size:.92rem}.note strong{color:var(--navy)}
+
+    .how{background:var(--light)}
+    .steps{display:grid;grid-template-columns:repeat(4,1fr);gap:18px}.step{background:#fff;padding:24px;border-radius:8px;box-shadow:var(--shadow)}.number{width:34px;height:34px;border-radius:50%;display:grid;place-items:center;background:var(--navy);color:#fff;font-weight:800;margin-bottom:15px}.step h3{color:var(--navy);margin-bottom:7px}.step p{color:var(--muted);font-size:.94rem}
+
+    .services{background:#fff}.service-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:20px}.service{padding:28px;border-radius:8px;background:var(--light);border-left:4px solid var(--orange)}.service h3{color:var(--navy);margin-bottom:9px}.service p{color:var(--muted)}
+
+    .about{background:var(--light)}.about-grid{display:grid;grid-template-columns:.8fr 1.2fr;gap:55px;align-items:center}.about-photo img{width:100%;max-width:390px;display:block;margin:auto;border-radius:10px;box-shadow:var(--shadow)}.about-content h2{color:var(--navy);font-size:2.5rem;margin-bottom:15px}.about-content>p{color:var(--muted);margin-bottom:20px}.credentials{background:#fff;border-left:4px solid var(--green);padding:20px 24px}.credentials h3{color:var(--navy);margin-bottom:8px}.credentials ul{list-style:none;color:var(--muted)}.credentials li{padding:5px 0}.credentials li::before{content:"▸";color:var(--orange);margin-right:8px;font-weight:800}.philosophy{margin-top:22px;color:var(--navy);font-weight:600}.philosophy span{color:var(--orange)}
+
+    .faq{background:#fff}.faq-list{max-width:850px;margin:auto}.faq-item{border-bottom:1px solid var(--line);padding:18px 0}.faq-item h3{font-size:1.05rem;color:var(--navy);margin-bottom:6px}.faq-item p{color:var(--muted)}
+
+    .contact{background:var(--navy);color:#fff;text-align:center}.contact h2{font-size:clamp(2rem,4vw,2.8rem);margin-bottom:12px}.contact p{color:#dfe6f1;max-width:650px;margin:0 auto 25px}.contact .btn-light{border-color:#fff}.contact .btn-light:hover{color:var(--navy)}
+    footer{background:#172c50;color:#aeb9c9;padding:25px 0;text-align:center;font-size:.86rem}.footer-links{display:flex;justify-content:center;gap:24px;margin-bottom:10px}.footer-links a{color:var(--orange)}
+
+    @media(max-width:850px){.hero-grid,.about-grid{grid-template-columns:1fr}.hero-card{max-width:520px}.offer-grid,.problem-grid{grid-template-columns:1fr}.offer.featured{transform:none}.steps{grid-template-columns:1fr 1fr}.service-grid{grid-template-columns:1fr}.nav-links{display:none}.nav-cta{display:none}}
+    @media(max-width:520px){section{padding:62px 0}.hero{padding:70px 0}.steps{grid-template-columns:1fr}.actions .btn{width:100%}.offer{padding:25px}}
+  </style>
 </head>
 <body>
-    <!-- Navigation -->
-    <nav>
-        <div class="nav-container">
-            <div class="logo">MILMAT</div>
-            <ul class="nav-links">
-                <li><a href="#accueil">Accueil</a></li>
-                <li><a href="#services">Offres</a></li>
-                <li><a href="#about">Qui suis-je</a></li>
-                <li><a href="#contact">Contact</a></li>
-            </ul>
-        </div>
-    </nav>
-
-    <!-- Hero Section -->
-    <section class="hero" id="accueil">
-        <div class="hero-container">
-            <h1>MILMAT Formation & Conseil</h1>
-            <div class="hero-tagline">L'outil répond ; l'esprit questionne</div>
-            <p>Formations professionnelles en IA générative, microlearning sur mesure, et conseil administratif pour TPE/artisans en Provence.</p>
-            <div class="hero-buttons">
-                <button class="btn-primary" onclick="openModal()">Me contacter</button>
-                <button class="btn-secondary" onclick="document.getElementById('services').scrollIntoView({ behavior: 'smooth' })">En savoir plus</button>
-            </div>
-        </div>
-    </section>
-
-    <!-- Services Section -->
-    <section class="services" id="services">
-        <div class="services-container">
-            <h2 class="section-title">Nos Offres</h2>
-            <div class="services-grid">
-                <div class="service-card">
-                    <h3>Formations IA générative</h3>
-                    <p>Donner une voix et une méthode à l'IA. Programmes sur mesure pour manager, vendre, et piloter avec l'intelligence artificielle. Approche comprendre → structurer → transformer.</p>
-                </div>
-                <div class="service-card">
-                    <h3>Microlearning</h3>
-                    <p>Capsules de formation vidéo courtes et ciblées. Idéales pour la montée en compétences rapide : négociation, appels professionnels, gestion administrative. Tickets d'entrée accessibles.</p>
-                </div>
-                <div class="service-card">
-                    <h3>Services TPE/PME</h3>
-                    <p>Conseil administratif et gestion commerciale pour petites entreprises et artisans. Accompagnement sur le pilotage, l'organisation, et la stratégie de développement.</p>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- About Section -->
-    <section class="about" id="about">
-        <div class="about-container">
-            <div class="about-photo">
-                <img src="photo-stephane.jpg" alt="Stéphane Ogé - Fondateur MILMAT">
-            </div>
-            <div class="about-content">
-                <h2>Qui suis-je</h2>
-                <p>Je suis Stéphane Ogé, fondateur de MILMAT. Après plus de 30 ans de carrière en gestion commerciale et direction d'équipes (CDC Habitat, courtage, immobilier), j'ai choisi de transmettre : former les esprits à poser les bonnes questions face aux outils.</p>
-                
-                <div class="credentials">
-                    <h4>Formation</h4>
-                    <ul>
-                        <li>DESS (Bac+5) - Institut d'Administration des Entreprises (IAE Metz)</li>
-                        <li>Management stratégique et gestion d'équipes</li>
-                        <li>Maîtrise des outils d'IA générative</li>
-                    </ul>
-                </div>
-
-                <div class="credentials">
-                    <h4>Expérience</h4>
-                    <ul>
-                        <li>30+ ans en gestion commerciale et management</li>
-                        <li>Direction d'agences (jusqu'à 25 collaborateurs)</li>
-                        <li>Environ 200 heures de formation professionnelle</li>
-                        <li>Basé en Provence (L'Isle-sur-la-Sorgue, Vaucluse)</li>
-                    </ul>
-                </div>
-
-                <p><strong>Philosophie :</strong> "L'outil répond ; l'esprit questionne." Mon objectif est de vous aider à utiliser les technologies comme des leviers de clarté et de stratégie, pas comme des fins en soi.</p>
-            </div>
-        </div>
-    </section>
-
-    <!-- Contact Section -->
-    <section class="contact-section" id="contact">
-        <div class="contact-section">
-            <h2>Prêt à avancer ?</h2>
-            <p style="margin-bottom: 2rem; color: #666; font-size: 1.05rem;">Parlez-moi de votre projet. Je vous recontacterai rapidement.</p>
-            <button class="btn-primary" onclick="openModal()">Me contacter</button>
-        </div>
-    </section>
-
-    <!-- Contact Modal -->
-    <div id="contactModal" class="modal">
-        <div class="modal-content">
-            <span class="close-btn" onclick="closeModal()">&times;</span>
-            <h2 style="color: #1F3864; margin-bottom: 1.5rem;">Parlons de votre projet</h2>
-            
-            <form onsubmit="handleSubmit(event)">
-                <div class="form-group">
-                    <label for="nom">Nom *</label>
-                    <input type="text" id="nom" name="nom" required>
-                </div>
-
-                <div class="form-group">
-                    <label for="prenom">Prénom *</label>
-                    <input type="text" id="prenom" name="prenom" required>
-                </div>
-
-                <div class="form-group">
-                    <label for="telephone">Téléphone *</label>
-                    <input type="tel" id="telephone" name="telephone" required>
-                </div>
-
-                <div class="form-group">
-                    <label for="email">Email *</label>
-                    <input type="email" id="email" name="email" required>
-                </div>
-
-                <div class="form-group">
-                    <label for="interet">Vous m'intéressez pour *</label>
-                    <select id="interet" name="interet" required>
-                        <option value="">-- Sélectionnez une option --</option>
-                        <option value="Formations IA générative">Formations IA générative</option>
-                        <option value="Microlearning">Microlearning</option>
-                        <option value="Services TPE">Services TPE/PME</option>
-                        <option value="Autre">Autre</option>
-                    </select>
-                </div>
-
-                <div class="form-group">
-                    <label for="message">Message (optionnel)</label>
-                    <textarea id="message" name="message" placeholder="Décrivez brièvement votre besoin..."></textarea>
-                </div>
-
-                <button type="submit" class="submit-btn">Envoyer ma demande</button>
-            </form>
-
-            <div style="margin-top: 1.5rem; padding-top: 1.5rem; border-top: 1px solid #ddd; text-align: center; color: #999; font-size: 0.9rem;">
-                <p>Ou contactez-moi directement :</p>
-                <p><strong>Tél/SMS :</strong> <a href="tel:0784374106" style="color: #ED7D31; text-decoration: none;">0784 37 41 06</a></p>
-                <p><strong>Email :</strong> <a href="mailto:stephane.oge@milmat-formations.com" style="color: #ED7D31; text-decoration: none;">stephane.oge@milmat-formations.com</a></p>
-            </div>
-        </div>
+  <nav>
+    <div class="container nav-inner">
+      <a class="logo" href="#accueil">MILMAT</a>
+      <ul class="nav-links">
+        <li><a href="#accueil">Accueil</a></li>
+        <li><a href="#tpe">Forfaits TPE</a></li>
+        <li><a href="#formations">Formations</a></li>
+        <li><a href="#about">Qui suis-je</a></li>
+      </ul>
+      <a class="nav-cta" href="#contact">Parlons de votre entreprise</a>
     </div>
+  </nav>
 
-    <!-- Footer -->
-    <footer>
-        <div class="footer-content">
-            <div class="footer-links">
-                <a href="https://www.linkedin.com/in/stephane-oge/" target="_blank">LinkedIn</a>
-                <a href="https://www.instagram.com/milmat.formation/" target="_blank">Instagram</a>
-                <a href="mailto:stephane.oge@milmat-formations.com">Email</a>
-            </div>
-            <p class="footer-copy">© 2026 MILMAT Formation & Conseil. Tous droits réservés.</p>
+  <main>
+    <section class="hero" id="accueil">
+      <div class="container hero-grid">
+        <div>
+          <div class="eyebrow">Formation & Conseil — Provence</div>
+          <h1>Votre entreprise avance.<br><span>Votre administratif aussi.</span></h1>
+          <div class="tagline">« L'outil répond ; l'esprit questionne. »</div>
+          <p class="hero-copy">MILMAT accompagne les TPE et artisans qui veulent gagner du temps, mieux suivre leur activité et rester concentrés sur leur métier — sans recruter immédiatement une fonction administrative à temps plein.</p>
+          <div class="actions">
+            <a class="btn btn-primary" href="#tpe">Découvrir les forfaits TPE</a>
+            <a class="btn btn-light" href="#contact">Parler de mon entreprise</a>
+          </div>
         </div>
-    </footer>
+        <aside class="hero-card">
+          <h3>Un appui extérieur, chaque mois</h3>
+          <p>Relances, devis, suivi d'activité, administratif et communication selon le niveau d'accompagnement choisi.</p>
+          <strong>250 €</strong><small>par mois — formule Essentiel</small>
+          <ul class="mini-list">
+            <li>Pas de comptabilité</li>
+            <li>Un accompagnement récurrent</li>
+            <li>Des interventions concrètes</li>
+          </ul>
+        </aside>
+      </div>
+    </section>
 
-    <script>
-        function openModal() {
-            document.getElementById('contactModal').style.display = 'block';
-        }
+    <section class="problem">
+      <div class="container">
+        <div class="section-head">
+          <h2>Le problème n'est pas toujours le manque de clients.</h2>
+          <p>Pour une TPE, quelques heures perdues chaque semaine dans l'administratif, les devis ou les relances finissent par coûter cher.</p>
+        </div>
+        <div class="problem-grid">
+          <article class="problem-card"><h3>Les devis s'accumulent</h3><p>Vous avez vendu, mais le suivi des devis et des demandes passe après le travail urgent.</p></article>
+          <article class="problem-card"><h3>Les relances attendent</h3><p>Les impayés et les clients à rappeler restent dans votre tête au lieu d'être suivis régulièrement.</p></article>
+          <article class="problem-card"><h3>Vous pilotez à vue</h3><p>Sans point régulier sur le chiffre d'affaires, la marge, la trésorerie ou les impayés, décider devient plus difficile.</p></article>
+        </div>
+      </div>
+    </section>
 
-        function closeModal() {
-            document.getElementById('contactModal').style.display = 'none';
-        }
+    <section class="offers" id="tpe">
+      <div class="container">
+        <div class="section-head">
+          <div class="eyebrow">Les forfaits TPE MILMAT</div>
+          <h2>Trois niveaux d'appui. Un objectif : vous faire gagner du temps.</h2>
+          <p>Choisissez le niveau d'intervention correspondant à votre besoin actuel. L'accompagnement est récurrent et concret.</p>
+        </div>
+        <div class="offer-grid">
+          <article class="offer">
+            <h3>Essentiel</h3>
+            <div class="price">250 € <span>/ mois</span></div>
+            <div class="hours">Environ 4 à 5 h / mois</div>
+            <ul>
+              <li>Relances clients</li>
+              <li>Suivi des devis</li>
+              <li>2 courriers ou emails professionnels / mois</li>
+              <li>Point WhatsApp hebdomadaire</li>
+            </ul>
+            <a class="btn btn-primary" href="#contact">Choisir Essentiel</a>
+          </article>
+          <article class="offer featured">
+            <div class="badge">PILOTER</div>
+            <h3>Pilotage</h3>
+            <div class="price">450 € <span>/ mois</span></div>
+            <div class="hours">Environ 6 à 8 h / mois</div>
+            <ul>
+              <li>Tout le forfait Essentiel</li>
+              <li>Tableau de bord mensuel : CA, marge, trésorerie, impayés</li>
+              <li>Rédaction des devis sur instruction</li>
+              <li>Entretien téléphonique mensuel de 30 min</li>
+            </ul>
+            <a class="btn btn-primary" href="#contact">Choisir Pilotage</a>
+          </article>
+          <article class="offer">
+            <h3>Complet</h3>
+            <div class="price">650 € <span>/ mois</span></div>
+            <div class="hours">Environ 10 à 12 h / mois</div>
+            <ul>
+              <li>Tout le forfait Pilotage</li>
+              <li>Gestion administrative courante</li>
+              <li>Réponses aux avis Google et demandes entrantes</li>
+              <li>4 publications réseaux sociaux / mois</li>
+            </ul>
+            <a class="btn btn-primary" href="#contact">Choisir Complet</a>
+          </article>
+        </div>
+        <p class="note"><strong>À noter :</strong> MILMAT ne fait pas de comptabilité. L'offre porte sur l'accompagnement administratif, commercial et le pilotage de l'activité.</p>
+      </div>
+    </section>
 
-        window.onclick = function(event) {
-            const modal = document.getElementById('contactModal');
-            if (event.target === modal) {
-                modal.style.display = 'none';
-            }
-        }
+    <section class="how">
+      <div class="container">
+        <div class="section-head"><h2>Comment ça fonctionne ?</h2><p>Un fonctionnement simple, pensé pour une petite entreprise qui n'a pas de temps à perdre.</p></div>
+        <div class="steps">
+          <article class="step"><div class="number">1</div><h3>On fait le point</h3><p>Votre activité, vos priorités, vos irritants et le niveau d'aide nécessaire.</p></article>
+          <article class="step"><div class="number">2</div><h3>On choisit le forfait</h3><p>Essentiel, Pilotage ou Complet selon la charge et le niveau de suivi souhaité.</p></article>
+          <article class="step"><div class="number">3</div><h3>On travaille chaque mois</h3><p>Les actions prévues sont réalisées avec un suivi régulier et des échanges simples.</p></article>
+          <article class="step"><div class="number">4</div><h3>Vous gardez la main</h3><p>MILMAT intervient en appui. Vous restez décisionnaire de votre entreprise.</p></article>
+        </div>
+      </div>
+    </section>
 
-        function handleSubmit(event) {
-            event.preventDefault();
+    <section class="services" id="formations">
+      <div class="container">
+        <div class="section-head"><div class="eyebrow">Les autres activités MILMAT</div><h2>Former, accompagner, augmenter les compétences.</h2><p>Les forfaits TPE constituent une offre d'accompagnement. MILMAT développe également ses activités de formation et de microlearning.</p></div>
+        <div class="service-grid">
+          <article class="service"><h3>Formations IA générative</h3><p>Des formations professionnelles pour comprendre, structurer et utiliser l'IA générative dans les usages professionnels.</p></article>
+          <article class="service"><h3>Microlearning</h3><p>Des capsules courtes et ciblées pour travailler une compétence précise : relation client, négociation, appels professionnels ou gestion administrative.</p></article>
+          <article class="service"><h3>Formation terrain</h3><p>Une approche centrée sur la pratique et les situations professionnelles réelles, avec l'objectif de rendre les compétences immédiatement utilisables.</p></article>
+          <article class="service"><h3>Conseil TPE / artisans</h3><p>Un appui pragmatique sur l'organisation, le suivi commercial, l'administratif et le pilotage de l'activité.</p></article>
+        </div>
+      </div>
+    </section>
 
-            const nom = document.getElementById('nom').value;
-            const prenom = document.getElementById('prenom').value;
-            const telephone = document.getElementById('telephone').value;
-            const email = document.getElementById('email').value;
-            const interet = document.getElementById('interet').value;
-            const message = document.getElementById('message').value;
+    <section class="about" id="about">
+      <div class="container about-grid">
+        <div class="about-photo"><img src="photo-stephane.jpg" alt="Stéphane Ogé, fondateur de MILMAT"></div>
+        <div class="about-content">
+          <div class="eyebrow">Le fondateur</div>
+          <h2>Une expérience de terrain avant les outils.</h2>
+          <p>Je suis Stéphane Ogé, fondateur de MILMAT. Après plus de 30 ans de carrière en gestion commerciale, management et immobilier, j'ai choisi de transmettre et d'accompagner les professionnels au plus près de leurs réalités.</p>
+          <div class="credentials">
+            <h3>Repères</h3>
+            <ul>
+              <li>DESS (Bac+5) — Institut d'Administration des Entreprises, IAE Metz</li>
+              <li>30+ ans en gestion commerciale et management</li>
+              <li>Direction d'agences jusqu'à 25 collaborateurs</li>
+              <li>Environ 200 heures de formation professionnelle</li>
+              <li>Basé en Provence — L'Isle-sur-la-Sorgue, Vaucluse</li>
+            </ul>
+          </div>
+          <p class="philosophy"><span>« L'outil répond ; l'esprit questionne. »</span> La technologie est un levier. Elle ne remplace ni le jugement, ni l'expérience, ni la décision.</p>
+        </div>
+      </div>
+    </section>
 
-            // Email mailto
-            const emailBody = `Nom: ${prenom} ${nom}\nTéléphone: ${telephone}\nEmail: ${email}\nIntérêt: ${interet}\n\nMessage: ${message}`;
-            const emailLink = `mailto:stephane.oge@milmat-formations.com?subject=Demande%20de%20contact%20MILMAT&body=${encodeURIComponent(emailBody)}`;
+    <section class="faq">
+      <div class="container">
+        <div class="section-head"><h2>Quelques questions simples</h2><p>Avant de nous parler, voici l'essentiel.</p></div>
+        <div class="faq-list">
+          <div class="faq-item"><h3>À qui s'adressent les forfaits ?</h3><p>Aux TPE et artisans qui souhaitent externaliser une partie de leur gestion administrative et commerciale sans recruter immédiatement.</p></div>
+          <div class="faq-item"><h3>MILMAT remplace-t-il mon comptable ?</h3><p>Non. La comptabilité ne fait pas partie de l'offre. MILMAT intervient en amont et autour du suivi administratif, commercial et du pilotage.</p></div>
+          <div class="faq-item"><h3>Peut-on commencer simplement ?</h3><p>Oui. Le forfait Essentiel constitue le niveau d'entrée à 250 € par mois. Le niveau d'accompagnement peut ensuite évoluer avec les besoins de l'entreprise.</p></div>
+        </div>
+      </div>
+    </section>
 
-            // SMS avec données
-            const smsBody = `${prenom} ${nom} (${email}) - Intérêt: ${interet}`;
-            const smsLink = `sms:0784374106?body=${encodeURIComponent(smsBody)}`;
+    <section class="contact" id="contact">
+      <div class="container">
+        <div class="eyebrow">Premier échange</div>
+        <h2>Parlons de votre entreprise.</h2>
+        <p>Expliquez-moi simplement ce qui vous prend du temps aujourd'hui. Nous verrons si MILMAT peut réellement vous être utile.</p>
+        <a class="btn btn-light" href="mailto:contact@milmat.fr?subject=Demande%20d%27information%20MILMAT%20TPE">Me contacter par email</a>
+      </div>
+    </section>
+  </main>
 
-            // Affiche les options
-            alert(`Merci ${prenom} ! Cliquez sur votre moyen de contact préféré :\n\n📧 Email ou 📱 SMS (répondez au lien qui va s'ouvrir)`);
-
-            // Ouvre l'email par défaut
-            window.location.href = emailLink;
-            
-            // L'utilisateur peut aussi envoyer un SMS manuellement
-            setTimeout(() => {
-                if (confirm('Voulez-vous aussi m\'envoyer un SMS ?')) {
-                    window.location.href = smsLink;
-                }
-            }, 500);
-
-            closeModal();
-        }
-    </script>
+  <footer>
+    <div class="container">
+      <div class="footer-links"><a href="#tpe">Forfaits TPE</a><a href="#formations">Formations</a><a href="#about">Qui suis-je</a><a href="#contact">Contact</a></div>
+      <div>© 2026 MILMAT Formation & Conseil. Tous droits réservés.</div>
+    </div>
+  </footer>
 </body>
 </html>
