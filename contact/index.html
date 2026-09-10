@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Contacter MILMAT Formation & Conseil simplement par WhatsApp, SMS ou téléphone.">
+  <meta name="theme-color" content="#1F3864">
+  <title>Contacter MILMAT — Formation & Conseil</title>
+  <style>
+    :root{--navy:#1F3864;--blue:#4A7BA7;--green:#69A297;--gold:#C9A876;--ink:#263238;--muted:#667085;--line:#e5e9ef;--light:#f7f9fb;--white:#fff}
+    *{box-sizing:border-box;margin:0;padding:0}
+    body{font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Arial,sans-serif;background:#fff;color:var(--ink);min-height:100vh}
+    a{text-decoration:none;color:inherit}
+    .page{width:min(560px,100%);margin:0 auto;padding:28px 20px 34px}
+    header{text-align:center;padding:8px 0 28px}
+    .logo{width:190px;max-width:70%;height:auto;margin:0 auto 18px;display:block}
+    .eyebrow{font-size:.78rem;letter-spacing:.1em;text-transform:uppercase;color:var(--green);font-weight:750;margin-bottom:9px}
+    h1{font-size:clamp(2rem,8vw,2.7rem);line-height:1.08;color:var(--navy);letter-spacing:-.025em;margin-bottom:10px}
+    .intro{font-size:1.04rem;line-height:1.5;color:var(--muted);max-width:440px;margin:auto}
+    .notice{margin:18px 0 24px;background:var(--light);border:1px solid var(--line);border-left:4px solid var(--green);border-radius:10px;padding:15px 16px;text-align:center;color:var(--navy);font-weight:650;line-height:1.45}
+    .choices{display:grid;gap:13px}
+    .choice{display:flex;align-items:center;gap:16px;background:#fff;border:1.5px solid var(--line);border-radius:13px;padding:17px 18px;min-height:82px;box-shadow:0 5px 18px rgba(31,56,100,.07);transition:transform .15s,box-shadow .15s,border-color .15s}
+    .choice:hover{transform:translateY(-1px);box-shadow:0 9px 24px rgba(31,56,100,.11);border-color:#cbd5e1}
+    .icon{width:50px;height:50px;flex:0 0 50px;border-radius:50%;display:grid;place-items:center;font-size:25px;background:#edf4f8}
+    .choice.whatsapp .icon{background:#eaf5f2}.choice.phone .icon{background:#f5efe3}
+    .choice h2{font-size:1.08rem;color:var(--navy);margin-bottom:2px}
+    .choice p{font-size:.9rem;color:var(--muted);line-height:1.35}
+    .arrow{margin-left:auto;font-size:1.45rem;color:var(--blue)}
+    .easy{margin:25px 0 18px;text-align:center;color:var(--gold);font-size:1.08rem;font-weight:650}
+    .languages{text-align:center;font-size:.84rem;color:var(--muted);padding:14px 0;border-top:1px solid var(--line)}
+    .languages strong{color:var(--navy)}
+    .legal{text-align:center;color:#7b8492;font-size:.73rem;line-height:1.45;margin-top:20px}
+    footer{text-align:center;border-top:1px solid var(--line);margin-top:22px;padding-top:17px;color:var(--muted);font-size:.8rem}
+    footer a{color:var(--blue);font-weight:650}
+    @media(max-width:390px){.page{padding-left:14px;padding-right:14px}.choice{padding:15px}.icon{width:46px;height:46px;flex-basis:46px}}
+  </style>
+</head>
+<body>
+  <main class="page">
+    <header>
+      <img class="logo" src="../milmat-logo.svg" alt="MILMAT Formation & Conseil">
+      <div class="eyebrow">Écouter · Comprendre · Agir</div>
+      <h1>Besoin d'aide ?</h1>
+      <p class="intro">Vous pouvez nous envoyer votre question, une photo de votre courrier ou un message vocal.</p>
+    </header>
+
+    <div class="notice">Pas besoin de bien écrire le français.<br>Expliquez simplement votre situation.</div>
+
+    <section class="choices" aria-label="Choisissez votre moyen de contact">
+      <a class="choice whatsapp" href="https://wa.me/33784374106?text=Bonjour%20MILMAT%2C%20j%27ai%20besoin%20d%27aide.%20Je%20vous%20envoie%20mon%20document." aria-label="Contacter MILMAT par WhatsApp">
+        <span class="icon" aria-hidden="true">💬</span>
+        <span><h2>WHATSAPP</h2><p>Envoyer un message, une photo ou un vocal</p></span>
+        <span class="arrow" aria-hidden="true">›</span>
+      </a>
+
+      <a class="choice" href="sms:+33784374106?body=Bonjour%20MILMAT%2C%20j%27ai%20besoin%20d%27aide.%20Je%20souhaite%20%C3%AAtre%20contact%C3%A9." aria-label="Contacter MILMAT par SMS">
+        <span class="icon" aria-hidden="true">✉</span>
+        <span><h2>SMS</h2><p>Écrire un message très simplement</p></span>
+        <span class="arrow" aria-hidden="true">›</span>
+      </a>
+
+      <a class="choice phone" href="tel:+33784374106" aria-label="Appeler MILMAT au 07 84 37 41 06">
+        <span class="icon" aria-hidden="true">☎</span>
+        <span><h2>TÉLÉPHONE</h2><p>07 84 37 41 06 · Appeler MILMAT</p></span>
+        <span class="arrow" aria-hidden="true">›</span>
+      </a>
+    </section>
+
+    <div class="easy">Un courrier vous pose problème ?<br>📷 Prenez-le simplement en photo.</div>
+
+    <div class="languages"><strong>Vous pouvez nous écrire dans votre langue.</strong><br>MILMAT vous répondra au mieux, en français simple si nécessaire.</div>
+
+    <p class="legal">MILMAT vous aide à comprendre et à rédiger.<br>MILMAT n'est ni avocat, ni expert-comptable, ni représentant légal.<br>Lorsque la situation nécessite un professionnel spécialisé, nous vous orientons.</p>
+
+    <footer><a href="https://milmat-site-rdut.vercel.app/">Retour sur le site MILMAT</a></footer>
+  </main>
+</body>
+</html>
