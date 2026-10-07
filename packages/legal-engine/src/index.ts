@@ -10,3 +10,4 @@ export * from "./case/deadlines";
 export * from "./case/evidenceIngestion";
 export * from "./case/caseStore";
 export * from "./case/legalVersionRegistry";
+export * from "./case/legalUpdateWorkflow";
