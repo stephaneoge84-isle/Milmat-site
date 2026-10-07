@@ -34,7 +34,23 @@ describe("FPS rules", () => {
         fpsSignature: "Signé",
         fpsNoticeNumber: "21130001700012 26 1 266 016 088",
         noticeNotificationDate: "2026-10-05",
-        rapoAuthority: "AIX EN PROVENCE"
+        rapoAuthority: "AIX EN PROVENCE",
+        fpsNoticePart1Complete: true,
+        fpsNoticePart2Complete: true,
+        paymentServiceCoordinates: "service paiement",
+        paymentMethods: "moyens indiqués",
+        paymentDeadline: "2027-01-05",
+        nonPaymentConsequence: "titre exécutoire majoré",
+        rapoMandatory: true,
+        rapoDeadlineAndMethod: "un mois / modalités indiquées",
+        rapoSilenceRejection: true,
+        tribunalAppealInfo: "tribunal du stationnement payant",
+        dataAccessRectification: true,
+        rapoRequiredDocuments: true,
+        notificationMode: "postal",
+        notificationProof: "élément de notification",
+        tribunalAppealDeadline: "un mois",
+        tribunalPriorPayment: true
       }
     }, legalRules);
 
