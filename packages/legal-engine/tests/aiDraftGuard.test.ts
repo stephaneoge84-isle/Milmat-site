@@ -1,0 +1,3 @@
+import { describe, expect, it } from "vitest";
+import { reviewAIDraft } from "../src/contest/aiDraftGuard";
+describe("AI drafting guard",()=>{it("rejects categorical legal conclusions",()=>{const r=reviewAIDraft({caseFile:{} as any,audit:{anomalies:[],checks:[],legalVersionDate:"2026-09-23",applicableRules:[],missingEvidence:[],requests:[],confidence:0},draftText:"Le PV est nul et l'agent est non assermenté."});expect(r.accepted).toBe(false)})});
