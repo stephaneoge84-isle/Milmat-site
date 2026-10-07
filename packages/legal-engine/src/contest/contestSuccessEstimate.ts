@@ -1,7 +1,9 @@
 import type { LegalAudit, RiskLevel, RuleCheck } from "../types";
 
 export interface ContestSuccessEstimate {
+  /** @deprecated Kept for backward compatibility; UI must not present this as probability. */
   percentage: number;
+  solidite: "FAVORABLE_A_EXAMEN" | "A_COMPLETER" | "INCOHERENCE_APPARENTE" | "AUCUN_MOYEN_IDENTIFIE";
   level: "VERY_LOW" | "LOW" | "MODERATE" | "HIGH";
   decision: "CONTINUE" | "CONTINUE_WITH_CAUTION" | "STOP_AND_REVIEW";
   basis: string[];
@@ -18,7 +20,8 @@ function hasSeriousGround(checks: RuleCheck[]): boolean {
 
 /**
  * This is an internal case-strength estimate, not a prediction of an authority's decision.
- * The engine never lets the AI choose or alter the percentage.
+ * The percentage is retained only for backward compatibility and is not a probability of success.
+ * The authoritative UI-facing result is the qualitative `solidite` field.
  */
 export function estimateContestSuccess(audit: LegalAudit, explicitGroundFound = false): ContestSuccessEstimate {
   const relevant = audit.checks.filter(c => c.status !== "NON_APPLICABLE");
@@ -32,6 +35,7 @@ export function estimateContestSuccess(audit: LegalAudit, explicitGroundFound = 
   if (!seriousGround && unresolved.length === 0 && incoherent.length === 0) {
     return {
       percentage: 0,
+      solidite: "AUCUN_MOYEN_IDENTIFIE",
       level: "VERY_LOW",
       decision: "STOP_AND_REVIEW",
       basis: ["Tous les contrôles pertinents disponibles sont conformes.", "Aucun moyen de contestation sérieux n'est identifié."],
@@ -50,8 +54,15 @@ export function estimateContestSuccess(audit: LegalAudit, explicitGroundFound = 
   const level = percentage >= 70 ? "HIGH" : percentage >= 40 ? "MODERATE" : percentage >= 20 ? "LOW" : "VERY_LOW";
   const decision = percentage >= 40 ? "CONTINUE" : "CONTINUE_WITH_CAUTION";
 
+  const solidite = incoherent.length > 0
+    ? "INCOHERENCE_APPARENTE"
+    : unresolved.length > 0
+      ? "A_COMPLETER"
+      : "FAVORABLE_A_EXAMEN";
+
   return {
     percentage,
+    solidite,
     level,
     decision,
     basis: [
