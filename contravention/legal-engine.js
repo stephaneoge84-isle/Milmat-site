@@ -12,16 +12,17 @@ export function analyzeFpsIntake(input) {
     completeNotice ? "" : "Fournir l'avis FPS complet, notamment la seconde partie « Modalités de paiement et contestation ».",
     ["collectivité","autorité","agent","date/heure/lieu","véhicule","redevable","montant","fin FPS","avis"]);
 
-  push("FPS-AGENT-002", "PRESENT_CONFORME", "INFO",
-    "L'autorité et l'identifiant de l'agent sont présents sur les éléments connus du dossier FPS.",
-    "", ["autorité dont relève l'agent","numéro d'identification de l'agent"]);
+  push("FPS-AGENT-002", "NON_DEMONTRE", "YELLOW",
+    "L'autorité et l'identifiant de l'agent doivent être contrôlés sur l'avis complet ; l'interface ne les déduit pas d'une copie partielle.",
+    "Vérifier l'autorité et le numéro d'identification sur l'avis complet.",
+    ["autorité dont relève l'agent","numéro d'identification de l'agent"]);
 
   const notification = input.notificationDate;
-  push("FPS-RAPO-003", notification ? "PRESENT_CONFORME" : "NON_DEMONTRE",
-    notification ? "INFO" : "ORANGE",
-    notification ? "La date de notification est renseignée ; le délai de RAPO doit être calculé à partir de cette date." : "La date effective de notification n'est pas établie.",
-    notification ? "" : "Préciser la date et le mode de notification et vérifier l'autorité compétente pour le RAPO.",
-    ["date de notification","entité compétente pour le RAPO"]);
+  push("FPS-RAPO-003", notification ? "A_VERIFIER" : "NON_DEMONTRE",
+    "ORANGE",
+    notification ? "La date de notification est renseignée, mais l'autorité destinataire du RAPO doit encore être contrôlée." : "La date effective de notification n'est pas établie.",
+    "Vérifier la date de notification, l'autorité compétente et les modalités de saisine du RAPO.",
+    ["date de notification","entité compétente pour le RAPO","modalités de saisine"]);
 
   const ground=input.ground;
   if (ground==="paiement") {
