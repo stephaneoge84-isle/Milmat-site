@@ -1,0 +1,65 @@
+<!doctype html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>MILMAT — Audit stationnement</title>
+<style>
+:root{--blue:#4A7BA7;--gold:#C9A876;--green:#69A297;--ink:#26323b;--muted:#687681;--line:#dbe2e7;--bg:#f5f7f8;--white:#fff;--orange:#c98535;--red:#b64b4b}
+*{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--ink);font-family:Calibri,Arial,sans-serif}
+header{background:var(--white);border-bottom:1px solid var(--line);padding:18px 5vw;display:flex;justify-content:space-between;align-items:center}
+.brand{font:700 28px Cambria,serif;color:var(--blue);letter-spacing:.08em}.brand span{color:var(--gold)}
+header small{color:var(--muted)}
+main{max-width:1180px;margin:34px auto;padding:0 24px}
+.eyebrow{color:var(--blue);font-weight:700;letter-spacing:.08em;text-transform:uppercase;font-size:13px}
+h1{font:700 34px Cambria,serif;margin:7px 0}.intro{color:var(--muted);font-size:17px;margin:0 0 26px}
+.grid{display:grid;grid-template-columns:1.2fr .8fr;gap:22px}.card{background:var(--white);border:1px solid var(--line);border-radius:14px;padding:24px;box-shadow:0 4px 18px #2030400b}
+.card h2{font:700 21px Cambria,serif;margin:0 0 18px}
+.identity{display:grid;grid-template-columns:repeat(2,1fr);gap:12px}.fact{padding:13px;border:1px solid var(--line);border-radius:9px}.fact label{display:block;color:var(--muted);font-size:12px;margin-bottom:4px}.fact strong{font-size:15px}
+.status{display:flex;gap:12px;align-items:center;padding:14px;border-radius:10px;background:#edf6f3;border:1px solid #c9e1da;margin-bottom:18px}.dot{width:12px;height:12px;border-radius:50%;background:var(--green)}
+.score{text-align:center;padding:25px 15px;border:1px solid var(--line);border-radius:12px;margin-bottom:18px}.score .number{font:700 58px Cambria,serif;color:var(--green)}.score strong{display:block;font-size:19px}.score p{color:var(--muted);margin:7px 0 0}
+.item{display:flex;gap:12px;padding:14px 0;border-bottom:1px solid var(--line)}.item:last-child{border-bottom:0}.badge{min-width:86px;height:26px;border-radius:20px;text-align:center;padding:5px 8px;font-size:11px;font-weight:700}.ok{background:#e6f3ef;color:#39776b}.warn{background:#fff0dc;color:#9a611e}.info{background:#edf1f4;color:#5d6c76}
+.item b{display:block;margin-bottom:3px}.item span{font-size:14px;color:var(--muted);line-height:1.45}
+.actions{margin-top:22px;padding:22px;border-radius:14px;background:#fff;border:2px solid var(--blue)}.actions h2{margin-bottom:8px}.actions p{color:var(--muted);margin-top:0}
+button{border:0;border-radius:9px;padding:13px 18px;font-weight:700;font-size:15px;cursor:pointer}.primary{background:var(--blue);color:white}.secondary{background:white;color:var(--blue);border:1px solid var(--blue);margin-left:8px}
+.note{font-size:12px;color:var(--muted);line-height:1.5;margin-top:18px}
+@media(max-width:800px){.grid{grid-template-columns:1fr}.identity{grid-template-columns:1fr}.secondary{margin:10px 0 0}}
+</style>
+</head>
+<body>
+<header><div class="brand">MIL<span>MAT</span></div><small>Audit & contestation — prototype</small></header>
+<main>
+<div class="eyebrow">Résultat de l'analyse</div>
+<h1>Votre avis de paiement a été identifié comme un FPS</h1>
+<p class="intro">Aix-en-Provence · 23 septembre 2026 · 33 €</p>
+<div class="grid">
+<section class="card">
+<h2>1. Ce que nous avons identifié</h2>
+<div class="status"><span class="dot"></span><div><strong>Document reconnu</strong><br><small>Forfait de post-stationnement — hors contravention pénale classique.</small></div></div>
+<div class="identity">
+<div class="fact"><label>Numéro d'avis</label><strong>21130001700012 26 1 266 016 088</strong></div>
+<div class="fact"><label>Immatriculation</label><strong>EC-274-LF</strong></div>
+<div class="fact"><label>Constat</label><strong>23/09/2026 à 15h53</strong></div>
+<div class="fact"><label>Lieu</label><strong>12 rue de la Poudrière, Aix-en-Provence</strong></div>
+<div class="fact"><label>Agent</label><strong>N° 16 — Mairie d'Aix-en-Provence</strong></div>
+<div class="fact"><label>Montant</label><strong>33 €</strong></div>
+</div>
+</section>
+<section class="card">
+<h2>2. Estimation du dossier</h2>
+<div class="score"><div class="number">25 %</div><strong>Chance estimée de réussite</strong><p>Estimation provisoire : des éléments restent à vérifier.</p></div>
+<div class="item"><span class="badge ok">CONFORME</span><div><b>Première partie de l'avis</b><span>Les principales mentions visibles sont présentes : collectivité, agent, constat, véhicule, redevable, montant, date d'envoi et signature.</span></div></div>
+<div class="item"><span class="badge warn">À VÉRIFIER</span><div><b>Seconde partie de l'avis</b><span>Les modalités de paiement et de contestation ne sont pas suffisamment contrôlées sur la pièce fournie.</span></div></div>
+<div class="item"><span class="badge warn">À VÉRIFIER</span><div><b>Délai de RAPO</b><span>Le délai doit être calculé à partir de la notification juridiquement pertinente, pas simplement de la date d'envoi.</span></div></div>
+</section>
+</div>
+<section class="actions">
+<h2>3. Voulez-vous continuer ?</h2>
+<p>Le moteur n'a pas identifié à ce stade une irrégularité certaine. Il a identifié des points qui méritent une vérification avant de décider d'un RAPO.</p>
+<button class="primary" onclick="alert('Étape suivante : préciser le motif de contestation et les pièces disponibles.')">Oui, je veux poursuivre</button>
+<button class="secondary" onclick="alert('Analyse terminée : aucune contestation ne sera préparée.')">Non, arrêter ici</button>
+<div class="note"><strong>Important :</strong> le pourcentage est une estimation technique de la solidité du dossier à partir des éléments fournis. Ce n'est ni une probabilité scientifique ni une garantie de résultat. Seule l'autorité compétente décide de la suite donnée au recours.</div>
+</section>
+</main>
+</body>
+</html>
