@@ -17,6 +17,10 @@ describe("contest intake adapter", () => {
       fpsTopic: "paiement"
     });
     expect(result.ruleInput.regime).toBe("FPS");
+    expect(result.caseFile.schemaVersion).toBe("1.0");
+    expect(result.caseFile.regime).toBe("FPS");
+    expect(result.caseFile.facts.some(f => f.key === "userExplanation")).toBe(true);
+    expect(result.caseFile.legalAudit).toBeDefined();
     expect(result.audit.applicableRules.some(r => r.id === "FPS-RAPO-003")).toBe(true);
     expect(result.ground.primaryGround).toBe("FPS");
     expect(result.estimate.solidite).toBeDefined();
