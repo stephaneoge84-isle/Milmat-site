@@ -9,6 +9,7 @@ export interface ContestIntakeAnswers {
   infractionDate: string;
   notificationDate?: string;
   ground?: ContestGround;
+  fpsTopic?: "paiement" | "vehicule" | "document" | "notification" | "montant" | "autre";
   explanation: string;
   answers: Record<string, string>;
   documents: string[];
@@ -43,6 +44,7 @@ export function buildFpsRuleInput(input: ContestIntakeAnswers): RuleInput {
     paymentBeforeInfraction: paymentBefore,
     completeNoticeDeclared: completeNotice,
     declaredGround: input.ground,
+    fpsTopic: input.fpsTopic,
     userExplanation: input.explanation,
     contestAnswers: input.answers,
   };
