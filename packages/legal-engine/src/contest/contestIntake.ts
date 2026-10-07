@@ -44,6 +44,7 @@ export function buildFpsRuleInput(input: ContestIntakeAnswers): RuleInput {
     completeNoticeDeclared: completeNotice,
     declaredGround: input.ground,
     userExplanation: input.explanation,
+    contestAnswers: input.answers,
   };
 
   const documentEvidence: Record<string, unknown> = {
