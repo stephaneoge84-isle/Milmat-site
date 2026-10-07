@@ -4,6 +4,7 @@ import { classifyContestGround } from "./contestGrounds";
 import { estimateContestSuccess, type ContestSuccessEstimate } from "./contestSuccessEstimate";
 import { legalRuleEngine } from "../engine/legalRuleEngine";
 import { legalRules } from "../rules";
+import { buildCaseFile, attachLegalAudit, type CaseFile } from "../case/caseFile";
 
 export interface ContestIntakeAnswers {
   infractionDate: string;
@@ -22,6 +23,7 @@ export interface ContestIntakeResult {
   audit: LegalAudit;
   estimate: ContestSuccessEstimate;
   ruleInput: RuleInput;
+  caseFile: CaseFile;
 }
 
 function yes(answers: Record<string, string>, key: string): boolean | undefined {
@@ -76,9 +78,21 @@ export function analyzeContestIntake(input: ContestIntakeAnswers): ContestIntake
     userExplanation: input.explanation,
     extractedData: input.extractedData,
   });
-  const ruleInput = buildFpsRuleInput(input);
+  const caseFile = buildCaseFile({
+    regime: "FPS",
+    infractionDate: input.infractionDate,
+    notificationDate: input.notificationDate,
+    userExplanation: input.explanation,
+    answers: input.answers,
+    documents: input.documents,
+    extractedData: input.extractedData,
+    documentEvidence: input.documentEvidence,
+    selectedGround: input.ground,
+  });
+  const ruleInput = { ...buildFpsRuleInput(input), caseFile };
   const audit = legalRuleEngine(ruleInput, legalRules);
+  const finalCaseFile = attachLegalAudit(caseFile, audit);
   const explicitGroundFound = ground.primaryGround !== "UNDETERMINED";
   const estimate = estimateContestSuccess(audit, explicitGroundFound);
-  return { ground, audit, estimate, ruleInput };
+  return { ground, audit, estimate, ruleInput, caseFile: finalCaseFile };
 }
