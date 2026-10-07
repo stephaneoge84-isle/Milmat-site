@@ -1,0 +1,4 @@
+import { describe, expect, it } from "vitest";
+import { buildCaseFile, buildRuleInputFromCase, attachLegalAudit } from "../src/case/caseFile";
+
+describe("CASE canonical dossier",()=>{it("keeps user evidence declared rather than verified",()=>{const c=buildCaseFile({regime:"FPS",infractionDate:"2026-09-23",documents:["Avis FPS complet"],documentEvidence:{fpsNoticeComplete:true},fpsTopic:"document"});expect(c.evidence.find(e=>e.key==="fpsNoticeComplete")?.status).toBe("DECLARED");expect(buildRuleInputFromCase(c).extractedData.fpsTopic).toBe("document")});it("creates immutable revision history when audit is attached",()=>{const c=buildCaseFile({regime:"FPS",infractionDate:"2026-09-23"});const out=attachLegalAudit(c,{legalVersionDate:"2026-09-23",applicableRules:[],checks:[],missingEvidence:[],anomalies:[],requests:[],confidence:0});expect(out.revision).toBe(2);expect(out.revisions).toHaveLength(2)})});
