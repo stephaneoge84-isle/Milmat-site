@@ -20,7 +20,7 @@ describe("contest intake adapter", () => {
     expect(result.caseFile.schemaVersion).toBe("1.0");
     expect(result.caseFile.regime).toBe("FPS");
     expect(result.caseFile.facts.some(f => f.key === "userExplanation")).toBe(true);
-    expect(result.caseFile.legalAudit).toBeDefined();
+    expect(result.caseFile.audit).toBeDefined();
     expect(result.audit.applicableRules.some(r => r.id === "FPS-RAPO-003")).toBe(true);
     expect(result.ground.primaryGround).toBe("FPS");
     expect(result.estimate.solidite).toBeDefined();
