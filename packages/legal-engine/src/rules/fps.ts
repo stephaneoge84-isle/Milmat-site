@@ -63,7 +63,7 @@ export const fpsRules: LegalRule[] = [
     effectiveFrom:"2018-01-01", applicability:i=>i.extractedData.fpsTopic==="paiement",
     requiredEvidence:["justificatif de paiement","horodatage","validité du justificatif","durée maximale non expirée"],
     evaluate:i=>{
-      const paid=yes(i,"Paiement effectué ?"), proof=yes(i,"Justificatif ?"), time=yes(i,"Horodatage"), proofDoc=Boolean(i.documentEvidence.paymentProof);
+      const paid=yes(i,"Paiement effectué ?"), proof=yes(i,"Justificatif ?"), time=yes(i,"Horodatage"), proofDoc=Boolean(i.documentEvidence.paymentProof || i.extractedData.paymentProof);
       return paid&&proof&&time&&proofDoc
         ? check("FPS-PAIEMENT-004","A_VERIFIER","Le paiement préalable est déclaré et documenté ; ses conditions juridiques précises doivent être vérifiées.","justificatif, horodatage, validité, durée","La preuve doit être rapprochée de l'article R.2333-120-5.","Contrôler l'horodatage, le justificatif et l'expiration éventuelle de la durée maximale.","ORANGE")
         : check("FPS-PAIEMENT-004","NON_DEMONTRE","Le paiement préalable ou ses conditions de prise en compte ne sont pas suffisamment démontrés.","justificatif, horodatage, validité, durée","Ne pas déduire un droit à déduction d'une simple déclaration.","Fournir le justificatif et ses éléments d'horodatage.","YELLOW");
