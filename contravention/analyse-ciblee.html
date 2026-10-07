@@ -15,7 +15,7 @@
 
 <div id="s4" class="step"><h2>4. Résultat des contrôles ciblés</h2><div id="analysis"></div><div class="box ok"><b>Principe :</b> une mention absente de la copie fournie n'est pas automatiquement considérée comme absente de l'avis complet. Le moteur distingue « non démontré », « à vérifier » et « incohérence apparente ».</div><div class="actions"><button class="back" onclick="go(3)">Retour</button><button class="next" onclick="go(5)">Préparer le projet</button></div></div>
 
-<div id="s5" class="step"><h2>5. Projet de RAPO à relire</h2><div class="score"><b id="score">25 %</b><strong>Estimation indicative de solidité du recours</strong><p id="scoreText" class="muted"></p></div><div id="draft" class="draft"></div><div class="actions"><button class="back" onclick="go(4)">Modifier</button><button class="next" onclick="window.print()">Imprimer / enregistrer</button></div><p class="muted" style="font-size:12px">Rien n'est envoyé automatiquement. Le projet doit être relu, corrigé et validé par l'utilisateur.</p></div>
+<div id="s5" class="step"><h2>5. Projet de RAPO à relire</h2><div class="score"><b id="score">À COMPLÉTER</b><strong>Qualification technique du dossier</strong><p id="scoreText" class="muted"></p></div><div id="draft" class="draft"></div><div class="actions"><button class="back" onclick="go(4)">Modifier</button><button class="next" onclick="window.print()">Imprimer / enregistrer</button></div><p class="muted" style="font-size:12px">Rien n'est envoyé automatiquement. Le projet doit être relu, corrigé et validé par l'utilisateur.</p></div>
 </section></main>
 <script type="module">
 import { analyzeFpsIntake } from "./legal-engine.js";
@@ -48,14 +48,14 @@ function renderAnalysis(){
     const cls=c.status==="PRESENT_CONFORME"?'ok':'';
     return '<div class="box '+cls+'"><b>'+c.ruleId+'</b><br>'+c.finding+(c.request?'<br><span class="muted">'+c.request+'</span>':'')+'</div>';
   });
-  rows.unshift('<div class="score"><b>'+lastResult.score+' %</b><strong>Solidité technique indicative</strong><p class="muted">Décision moteur : '+lastResult.decision+'. Niveau : '+lastResult.level+'.</p></div>');
+  rows.unshift('<div class="score"><b>'+lastResult.solidite+'</b><strong>Qualification technique du dossier</strong><p class="muted">Décision moteur : '+lastResult.decision+'. Aucun pourcentage de réussite n'est affiché.</p></div>');
   document.getElementById('analysis').innerHTML=rows.join('');
 }
 function renderDraft(){
   if(!lastResult)lastResult=analyzeFpsIntake(collect());
   const data=collect(), f=data.explanation, proof=data.documents;
-  document.getElementById('score').textContent=lastResult.score+' %';
-  document.getElementById('scoreText').textContent=lastResult.estimate?.disclaimer||'Estimation technique fondée sur les éléments déclarés et les contrôles déterministes du dossier.';
+  document.getElementById('score').textContent=lastResult.solidite;
+  document.getElementById('scoreText').textContent='Cette qualification décrit l’état technique du dossier au regard des éléments déclarés. Elle ne constitue ni une probabilité de succès ni une décision de l’autorité.';
   const requests=lastResult.checks.filter(c=>c.request).map(c=>'— '+c.request).join('\n');
   document.getElementById('draft').textContent='PROJET DE RAPO — FORFAIT DE POST-STATIONNEMENT\n\nObjet : contestation de l’avis de paiement FPS n° 21130001700012 26 1 266 016 088\n\nMadame, Monsieur,\n\nJe conteste l’avis de paiement de forfait de post-stationnement établi à Aix-en-Provence le 23 septembre 2026 concernant le véhicule EC-274-LF.\n\nMotif déclaré : '+data.ground+'.\n\nExposé des faits :\n'+(f||'À compléter')+'\n\nÉléments et justificatifs annoncés :\n'+(proof.length?proof.join(', '):'À compléter')+'\n\nPoints à vérifier par l’autorité :\n'+(requests||'Aucun point complémentaire généré.')+'\n\nJe vous demande de bien vouloir examiner les éléments et justificatifs joints au présent recours et de tirer les conséquences qui vous paraîtront devoir en résulter.\n\nCordialement,\nStéphane OGÉ';
 }
