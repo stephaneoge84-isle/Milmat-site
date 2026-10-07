@@ -111,7 +111,7 @@ export const fpsRules: LegalRule[] = [
     officialSource: "Légifrance",
     officialUrl: "https://www.legifrance.gouv.fr/codes/section_lc/LEGITEXT000006070633/LEGISCTA000030622707/2026-02-27/",
     effectiveFrom: "2018-01-01",
-    applicability: (i) => i.extractedData.declaredGround === "paiement",
+    applicability: (i) => i.extractedData.fpsTopic === "paiement",
     requiredEvidence: ["preuve du paiement", "horodatage", "conditions de prise en compte"],
     evaluate: (i) => {
       const a = (i.extractedData.contestAnswers ?? {}) as Record<string, string>;
@@ -137,7 +137,7 @@ export const fpsRules: LegalRule[] = [
     officialSource: "Légifrance",
     officialUrl: "https://www.legifrance.gouv.fr/codes/article_lc/LEGIARTI000049919564",
     effectiveFrom: "2025-01-01",
-    applicability: (i) => i.extractedData.declaredGround === "document",
+    applicability: (i) => i.extractedData.fpsTopic === "document",
     requiredEvidence: ["avis complet", "mention précisément contestée"],
     evaluate: (i) => {
       const a = (i.extractedData.contestAnswers ?? {}) as Record<string, string>;
@@ -160,7 +160,7 @@ export const fpsRules: LegalRule[] = [
     officialSource: "Légifrance",
     officialUrl: "https://www.legifrance.gouv.fr/codes/section_lc/LEGISCTA000030622707/2026-08-05/",
     effectiveFrom: "2018-01-01",
-    applicability: (i) => i.extractedData.declaredGround === "notification",
+    applicability: (i) => i.extractedData.fpsTopic === "notification",
     requiredEvidence: ["preuve de notification"],
     evaluate: (i) => i.extractedData.noticeNotificationDate
       ? check("FPS-NOTIFICATION-006", "PRESENT_CONFORME", "La date de notification est renseignée.", ["preuve de notification"], "Vérifier la pièce établissant cette date.")
