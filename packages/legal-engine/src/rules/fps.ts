@@ -100,4 +100,74 @@ export const fpsRules: LegalRule[] = [
     priority: 150,
     verifiedAt: "2026-10-07"
   }
+  {
+    id: "FPS-PAIEMENT-004",
+    version: 1,
+    status: "ACTIVE",
+    regime: ["FPS"],
+    title: "Paiement préalable du stationnement",
+    description: "Le paiement effectué dès le début du stationnement peut être pris en compte dans les conditions prévues par le CGCT.",
+    legalReference: "CGCT art. R.2333-120-5",
+    officialSource: "Légifrance",
+    officialUrl: "https://www.legifrance.gouv.fr/codes/section_lc/LEGITEXT000006070633/LEGISCTA000030622707/2026-02-27/",
+    effectiveFrom: "2018-01-01",
+    applicability: (i) => i.extractedData.declaredGround === "paiement",
+    requiredEvidence: ["preuve du paiement", "horodatage", "conditions de prise en compte"],
+    evaluate: (i) => {
+      const a = (i.extractedData.contestAnswers ?? {}) as Record<string, string>;
+      const paid = a["Paiement effectué ?"] === "Oui";
+      const proof = a["Justificatif ?"] === "Oui" && Boolean(i.documentEvidence.paymentProof);
+      const before = a["Horodatage"] === "Oui";
+      return paid && proof && before
+        ? check("FPS-PAIEMENT-004", "PRESENT_CONFORME", "Un paiement antérieur au constat est déclaré et documenté.", ["preuve du paiement","horodatage","conditions de prise en compte"], "Vérifier les conditions exactes de déduction prévues par le texte.")
+        : check("FPS-PAIEMENT-004", "A_VERIFIER", "Le paiement ou ses conditions de prise en compte ne sont pas suffisamment démontrés.", ["preuve du paiement","horodatage","conditions de prise en compte"], "Fournir le justificatif, son horodatage et les éléments permettant de vérifier sa prise en compte.", "ORANGE");
+    },
+    consequence: "Le paiement préalable doit être vérifié au regard des conditions de l'article R.2333-120-5.",
+    priority: 160,
+    verifiedAt: "2026-10-07"
+  },
+  {
+    id: "FPS-DOCUMENT-005",
+    version: 1,
+    status: "ACTIVE",
+    regime: ["FPS"],
+    title: "Incohérence déclarée dans l'avis FPS",
+    description: "Une contradiction précise entre mentions doit être contrôlée sur l'avis complet avant toute conclusion.",
+    legalReference: "CGCT art. R.2333-120-4",
+    officialSource: "Légifrance",
+    officialUrl: "https://www.legifrance.gouv.fr/codes/article_lc/LEGIARTI000049919564",
+    effectiveFrom: "2025-01-01",
+    applicability: (i) => i.extractedData.declaredGround === "document",
+    requiredEvidence: ["avis complet", "mention précisément contestée"],
+    evaluate: (i) => {
+      const a = (i.extractedData.contestAnswers ?? {}) as Record<string, string>;
+      return a["Incohérence"] === "Oui"
+        ? check("FPS-DOCUMENT-005", "A_VERIFIER", "Une incohérence entre mentions est déclarée ; elle doit être contrôlée sur l'avis complet.", ["avis complet","mention précisément contestée"], "Fournir l'avis complet et identifier précisément les deux mentions en contradiction.", "ORANGE")
+        : check("FPS-DOCUMENT-005", "NON_DEMONTRE", "Aucune incohérence précise n'est encore démontrée.", ["avis complet","mention précisément contestée"], "Identifier la mention contestée et fournir l'avis complet.", "YELLOW");
+    },
+    consequence: "Une copie partielle ne permet pas de conclure à l'absence d'une mention.",
+    priority: 120,
+    verifiedAt: "2026-10-07"
+  },
+  {
+    id: "FPS-NOTIFICATION-006",
+    version: 1,
+    status: "ACTIVE",
+    regime: ["FPS"],
+    title: "Date de notification du FPS",
+    description: "Le délai de RAPO doit être apprécié à partir de la notification selon les modalités applicables.",
+    legalReference: "CGCT art. R.2333-120-13",
+    officialSource: "Légifrance",
+    officialUrl: "https://www.legifrance.gouv.fr/codes/section_lc/LEGISCTA000030622707/2026-08-05/",
+    effectiveFrom: "2018-01-01",
+    applicability: (i) => i.extractedData.declaredGround === "notification",
+    requiredEvidence: ["preuve de notification"],
+    evaluate: (i) => i.extractedData.noticeNotificationDate
+      ? check("FPS-NOTIFICATION-006", "PRESENT_CONFORME", "La date de notification est renseignée.", ["preuve de notification"], "Vérifier la pièce établissant cette date.")
+      : check("FPS-NOTIFICATION-006", "A_VERIFIER", "La date effective de notification n'est pas établie.", ["preuve de notification"], "Fournir tout élément permettant d'établir la notification et sa date.", "ORANGE"),
+    consequence: "Le délai doit être calculé à partir de la notification, et non de la seule date imprimée sur l'avis.",
+    priority: 155,
+    verifiedAt: "2026-10-07"
+  }
+
 ];
