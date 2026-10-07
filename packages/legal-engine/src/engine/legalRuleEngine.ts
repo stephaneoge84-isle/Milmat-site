@@ -1,4 +1,5 @@
 import type { LegalAudit, LegalRule, RuleInput } from "../types";
+import { qualifyCaseContext } from "../case/qualifyCaseContext";
 
 export function isRuleEffective(rule: LegalRule, date: string): boolean {
   return rule.status === "ACTIVE" && rule.effectiveFrom <= date && (!rule.effectiveTo || date < rule.effectiveTo);
@@ -11,5 +12,5 @@ export function legalRuleEngine(input: RuleInput, rules: LegalRule[]): LegalAudi
   const missingEvidence = checks.filter(c => c.status === "ABSENT_DU_DOCUMENT" || c.status === "NON_DEMONTRE" || c.status === "A_VERIFIER").flatMap(c => c.requiredEvidence);
   const requests = checks.filter(c => c.request).map(c => c.request as string);
   const confidence = applicableRules.length === 0 ? 0 : checks.filter(c => c.status === "PRESENT_CONFORME" || c.status === "NON_APPLICABLE").length / checks.length;
-  return { legalVersionDate: input.infractionDate, applicableRules, checks, missingEvidence: [...new Set(missingEvidence)], anomalies, requests: [...new Set(requests)], confidence };
+  const caseQualification = input.caseContext ? qualifyCaseContext(input.caseContext) : undefined;\n  const contextualRequests = caseQualification?.generatedRequests ?? [];\n  return {\n    legalVersionDate: input.infractionDate,\n    applicableRules,\n    checks,\n    missingEvidence: [...new Set(missingEvidence)],\n    anomalies,\n    requests: [...new Set([...requests, ...contextualRequests])],\n    confidence,\n    caseQualification,\n  };
 }
