@@ -16,7 +16,7 @@ export const fpsRules: LegalRule[] = [
       const required=["fpsNoticePart1Complete","fpsNoticePart2Complete","fpsCollectivity","fpsAgentAuthority","fpsAgentId","infractionDateTime","infractionLocation","vehicleRegistration","vehicleBrand","fpsAmount","fpsEndTime","fpsSignature","fpsNoticeNumber","paymentServiceCoordinates","paymentMethods","paymentDeadline","nonPaymentConsequence","rapoMandatory","rapoAuthority","rapoDeadlineAndMethod","rapoSilenceRejection","tribunalAppealInfo","dataAccessRectification"];
       const missing=required.filter(k=>!evidence(i,k));
       return missing.length===0
-        ? check("FPS-MENTIONS-001","PRESENT_CONFORME","Les mentions contrôlées des deux parties de l'avis sont retrouvées.","Les mentions réglementaires de l'avis FPS","Le contrôle formel est complet.")
+        ? check("FPS-MENTIONS-001","PRESENT_CONFORME","Les mentions contrôlées des deux parties de l'avis sont retrouvées.",required,"Le contrôle formel est complet.")
         : check("FPS-MENTIONS-001","NON_DEMONTRE","Une ou plusieurs mentions de l'avis complet ne sont pas démontrées dans les éléments analysés.",required,"Une pièce partielle ne permet pas de conclure à l'absence de la mention.","Fournir l'avis complet et contrôler séparément ses deux parties.","YELLOW");
     },
     consequence:"Une absence dans la copie analysée n'établit pas à elle seule l'absence sur l'avis complet.", priority:170, verifiedAt:"2026-10-07"
