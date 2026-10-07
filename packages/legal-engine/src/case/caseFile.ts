@@ -26,7 +26,7 @@ export function buildCaseFile(input:CaseFileInput):CaseFile{
 export function buildRuleInputFromCase(c:CaseFile):RuleInput{
  const extractedData:Record<string,unknown>={},documentEvidence:Record<string,unknown>={};
  for(const e of c.evidence){if(e.origin==="DOCUMENT"||e.status==="VERIFIED")documentEvidence[e.key]=e.value;else extractedData[e.key]=e.value;}
- if(c.fpsTopic)extractedData.fpsTopic=c.fpsTopic; extractedData.noticeNotificationDate=c.notificationDate; extractedData.declaredGround=c.grounds[0]?.code;
+ if(c.fpsTopic)extractedData.fpsTopic=c.fpsTopic; extractedData.noticeNotificationDate=c.notificationDate; extractedData.declaredGround=c.grounds[0]?.code; extractedData.contestAnswers=Object.fromEntries(c.facts.filter(f=>f.source==="USER").map(f=>[f.key,String(f.value??"")]));
  return {infractionDate:c.infractionDate,regime:c.regime,extractedData,documentEvidence,availableDocuments:c.documents.filter(d=>d.available).map(d=>d.name),caseContext:c.caseContext,caseFile:c};
 }
 export function attachLegalAudit(c:CaseFile,a:LegalAudit):CaseFile{
