@@ -52,7 +52,7 @@ export function estimateContestSuccess(audit: LegalAudit, explicitGroundFound = 
   percentage = Math.min(90, percentage);
 
   const level = percentage >= 70 ? "HIGH" : percentage >= 40 ? "MODERATE" : percentage >= 20 ? "LOW" : "VERY_LOW";
-  const decision = percentage >= 40 ? "CONTINUE" : "CONTINUE_WITH_CAUTION";
+  const decision = incoherent.length > 0 ? "CONTINUE_WITH_CAUTION" : percentage >= 40 ? "CONTINUE" : "CONTINUE_WITH_CAUTION";
 
   const solidite = incoherent.length > 0
     ? "INCOHERENCE_APPARENTE"
