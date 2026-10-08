@@ -65,7 +65,7 @@ function normalizeDate(value){
 export function mapFpsText(text){
   const clean=normalize(text);
   const amount=pick(clean,/(?:montant|forfait|fps)[^0-9]{0,80}(\d+(?:[,.]\d{1,2})?)\s*(?:€|euros?)/i);
-  const infractionDateTime=pick(clean,/(\d{1,2}[\/.-]\d{1,2}[\/.-]\d{2,4})\s*(?:à|a)?\s*(\d{1,2})\s*[h:]\s*(\d{2})/i);
+  const infractionDateTime=pick(clean,/((?:\d{1,2}[\/.-]\d{1,2}[\/.-]\d{2,4})\s*(?:à|a)?\s*\d{1,2}\s*[h:]\s*\d{2})/i);
   const sendDate=pick(clean,/(?:date\s+d['’]envoi|envoy[ée]|émis(?:e)?|envoi)[^0-9]{0,30}(\d{1,2}[\/.-]\d{1,2}[\/.-]\d{2,4})/i);
   const paymentDeadline=pick(clean,/(?:payable|paiement|payer)[^0-9]{0,100}(\d{1,2}[\/.-]\d{1,2}[\/.-]\d{2,4})/i);
   const registration=pick(clean,/\b([A-Z]{2}[- ]?\d{3}[- ]?[A-Z]{2})\b/i);
