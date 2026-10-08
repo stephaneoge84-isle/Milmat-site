@@ -63,47 +63,117 @@ function normalizeDate(value){
   return `${y}-${p[1].padStart(2,"0")}-${p[0].padStart(2,"0")}`;
 }
 export function mapFpsText(text){
-  const clean=normalize(text);
-  const amount=pick(clean,/(?:montant|forfait|fps)[^0-9]{0,80}(\d+(?:[,.]\d{1,2})?)\s*(?:€|euros?)/i);
-  const infractionDateTime=pick(clean,/((?:\d{1,2}[\/.-]\d{1,2}[\/.-]\d{2,4})\s*(?:à|a)?\s*\d{1,2}\s*[h:]\s*\d{2})/i);
-  const sendDate=pick(clean,/(?:date\s+d['’]envoi|envoy[ée]|émis(?:e)?|envoi)[^0-9]{0,30}(\d{1,2}[\/.-]\d{1,2}[\/.-]\d{2,4})/i);
-  const paymentDeadline=pick(clean,/(?:payable|paiement|payer)[^0-9]{0,100}(\d{1,2}[\/.-]\d{1,2}[\/.-]\d{2,4})/i);
-  const registration=pick(clean,/\b([A-Z]{2}[- ]?\d{3}[- ]?[A-Z]{2})\b/i);
-  const agentId=pick(clean,/(?:agent|identification|matricule)[^0-9]{0,40}(\d{1,8})\b/i);
-  const noticeNumber=pick(clean,/(?:num(?:éro)?(?:\s+de)?\s+avis|avis(?:\s+n[°o]?)?)[^0-9]{0,20}([0-9][0-9 ]{8,})/i);
-  const location=pick(clean,/(?:lieu|adresse|à|au)[^,.;]{0,10}([^.;]{5,80}\d{1,4}[^.;]{3,80})/i);
-  const authority=pick(clean,/(?:autorité|mairie|commune|collectivité)[^:;]{0,5}[:\-]?\s*([^.;]{3,100})/i);
-  const brand=pick(clean,/(?:marque|véhicule|constructeur)[^:;]{0,20}[:\-]?\s*([A-Z][A-Za-zÀ-ÿ-]{2,30})/i);
-  const endTime=pick(clean,/(?:fin|échéance|fin d['’]effet)[^0-9]{0,30}(\d{1,2})\s*[h:]\s*(\d{2})/i);
-  const rapoAuthority=pick(clean,/(?:RAPO|recours administratif préalable)[^.;]{0,120}(?:auprès de|à)\s+([^.;]{3,100})/i);
+  const raw=String(text||"");
+  const clean=normalize(raw);
+  const page1=(raw.match(/\[PAGE\s*1\]([\\s\\S]*?)(?=\[PAGE\s*2\]|$)/i)||[,raw])[1];
+  const page2=(raw.match(/\[PAGE\s*2\]([\\s\\S]*?)(?=\[PAGE\s*3\]|$)/i)||[,raw])[1];
+  const page3=(raw.match(/\[PAGE\s*3\]([\\s\\S]*)$/i)||[,raw])[1];
+
+  const first=(value,patterns)=>{
+    for(const re of patterns){
+      const m=value.match(re);
+      if(m&&m[1])return normalize(m[1]);
+    }
+    return undefined;
+  };
+  const yes=(value,re)=>re.test(value)?true:undefined;
+  const dateValue=value=>normalizeDate(value);
+
+  // The FPS form has fixed labels. Prefer label-scoped extraction over broad
+  // keyword searches so amounts/dates from page 2 cannot overwrite page 1.
+  const noticeNumber=first(page1,[
+    /Num(?:é|e)ro\s+de\s+l['’]avis\s+de\s+paiement\s*:\s*([0-9][0-9\s]{10,})\s*(?=Cl[eé])/i
+  ]);
+  const sendDate=first(page1,[
+    /Date\s+d['’]envoi\s+de\s+l['’]avis\s+de\s+paiement\s*:\s*(\d{1,2}[\/.-]\d{1,2}[\/.-]\d{2,4})/i
+  ]);
+  const infractionDateTime=first(page1,[
+    /Date\s+et\s+heure\s+de\s+constatation[\\s\\S]{0,180}?(\d{1,2}[\/.-]\d{1,2}[\/.-]\d{2,4}\s*(?:à|a)?\s*\d{1,2}\s*[h:]\s*\d{2})/i
+  ]);
+  const infractionDate=first(page1,[
+    /Date\s+et\s+heure\s+de\s+constatation[\\s\\S]{0,180}?(\d{1,2}[\/.-]\d{1,2}[\/.-]\d{2,4})/i
+  ]);
+  const location=first(page1,[
+    /Lieu\s*:\s*([\\s\\S]*?)(?=N[°ºo]?\s*d['’]immatriculation)/i
+  ]);
+  const registration=first(page1,[
+    /N[°ºo]?\s*d['’]immatriculation\s+du\s+v(?:é|e)hicule\s*:\s*([A-Z]{2}[- ]?\d{3}[- ]?[A-Z]{2})/i
+  ]);
+  const brand=first(page1,[
+    /Marque\s+du\s+v(?:é|e)hicule\s*:\s*([A-Za-zÀ-ÿ][A-Za-zÀ-ÿ -]{2,40}?)(?=\\s*$|\\n|\[)/i
+  ]);
+  const agentId=first(page1,[
+    /N[°ºo]?\s*d['’]identification\s+de\s+l['’]agent\s+asserment(?:é|e)\s*:\s*(\d{1,8})/i
+  ]);
+  const agentAuthority=first(page1,[
+    /Autorit(?:é|e)\s+dont\s+rel(?:è|e)ve\s+l['’]agent\s+asserment(?:é|e)\s*:\s*([\\s\\S]*?)(?=N[°ºo]?\s*d['’]identification)/i
+  ]);
+  const collectivity=first(page1,[
+    /Nom\s+de\s+la\s+collectivit(?:é|e)\s*:\s*([^\\n\r]+)/i
+  ]);
+  const amount=first(page1,[
+    /Le\s+montant\s+du\s+FPS\s+est\s+égal\s+à\s*:\s*(\d+(?:[,.]\d{1,2})?)\s*euros?/i,
+    /Le\s+montant\s+du\s+FPS[^0-9]{0,80}(\d+(?:[,.]\d{1,2})?)\s*(?:€|euros?)/i
+  ]);
+  const endTime=first(page1,[
+    /cesse\s+de\s+produire\s+ses\s+effets[^0-9]{0,80}(\d{1,2}\s*[h:]\s*\d{2})/i
+  ]);
+
+  const paymentDeadline=first(page2,[
+    /Date\s+limite\s+de\s+paiement\s+de\s+votre\s+FPS\s*:\s*(\d{1,2}[\/.-]\d{1,2}[\/.-]\d{2,4})/i
+  ]);
+  const rapoAuthority=first(page3,[
+    /Par\s+lettre\s+recommand(?:ée|e)[\\s\\S]{0,250}?l['’]adresse\s+suivante\s*:\s*([\\s\\S]*?)(?=Dans\s+quel\s+d(?:é|e)lai)/i,
+    /(?:recours|RAPO)[\\s\\S]{0,250}?aupr(?:è|e)s\s+de\s+([^\\n\\r]+)/i
+  ]);
+  const deemedReceipt=first(page3,[
+    /r(?:é|e)put(?:é|e)\s+avoir\s+re(?:ç|c)u[^.]{0,120}?5\s+jours\s+francs\s+[àa]\s+compter\s+de\s+la\s+date\s+d['’]envoi/i
+  ]);
+  const noticeNotificationDate=deemedReceipt&&sendDate?addClearDays(dateValue(sendDate),5):undefined;
+
+  const cleanedAuthority=agentAuthority?.replace(/\\s+/g," ").trim();
+  const cleanedLocation=location?.replace(/\\s+/g," ").trim();
+  const cleanedRapoAuthority=rapoAuthority?.replace(/\\s+/g," ").trim();
+
   return {
     fpsAmount:amount?amount.replace(",","."):undefined,
-    vehicleRegistration:registration,
+    vehicleRegistration:registration?.replace(/\\s+/g,"").toUpperCase(),
     fpsAgentId:agentId,
-    fpsNoticeNumber:noticeNumber?.replace(/\s+/g," "),
-    infractionDateTime,
-    infractionDate:normalizeDate(infractionDateTime?.split(/\s+/)[0]),
-    noticeSendDate:normalizeDate(sendDate),
-    printedPaymentDeadline:normalizeDate(paymentDeadline),
-    infractionLocation:location,
-    fpsAgentAuthority:authority,
-    rapoAuthority,
-    vehicleBrand:brand,
-    fpsEndTime:endTime,
-    fpsSignature:yesIfPresent(clean,/\b(?:sign[ée]|signature)\b/i),
-    fpsCollectivity:yesIfPresent(clean,/(?:mairie|commune|collectivité)/i),
-    paymentServiceCoordinates:yesIfPresent(clean,/(?:service|guichet|coordonnées).{0,40}(?:paiement|stationnement)/i),
-    paymentMethods:yesIfPresent(clean,/(?:moyens|modalités|payer).{0,80}(?:internet|téléphone|guichet|carte|chèque)/i),
-    nonPaymentConsequence:yesIfPresent(clean,/(?:non[- ]paiement|impayé).{0,100}(?:titre exécutoire|majoration)/i),
-    rapoMandatory:yesIfPresent(clean,/RAPO.{0,80}(?:obligatoire|préalable)/i),
-    rapoDeadlineAndMethod:yesIfPresent(clean,/RAPO.{0,160}(?:un mois|1 mois|électronique|recommand)/i),
-    rapoSilenceRejection:yesIfPresent(clean,/(?:silence|absence de réponse).{0,100}(?:rejet|rejeté)/i),
-    tribunalAppealInfo:yesIfPresent(clean,/(?:tribunal|juridiction).{0,100}(?:stationnement payant)/i),
-    dataAccessRectification:yesIfPresent(clean,/(?:accès|rectification).{0,120}(?:données|traitement)/i),
-    rapoRequiredDocuments:yesIfPresent(clean,/(?:RAPO|recours).{0,160}(?:pièces|documents).{0,80}(?:joindre|produire)/i),
-    tribunalAppealDeadline:yesIfPresent(clean,/(?:tribunal|juridiction).{0,120}(?:un mois|1 mois)/i),
-    tribunalPriorPayment:yesIfPresent(clean,/(?:tribunal|juridiction).{0,160}(?:paiement préalable|avoir payé)/i),
-    fpsNoticePart1Complete:undefined,
-    fpsNoticePart2Complete:undefined
+    fpsNoticeNumber:noticeNumber?.replace(/\\s+/g," ").trim(),
+    infractionDateTime:infractionDateTime?.replace(/\\s+/g," ").trim(),
+    infractionDate:dateValue(infractionDate),
+    noticeSendDate:dateValue(sendDate),
+    noticeNotificationDate,
+    notificationMode:deemedReceipt?"ANTAI — notification par envoi postal, date réputée reçue selon l'avis":undefined,
+    notificationProof:deemedReceipt?"Mention documentaire de réception réputée à 5 jours francs après l'envoi":undefined,
+    printedPaymentDeadline:dateValue(paymentDeadline),
+    paymentDeadline:dateValue(paymentDeadline),
+    infractionLocation:cleanedLocation,
+    fpsAgentAuthority:cleanedAuthority,
+    rapoAuthority:cleanedRapoAuthority,
+    vehicleBrand:brand?.trim(),
+    fpsEndTime:endTime?.replace(/\\s+/g," "),
+    fpsSignature:yes(page1,/«?\s*Sign(?:é|e)\s*»?/i),
+    fpsCollectivity:!!collectivity,
+    paymentServiceCoordinates:yes(page2,/(?:Direction\s+G(?:é|e)n(?:é|e)rale\s+des\s+Finances\s+Publiques|Centre\s+d['’]encaissement|coordonn(?:é|e)es)/i),
+    paymentMethods:yes(page2,/(?:smartphone|internet|t(?:é|e)l(?:é|e)phone|courrier|guichet|buraliste)/i),
+    nonPaymentConsequence:yes(page2,/(?:non-paiement|paiement\s+insuffisant)[\\s\\S]{0,180}(?:titre\s+ex(?:é|e)cutoire|majoration)/i),
+    rapoMandatory:yes(page3,/recours\s+administratif\s+pr(?:é|e)alable\s+obligatoire/i),
+    rapoDeadlineAndMethod:yes(page3,/(?:dans\s+le\s+d(?:é|e)lai\s+d['’]un\s+mois|un\s+mois)[\\s\\S]{0,180}(?:voie\s+(?:é|e)lectronique|lettre\s+recommand(?:ée|e))/i),
+    rapoSilenceRejection:yes(page3,/(?:absence\s+de\s+r(?:é|e)ponse|silence)[\\s\\S]{0,120}(?:rejet|rejet\s+du\s+recours)/i),
+    tribunalAppealInfo:yes(page3,/tribunal\s+du\s+stationnement\s+payant/i),
+    dataAccessRectification:yes(page3,/(?:droits?\s+sur\s+les\s+donn(?:é|e)es|droit\s+d['’]acc(?:è|e)s\s+et\s+de\s+rectification)/i),
+    rapoRequiredDocuments:yes(page3,/(?:Pi(?:è|e)ces\s+[àa]\s+transmettre\s+obligatoirement|pi(?:è|e)ces\s+obligatoires)[\\s\\S]{0,200}(?:avis|certificat|cession)/i),
+    tribunalAppealDeadline:yes(page3,/tribunal\s+du\s+stationnement\s+payant[\\s\\S]{0,180}(?:d(?:é|e)lai\s+d['’]un\s+mois|un\s+mois)/i),
+    tribunalPriorPayment:yes(page3,/tribunal\s+du\s+stationnement\s+payant[\\s\\S]{0,220}(?:paiement\s+pr(?:é|e)alable|paiement\s+pr(?:é|e)alable\s+du\s+montant)/i),
+    fpsNoticePart1Complete:yes(page1,/Etablissement\s+de\s+l['’]avis\s+de\s+paiement/i),
+    fpsNoticePart2Complete:yes(page2,/Modalit(?:é|e)s\s+de\s+paiement\s+et\s+contestation/i)
   };
+}
+
+function addClearDays(value,days){
+  if(!value)return undefined;
+  const d=new Date(value+"T00:00:00");
+  d.setDate(d.getDate()+days+1);
+  return d.toISOString().slice(0,10);
 }
