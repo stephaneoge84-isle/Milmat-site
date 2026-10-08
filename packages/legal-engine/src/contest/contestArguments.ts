@@ -28,7 +28,7 @@ export function buildContestArguments(caseFile:CaseFile,audit:LegalAudit,confron
    legalBasis:["CGCT, art. L.2333-87","CGCT, art. R.2333-120-5"],
    administrationRequest:"Demander la prise en compte du paiement ou, à défaut, la justification précise du rejet de ce paiement au regard des conditions légales.",
    draftingInstruction:status==="CONTRADICTED"?"Ne pas présenter le paiement comme établi ; exposer la contradiction et demander vérification.":"Présenter uniquement les faits corroborés par les pièces et demander l'examen du paiement.",
-   priority:1,humanReviewRequired:status==="CONTRADICTED"||status==="TO_VERIFY"});
+   priority:1,humanReviewRequired:status==="CONTRADICTED"||unresolved});
  }
  for(const check of audit.checks){
   if(check.status==="PRESENT_INCOHERENT"||check.status==="A_VERIFIER"){
