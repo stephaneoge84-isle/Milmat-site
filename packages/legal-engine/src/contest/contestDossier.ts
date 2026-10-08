@@ -34,6 +34,7 @@ export function buildContestDossier(caseFile:CaseFile,audit:LegalAudit,args:Cont
  return {kind:"RAPO_FPS",recipient,subject:`RAPO FPS — avis ${notice} — véhicule ${vehicle}`,noticeNumber:notice,vehicle,
   facts,arguments:args.selectedArguments,requests:args.requests,attachments:caseFile.documents.filter(d=>d.available).map(d=>d.name),
   deadline:caseFile.notificationDate?calculateFpsDeadline("RAPO",caseFile.notificationDate).deadlineDate:undefined,
+  paymentDeadline:caseFile.notificationDate?calculateFpsDeadline("PAIEMENT",caseFile.notificationDate).deadlineDate:undefined,
   warnings,humanReviewRequired:true};
 }
 export function renderContestLetter(d:ContestDossier):string{
