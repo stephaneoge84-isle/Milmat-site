@@ -15,7 +15,8 @@ export function buildAIDraftingPacket(caseFile:CaseFile,audit:LegalAudit,dossier
   dossier,
   legalConstraints:[
    ...audit.applicableRules.map(r=>r.legalReference),
-   ...audit.requests
+   ...audit.requests,
+   "Le délai RAPO et le délai de paiement doivent être présentés comme certains uniquement si la date de notification est établie."
   ],
   forbiddenClaims:[
    "PV nul sans base juridique explicite",
