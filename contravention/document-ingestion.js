@@ -115,7 +115,7 @@ export function mapFpsText(text){
     /Le\s+montant\s+du\s+FPS\s+est\s+égal\s+à\s*:\s*(\d+(?:[,.]\d{1,2})?)\s*euros?/i,
     /Le\s+montant\s+du\s+FPS[^0-9]{0,80}(\d+(?:[,.]\d{1,2})?)\s*(?:€|euros?)/i
   ]);
-  const endTimeMatch=page1.match(/cesse\s+de\s+produire\s+ses\s+effets[^0-9]{0,80}(\d{1,2}[\/.-]\d{1,2}[\/.-]\d{2,4}\s*(?:à|a)\s*(\d{1,2}\s*[h:]\s*\d{2}))/i);
+  const endTimeMatch=page1.match(/cess(?:e|é)\s+de\s+produire\s+ses\s+effets[^0-9]{0,80}(\d{1,2}[\/.-]\d{1,2}[\/.-]\d{2,4}\s*(?:à|a)\s*(\d{1,2}\s*[h:]\s*\d{2}))/i);
   const endTime=endTimeMatch?endTimeMatch[2]:undefined;
 
   const paymentDeadline=first(page2,[
