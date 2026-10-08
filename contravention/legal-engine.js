@@ -70,3 +70,37 @@ export function analyzeFpsIntake(input){
   const solidite=incoherent.length?"INCOHÉRENCE APPARENTE":serious&&unresolved.length?"À COMPLÉTER":serious?"FAVORABLE À L'EXAMEN":unresolved.length?"À COMPLÉTER":"AUCUN MOYEN IDENTIFIÉ";
   return {checks,solidite,decision:unresolved.length?"CONTINUE_WITH_CAUTION":serious?"CONTINUE":"STOP_AND_REVIEW",blockers:unresolved.map(c=>c.finding),ground,completeNotice:complete,hasPaymentProof:docs.includes("Justificatif de paiement")||hasSupportingPayment,deadlines:{rapo:deadlineRapo,payment:deadlinePayment}};
 }
+export function generateFpsRapoDraft(input,result){
+  const data=input.extractedData||{};
+  const notice=data.fpsNoticeNumber||"[numéro d'avis à compléter]";
+  const vehicle=data.vehicleRegistration||"[immatriculation à compléter]";
+  const authority=data.rapoAuthority||input.declaredRapoAuthority||"[autorité RAPO à compléter]";
+  const facts=(input.explanation||"[exposé des faits à compléter]").trim();
+  const requests=(result.checks||[]).map(x=>x.request).filter(Boolean);
+  const attachments=(input.attachments||[]).map(x=>x.name);
+  return `Objet : RAPO FPS — avis ${notice} — véhicule ${vehicle}
+
+Madame, Monsieur,
+
+Je forme un recours administratif préalable obligatoire contre l'avis de paiement de forfait de post-stationnement référencé ${notice}.
+
+Exposé des faits :
+${facts}
+
+Points à examiner :
+${(result.checks||[]).filter(x=>x.status==="A_VERIFIER"||x.status==="NON_DEMONTRE").map(x=>"- "+x.finding).join("\n")||"- Aucun point supplémentaire identifié à ce stade."}
+
+Je vous demande :
+${requests.map(x=>"- "+x).join("\n")||"- Examiner les faits et les pièces produites."}
+
+Pièces jointes :
+${attachments.map(x=>"- "+x).join("\n")||"- À compléter"}
+
+Je sollicite le réexamen de l'avis au regard des faits et pièces produits.
+
+Veuillez agréer, Madame, Monsieur, l'expression de ma considération distinguée.
+
+Stéphane OGÉ
+
+Autorité destinataire : ${authority}`;
+}
