@@ -5,4 +5,4 @@ export function evidence(input:RuleInput,key:string): unknown {
   if(typeof value==="string"&&PLACEHOLDERS.has(value.trim().toLowerCase()))return undefined;
   return value;
 }
-export function check(ruleId:string,status:EvidenceStatus,finding:string,requiredEvidence:string[],consequence:string,request?:string,risk:RiskLevel="INFO"):RuleCheck { return {ruleId,status,risk,finding,requiredEvidence,consequence,request}; }
+export function check(ruleId:string,status:EvidenceStatus,finding:string,requiredEvidence:string[]|string,consequence:string,request?:string,risk:RiskLevel="INFO"):RuleCheck { return {ruleId,status,risk,finding,requiredEvidence:Array.isArray(requiredEvidence)?requiredEvidence:[requiredEvidence],consequence,request}; }
