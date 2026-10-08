@@ -19,7 +19,6 @@ export interface ContestIntakeAnswers {
   extractedData?:Record<string,unknown>;
   documentEvidence?:Record<string,unknown>;
 }
-
 export interface ContestIntakeResult {
   ground:ReturnType<typeof classifyContestGround>;
   audit:LegalAudit;
@@ -27,15 +26,13 @@ export interface ContestIntakeResult {
   ruleInput:RuleInput;
   caseFile:CaseFile;
 }
-
 export function analyzeContestIntake(input:ContestIntakeAnswers):ContestIntakeResult {
   const ground=classifyContestGround({regime:"FPS",selectedGround:input.ground,userExplanation:input.explanation,extractedData:input.extractedData});
+  const extractedData={...(input.extractedData??{}),fpsTopic:input.fpsTopic,declaredGround:input.ground};
+  if(input.notificationMode)extractedData.declaredNotificationMode=input.notificationMode;
   const caseFile=buildCaseFile({
     caseId:input.caseId,regime:"FPS",infractionDate:input.infractionDate,notificationDate:input.notificationDate,fpsTopic:input.fpsTopic,
-    userExplanation:input.explanation,answers:input.answers,documents:input.documents,
-    extractedData:{...(input.extractedData??{}),noticeNotificationDate:input.notificationDate,notificationMode:input.notificationMode,fpsTopic:input.fpsTopic,declaredGround:input.ground},
-    documentEvidence:input.documentEvidence,
-    selectedGround:input.ground
+    userExplanation:input.explanation,answers:input.answers,documents:input.documents,extractedData,documentEvidence:input.documentEvidence,selectedGround:input.ground
   });
   const ruleInput=buildRuleInputFromCase(caseFile);
   const audit=legalRuleEngine(ruleInput,legalRules);
