@@ -126,9 +126,7 @@ export function mapFpsText(text){
     /Par\s+lettre\s+recommand(?:ée|e)[\s\S]{0,250}?l['’]adresse\s+suivante\s*:\s*([\s\S]*?)(?=Dans\s+quel\s+d(?:é|e)lai)/i,
     /(?:recours|RAPO)[\s\S]{0,250}?aupr(?:è|e)s\s+de\s+([^\n\r]+)/i
   ]);
-  const deemedReceipt=first(page3,[
-    /r(?:é|e)put(?:é|e)\s+avoir\s+re(?:ç|c)u[^.]{0,120}?5\s+jours\s+francs\s+[àa]\s+compter\s+de\s+la\s+date\s+d['’]envoi/i
-  ]);
+  const deemedReceipt=/r(?:é|e)put(?:é|e)\s+avoir\s+re(?:ç|c)u[^.]{0,120}?5\s+jours\s+francs\s+[àa]\s+compter\s+de\s+la\s+date\s+d['’]envoi/i.test(page3);
   const noticeNotificationDate=deemedReceipt&&sendDate?addClearDays(dateValue(sendDate),5):undefined;
 
   const cleanedAuthority=agentAuthority?.replace(/\s+/g," ").trim();
