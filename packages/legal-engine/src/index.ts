@@ -17,3 +17,5 @@ export * from "./contest/contestArguments";
 export * from "./contest/contestDossier";
 
 export * from "./contest/aiDraftPacket";
+
+export * from "./case/caseOutcome";
