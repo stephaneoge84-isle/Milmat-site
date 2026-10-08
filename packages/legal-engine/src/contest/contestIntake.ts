@@ -3,6 +3,8 @@ import type { ContestGround } from "./contestGrounds";
 import { buildContestInterviewPlan, type ContestInterviewPlan } from "./contestInterview";
 import { confrontCaseEvidence, type EvidenceConfrontationResult } from "../case/evidenceConfrontation";
 import { buildContestArguments, type ContestArgumentsResult } from "./contestArguments";
+import { buildContestDossier, type ContestDossier } from "./contestDossier";
+import { decideCaseOutcome, type CaseOutcome } from "../case/caseOutcome";
 import { classifyContestGround } from "./contestGrounds";
 import { estimateContestSuccess, type ContestSuccessEstimate } from "./contestSuccessEstimate";
 import { legalRuleEngine } from "../engine/legalRuleEngine";
@@ -32,6 +34,8 @@ export interface ContestIntakeResult {
   interview:ContestInterviewPlan;
   confrontation:EvidenceConfrontationResult;
   contestArguments:ContestArgumentsResult;
+  dossier:ContestDossier;
+  outcome:CaseOutcome;
 }
 export function analyzeContestIntake(input:ContestIntakeAnswers):ContestIntakeResult {
   const ground=classifyContestGround({regime:"FPS",selectedGround:input.ground,userExplanation:input.explanation,extractedData:input.extractedData});
@@ -47,11 +51,13 @@ export function analyzeContestIntake(input:ContestIntakeAnswers):ContestIntakeRe
   const estimate=estimateContestSuccess(audit,ground.primaryGround!=="UNDETERMINED");
   const confrontation=confrontCaseEvidence(finalCaseFile);
   const contestArguments=buildContestArguments(finalCaseFile,audit,confrontation);
+  const dossier=buildContestDossier(finalCaseFile,audit,contestArguments);
+  const outcome=decideCaseOutcome(finalCaseFile,contestArguments,dossier);
   const interview=buildContestInterviewPlan({
     regime:"FPS",
     ground:ground.primaryGround,
     topic:input.fpsTopic,
     explanation:input.explanation
   });
-  return {ground,audit,estimate,ruleInput,caseFile:finalCaseFile,interview,confrontation,contestArguments};
+  return {ground,audit,estimate,ruleInput,caseFile:finalCaseFile,interview,confrontation,contestArguments,dossier,outcome};
 }
