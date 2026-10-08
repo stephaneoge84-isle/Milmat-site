@@ -21,10 +21,38 @@ async function ocrCanvas(canvas,T,onProgress){
   const result=await T.recognize(canvas,"fra",{logger:m=>{if(typeof m.progress==="number")onProgress(m.progress)}});
   return result.data.text||"";
 }
+
+async function ocrFpsAmountRegion(canvas,T){
+  // The FPS amount is printed in a coloured full-width banner on page 1.
+  // A focused OCR pass recovers text that full-page OCR can miss because of the coloured background.
+  const width=canvas.width;
+  const height=canvas.height;
+  const crop=document.createElement("canvas");
+  const sx=Math.floor(width*0.05);
+  const sy=Math.floor(height*0.72);
+  const sw=Math.floor(width*0.90);
+  const sh=Math.floor(height*0.11);
+  crop.width=sw;
+  crop.height=sh;
+  crop.getContext("2d").drawImage(canvas,sx,sy,sw,sh,0,0,sw,sh);
+  const result=await T.recognize(crop,"fra");
+  return result.data.text||"";
+}
+
+function mergeAmountOcr(primary,secondary){
+  const amountPattern=/Le\s+montant\s+du\s+FPS[\s\S]{0,100}?\d+(?:[,.]\d{1,2})?\s*(?:€|euros?)/i;
+  if(amountPattern.test(primary)||!secondary)return primary;
+  return primary+"\n"+secondary;
+}
 export async function extractDocumentText(file,onProgress=()=>{}){
   if(!file)throw new Error("Aucun document sélectionné.");
   const T=await loadTesseract();
-  if(file.type.startsWith("image/"))return ocrCanvas(await imageToCanvas(file),T,onProgress);
+  if(file.type.startsWith("image/")){
+    const canvas=await imageToCanvas(file);
+    const primaryText=await ocrCanvas(canvas,T,onProgress);
+    const amountText=await ocrFpsAmountRegion(canvas,T);
+    return mergeAmountOcr(primaryText,amountText);
+  }
   if(file.type==="application/pdf"||file.name?.toLowerCase().endsWith(".pdf")){
     const pdfjs=await loadPdfJs();
     const pdf=await pdfjs.getDocument({data:await file.arrayBuffer()}).promise;
@@ -35,7 +63,9 @@ export async function extractDocumentText(file,onProgress=()=>{}){
       const canvas=document.createElement("canvas");
       canvas.width=Math.ceil(viewport.width);canvas.height=Math.ceil(viewport.height);
       await page.render({canvasContext:canvas.getContext("2d"),viewport}).promise;
-      const text=await ocrCanvas(canvas,T,p=>onProgress(((n-1)+p)/pdf.numPages));
+      const primaryText=await ocrCanvas(canvas,T,p=>onProgress(((n-1)+p)/pdf.numPages));
+      const amountText=n===1?await ocrFpsAmountRegion(canvas,T):"";
+      const text=mergeAmountOcr(primaryText,amountText);
       pages.push(`[PAGE ${n}]\n${text}`);
     }
     return pages.join("\n\n");
