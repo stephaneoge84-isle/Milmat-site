@@ -82,7 +82,7 @@ export function mapFpsText(text){
   // The FPS form has fixed labels. Prefer label-scoped extraction over broad
   // keyword searches so amounts/dates from page 2 cannot overwrite page 1.
   const noticeNumber=first(page1,[
-    /Num(?:é|e)ro\s+de\s+l['’]avis\s+de\s+paiement\s*:?\s*([0-9][0-9\s./|\[\]A-Za-z]{15,}?)(?=c?l[eé])/i
+    /Num(?:é|e)ro\s+de\s+l['’]avis\s+de\s+paiement\s*:?\s*([\[\(]?\s*[0-9][0-9\s./|\[\]A-Za-z]{15,}?)(?=c?l[eé])/i
   ]);
   const sendDate=first(page1,[
     /(?:Date|date|ate)\s+d['’]envoi\s+de\s+l['’]avis\s+de\s+paiement\s*:?\s*(\d{1,2}[\/.-]\d{1,2}[\/.-]\d{2,4})/i
