@@ -138,7 +138,7 @@ export function mapFpsText(text){
     /N[°ºo]?\s*d['’]identification\s+de\s+l['’]agent\s+asserment(?:é|e)[\s\S]{0,120}?N[°ºo]?\s*d['’]immatriculation\s+du\s+v(?:é|e)hicule[\s\S]{0,30}?(\d{1,8})/i
   ]);
   const agentAuthority=first(page1,[
-    /Autorit(?:é|e)\s+dont\s+rel(?:è|e)ve\s+l['’]agent\s+asserment(?:é|e)\s*:?\s*([\s\S]*?)(?=Lieu\b)/i
+    /Autorit(?:é|e)\s+dont\s+rel(?:è|e)ve\s+l['’]agent\s+asserment(?:é|e)\s*:?\s*([\s\S]*?)(?=N[°ºo]?\s*d['’]identification\s+de\s+l['’]agent)/i
   ]);
   const collectivity=first(page1,[
     /Nom\s+de\s+la\s+collectivit(?:é|e)\s*:\s*([^\n\r]+)/i
