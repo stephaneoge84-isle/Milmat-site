@@ -20,7 +20,7 @@ describe("evidence confrontation",()=>{
       }]
     });
     const result=confrontCaseEvidence(c);
-    expect(result.items.find(x=>x.key==="paymentProof")?.status).toBe("DOCUMENTED");
+    expect(result.items.find(x=>x.key==="paymentProof")?.status).toBe("CORROBORATED");
     expect(result.items.find(x=>x.key==="paymentTimestamp")?.status).toBe("DOCUMENTED");
   });
 
