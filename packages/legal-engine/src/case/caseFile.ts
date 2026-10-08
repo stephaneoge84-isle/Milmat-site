@@ -12,21 +12,27 @@ export interface CaseRevision{revision:number;createdAt:string;reason:string;rul
 export interface CaseFile{schemaVersion:"1.0";caseId:string;revision:number;createdAt:string;updatedAt:string;regime:Regime;infractionDate:string;notificationDate?:string;fpsTopic?:FpsTopic;caseContext?:CaseContext;facts:CaseFact[];evidence:CaseEvidence[];documents:CaseDocument[];grounds:CaseGround[];audit?:LegalAudit;assessment?:CaseAssessment;generatedRequests:string[];humanReviewRequired:boolean;revisions:CaseRevision[]}
 export interface CaseFileInput{caseId?:string;regime:Regime;infractionDate:string;notificationDate?:string;fpsTopic?:FpsTopic;caseContext?:CaseContext;userExplanation?:string;answers?:Record<string,string>;documents?:string[];extractedData?:Record<string,unknown>;documentEvidence?:Record<string,unknown>;selectedGround?:ContestGround}
 const now=()=>new Date().toISOString();
-const status=(origin:CaseEvidenceOrigin,value:unknown):CaseEvidenceStatus=>value===undefined||value===null||value===""?"MISSING":origin==="EXTRACTION"?"EXTRACTED":origin==="LEGAL_ENGINE"?"VERIFIED":"DECLARED";
+const status=(origin:CaseEvidenceOrigin,value:unknown):CaseEvidenceStatus=>value===undefined||value===null||value===""?"MISSING":origin==="EXTRACTION"?"EXTRACTED":origin==="LEGAL_ENGINE"?"VERIFIED":origin==="DOCUMENT"?"VERIFIED":"DECLARED";
 export function buildCaseFile(input:CaseFileInput):CaseFile{
  const t=now(),caseId=input.caseId??`case-${input.infractionDate}-${Date.now()}`,facts:CaseFact[]=[],evidence:CaseEvidence[]=[];
  if(input.userExplanation)facts.push({key:"userExplanation",value:input.userExplanation,source:"USER",confidence:"DECLARED"});
- for(const [key,value] of Object.entries(input.answers??{})){facts.push({key,value,source:"USER",confidence:"DECLARED"});evidence.push({key,value,origin:"USER_DECLARATION",status:status("USER_DECLARATION",value),asOf:t});}
+ for(const [key,value] of Object.entries(input.answers??{}))facts.push({key,value,source:"USER",confidence:"DECLARED"});
  for(const [key,value] of Object.entries(input.extractedData??{}))evidence.push({key,value,origin:"EXTRACTION",status:status("EXTRACTION",value),asOf:t});
- for(const [key,value] of Object.entries(input.documentEvidence??{}))evidence.push({key,value,origin:"USER_DECLARATION",status:status("USER_DECLARATION",value),asOf:t,note:"Disponibilité déclarée par l'utilisateur ; non équivaut à vérification du document."});
+ for(const [key,value] of Object.entries(input.documentEvidence??{}))evidence.push({key,value,origin:"DOCUMENT",status:status("DOCUMENT",value),asOf:t,note:"Élément fourni comme provenant du document ; conserver le lien avec la pièce source."});
  const documents=(input.documents??[]).map((name,i)=>({id:`doc-${i+1}`,name,available:true,uploaded:false,extracted:false,addedAt:t}));
  const grounds=input.selectedGround?[{code:input.selectedGround,label:input.selectedGround,source:"USER" as const}]:[{code:"UNDETERMINED" as const,label:"Non déterminé",source:"ENGINE" as const}];
  return {schemaVersion:"1.0",caseId,revision:1,createdAt:t,updatedAt:t,regime:input.regime,infractionDate:input.infractionDate,notificationDate:input.notificationDate,fpsTopic:input.fpsTopic,caseContext:input.caseContext,facts,evidence,documents,grounds,generatedRequests:[],humanReviewRequired:false,revisions:[{revision:1,createdAt:t,reason:"Initialisation du dossier",ruleVersionDate:input.infractionDate}]};
 }
 export function buildRuleInputFromCase(c:CaseFile):RuleInput{
  const extractedData:Record<string,unknown>={},documentEvidence:Record<string,unknown>={};
- for(const e of c.evidence){if(e.origin==="DOCUMENT"||e.status==="VERIFIED")documentEvidence[e.key]=e.value;else extractedData[e.key]=e.value;}
- if(c.fpsTopic)extractedData.fpsTopic=c.fpsTopic; extractedData.noticeNotificationDate=c.notificationDate; extractedData.declaredGround=c.grounds[0]?.code; extractedData.contestAnswers=Object.fromEntries(c.facts.filter(f=>f.source==="USER").map(f=>[f.key,String(f.value??"")]));
+ for(const e of c.evidence){
+   if(e.origin==="DOCUMENT"||e.status==="VERIFIED")documentEvidence[e.key]=e.value;
+   else if(e.origin==="EXTRACTION"&&e.status==="EXTRACTED")extractedData[e.key]=e.value;
+ }
+ if(c.fpsTopic)extractedData.fpsTopic=c.fpsTopic;
+ extractedData.declaredNotificationDate=c.notificationDate;
+ extractedData.declaredGround=c.grounds[0]?.code;
+ extractedData.contestAnswers=Object.fromEntries(c.facts.filter(f=>f.source==="USER").map(f=>[f.key,String(f.value??"")]));
  return {infractionDate:c.infractionDate,regime:c.regime,extractedData,documentEvidence,availableDocuments:c.documents.filter(d=>d.available).map(d=>d.name),caseContext:c.caseContext,caseFile:c};
 }
 export function attachLegalAudit(c:CaseFile,a:LegalAudit):CaseFile{
