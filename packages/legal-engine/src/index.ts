@@ -15,3 +15,5 @@ export * from "./case/legalUpdateWorkflow";
 export * from "./case/evidenceConfrontation";
 export * from "./contest/contestArguments";
 export * from "./contest/contestDossier";
+
+export * from "./contest/aiDraftPacket";
