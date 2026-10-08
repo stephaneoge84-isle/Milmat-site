@@ -10,7 +10,7 @@ export function calculateFpsDeadline(kind,notificationDate){
 }
 const hasEvidence=(data,key)=>{const v=data?.[key];return v!==undefined&&v!==null&&v!==""&&!(typeof v==="string"&&["à contrôler","a controler","à documenter","a documenter"].includes(v.trim().toLowerCase()))};
 export function analyzeFpsIntake(input){
-  const answers=input.answers||{},docs=input.documents||[],checks=[],data=input.extractedData||{};
+  const answers=input.answers||{},docs=input.documents||[],checks=[],data=input.extractedData||{},attachments=input.attachments||[];
   const complete=docs.includes("Avis FPS complet")||docs.includes("Avis FPS complet, recto et verso");
   const has=key=>hasEvidence(data,key);
   const push=(id,status,risk,finding,request,required)=>checks.push({ruleId:id,status,risk,finding,request,requiredEvidence:required});
@@ -29,9 +29,11 @@ export function analyzeFpsIntake(input){
   push("FPS-RAPO-003",rapoOk?"PRESENT_CONFORME":"NON_DEMONTRE",rapoOk?"INFO":"ORANGE",
     rapoOk?"Notification et éléments essentiels du RAPO retrouvés dans le document extrait.":"La notification ou les modalités essentielles du RAPO ne sont pas démontrées par la pièce analysée.",
     "La date saisie manuellement ne vaut pas preuve de notification.",["notification","autorité RAPO","délai","modalités","pièces"]);
+  const supportingText=attachments.map(a=>String(a.extractedText||"")).join("\n").toLowerCase();
+  const hasSupportingPayment=/ticket|paiement|stationnement|valable jusqu/.test(supportingText);
   const ground=input.ground;
   if(ground==="paiement"){
-    const paid=answers["Paiement effectué ?"]==="Oui",proof=answers["Justificatif ?"]==="Oui"&&docs.includes("Justificatif de paiement"),before=answers["Horodatage"]==="Oui";
+    const paid=answers["Paiement effectué ?"]==="Oui"||answers.paymentDeclared==="Oui",proof=(answers["Justificatif ?"]==="Oui"&&docs.includes("Justificatif de paiement"))||hasSupportingPayment||attachments.some(a=>a.role==="PAYMENT_PROOF"&&a.extractedText),before=answers["Horodatage"]==="Oui"||/jusqu'à|jusqu a/.test(supportingText);
     push("FPS-PAIEMENT-004",paid&&proof&&before?"A_VERIFIER":"NON_DEMONTRE","ORANGE",
       paid&&proof&&before?"Paiement préalable déclaré et documenté ; conditions de déduction à vérifier.":"Paiement préalable insuffisamment démontré.",
       "Vérifier le justificatif, son horodatage et les conditions de R.2333-120-5.",["justificatif","horodatage","durée maximale"]);
@@ -66,5 +68,5 @@ export function analyzeFpsIntake(input){
   const incoherent=checks.filter(c=>c.status==="PRESENT_INCOHERENT");
   const serious=(ground&&ground!=="autre")||incoherent.length>0;
   const solidite=incoherent.length?"INCOHÉRENCE APPARENTE":serious&&unresolved.length?"À COMPLÉTER":serious?"FAVORABLE À L'EXAMEN":unresolved.length?"À COMPLÉTER":"AUCUN MOYEN IDENTIFIÉ";
-  return {checks,solidite,decision:unresolved.length?"CONTINUE_WITH_CAUTION":serious?"CONTINUE":"STOP_AND_REVIEW",blockers:unresolved.map(c=>c.finding),ground,completeNotice:complete,hasPaymentProof:docs.includes("Justificatif de paiement"),deadlines:{rapo:deadlineRapo,payment:deadlinePayment}};
+  return {checks,solidite,decision:unresolved.length?"CONTINUE_WITH_CAUTION":serious?"CONTINUE":"STOP_AND_REVIEW",blockers:unresolved.map(c=>c.finding),ground,completeNotice:complete,hasPaymentProof:docs.includes("Justificatif de paiement")||hasSupportingPayment,deadlines:{rapo:deadlineRapo,payment:deadlinePayment}};
 }
