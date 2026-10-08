@@ -1,7 +1,4 @@
 name: legal-engine
-permissions:
-  contents: read
-  pull-requests: write
 on:
   push:
     branches: ["feature/contravention-audit-foundation"]
@@ -16,29 +13,5 @@ jobs:
         with:
           node-version: 20
       - run: npm install
-      - name: Typecheck
-        env:
-          GH_TOKEN: ${{ github.token }}
-        run: |
-          set +e
-          npm run typecheck > typecheck.log 2>&1
-          code=$?
-          cat typecheck.log
-          {
-            echo "## TypeScript typecheck"
-            echo '```text'
-            cat typecheck.log
-            echo '```'
-          } >> "$GITHUB_STEP_SUMMARY"
-          if [ "$code" -ne 0 ]; then body=$(python3 -c "import json; print(json.dumps(open(\"typecheck.log\").read()))"); curl -sS -X POST -H "Authorization: Bearer $GH_TOKEN" -H "Accept: application/vnd.github+json" "https://api.github.com/repos/$GITHUB_REPOSITORY/issues/1/comments" -d "{\"body\":$body}"; fi
-          exit $code
-      - name: Test
-        env:
-          GH_TOKEN: ${{ github.token }}
-        run: |
-          set +e
-          npm test > test.log 2>&1
-          code=$?
-          cat test.log
-          if [ "$code" -ne 0 ]; then body=$(python3 -c "import json; print(json.dumps(open(\"test.log\").read()))"); curl -sS -X POST -H "Authorization: Bearer $GH_TOKEN" -H "Accept: application/vnd.github+json" "https://api.github.com/repos/$GITHUB_REPOSITORY/issues/1/comments" -d "{\"body\":$body}"; fi
-          exit $code
+      - run: npm run typecheck
+      - run: npm test
