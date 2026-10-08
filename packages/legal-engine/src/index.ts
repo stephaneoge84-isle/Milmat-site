@@ -11,3 +11,7 @@ export * from "./case/evidenceIngestion";
 export * from "./case/caseStore";
 export * from "./case/legalVersionRegistry";
 export * from "./case/legalUpdateWorkflow";
+
+export * from "./case/evidenceConfrontation";
+export * from "./contest/contestArguments";
+export * from "./contest/contestDossier";
