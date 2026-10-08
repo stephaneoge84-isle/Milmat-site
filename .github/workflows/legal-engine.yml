@@ -13,5 +13,17 @@ jobs:
         with:
           node-version: 20
       - run: npm install
-      - run: npm run typecheck
+      - name: Typecheck
+        run: |
+          set +e
+          npm run typecheck > typecheck.log 2>&1
+          code=$?
+          cat typecheck.log
+          {
+            echo "## TypeScript typecheck"
+            echo '```text'
+            cat typecheck.log
+            echo '```'
+          } >> "$GITHUB_STEP_SUMMARY"
+          exit $code
       - run: npm test
