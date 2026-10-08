@@ -1,6 +1,7 @@
 import type { LegalAudit, RuleInput } from "../types";
 import type { ContestGround } from "./contestGrounds";
 import { buildContestInterviewPlan, type ContestInterviewPlan } from "./contestInterview";
+import { confrontCaseEvidence, type EvidenceConfrontationResult } from "../case/evidenceConfrontation";
 import { classifyContestGround } from "./contestGrounds";
 import { estimateContestSuccess, type ContestSuccessEstimate } from "./contestSuccessEstimate";
 import { legalRuleEngine } from "../engine/legalRuleEngine";
@@ -28,6 +29,7 @@ export interface ContestIntakeResult {
   ruleInput:RuleInput;
   caseFile:CaseFile;
   interview:ContestInterviewPlan;
+  confrontation:EvidenceConfrontationResult;
 }
 export function analyzeContestIntake(input:ContestIntakeAnswers):ContestIntakeResult {
   const ground=classifyContestGround({regime:"FPS",selectedGround:input.ground,userExplanation:input.explanation,extractedData:input.extractedData});
@@ -41,11 +43,12 @@ export function analyzeContestIntake(input:ContestIntakeAnswers):ContestIntakeRe
   const audit=legalRuleEngine(ruleInput,legalRules);
   const finalCaseFile=attachLegalAudit(caseFile,audit);
   const estimate=estimateContestSuccess(audit,ground.primaryGround!=="UNDETERMINED");
+  const confrontation=confrontCaseEvidence(finalCaseFile);
   const interview=buildContestInterviewPlan({
     regime:"FPS",
     ground:ground.primaryGround,
     topic:input.fpsTopic,
     explanation:input.explanation
   });
-  return {ground,audit,estimate,ruleInput,caseFile:finalCaseFile,interview};
+  return {ground,audit,estimate,ruleInput,caseFile:finalCaseFile,interview,confrontation};
 }
