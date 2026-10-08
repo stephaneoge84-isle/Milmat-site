@@ -65,9 +65,9 @@ function normalizeDate(value){
 export function mapFpsText(text){
   const raw=String(text||"");
   const clean=normalize(raw);
-  const page1=(raw.match(/\[PAGE\s*1\]([\\s\\S]*?)(?=\[PAGE\s*2\]|$)/i)||[,raw])[1];
-  const page2=(raw.match(/\[PAGE\s*2\]([\\s\\S]*?)(?=\[PAGE\s*3\]|$)/i)||[,raw])[1];
-  const page3=(raw.match(/\[PAGE\s*3\]([\\s\\S]*)$/i)||[,raw])[1];
+  const page1=(raw.match(/\[PAGE\s*1\]([\s\S]*?)(?=\[PAGE\s*2\]|$)/i)||[,raw])[1];
+  const page2=(raw.match(/\[PAGE\s*2\]([\s\S]*?)(?=\[PAGE\s*3\]|$)/i)||[,raw])[1];
+  const page3=(raw.match(/\[PAGE\s*3\]([\s\S]*)$/i)||[,raw])[1];
 
   const first=(value,patterns)=>{
     for(const re of patterns){
@@ -88,28 +88,28 @@ export function mapFpsText(text){
     /Date\s+d['’]envoi\s+de\s+l['’]avis\s+de\s+paiement\s*:\s*(\d{1,2}[\/.-]\d{1,2}[\/.-]\d{2,4})/i
   ]);
   const infractionDateTime=first(page1,[
-    /Date\s+et\s+heure\s+de\s+constatation[\\s\\S]{0,180}?(\d{1,2}[\/.-]\d{1,2}[\/.-]\d{2,4}\s*(?:à|a)?\s*\d{1,2}\s*[h:]\s*\d{2})/i
+    /Date\s+et\s+heure\s+de\s+constatation[\s\S]{0,180}?(\d{1,2}[\/.-]\d{1,2}[\/.-]\d{2,4}\s*(?:à|a)?\s*\d{1,2}\s*[h:]\s*\d{2})/i
   ]);
   const infractionDate=first(page1,[
-    /Date\s+et\s+heure\s+de\s+constatation[\\s\\S]{0,180}?(\d{1,2}[\/.-]\d{1,2}[\/.-]\d{2,4})/i
+    /Date\s+et\s+heure\s+de\s+constatation[\s\S]{0,180}?(\d{1,2}[\/.-]\d{1,2}[\/.-]\d{2,4})/i
   ]);
   const location=first(page1,[
-    /Lieu\s*:\s*([\\s\\S]*?)(?=N[°ºo]?\s*d['’]immatriculation)/i
+    /Lieu\s*:\s*([\s\S]*?)(?=N[°ºo]?\s*d['’]immatriculation)/i
   ]);
   const registration=first(page1,[
     /N[°ºo]?\s*d['’]immatriculation\s+du\s+v(?:é|e)hicule\s*:\s*([A-Z]{2}[- ]?\d{3}[- ]?[A-Z]{2})/i
   ]);
   const brand=first(page1,[
-    /Marque\s+du\s+v(?:é|e)hicule\s*:\s*([A-Za-zÀ-ÿ][A-Za-zÀ-ÿ -]{2,40}?)(?=\\s*$|\\n|\[)/i
+    /Marque\s+du\s+v(?:é|e)hicule\s*:\s*([A-Za-zÀ-ÿ][A-Za-zÀ-ÿ -]{2,40}?)(?=\s*$|\n|\[)/i
   ]);
   const agentId=first(page1,[
     /N[°ºo]?\s*d['’]identification\s+de\s+l['’]agent\s+asserment(?:é|e)\s*:\s*(\d{1,8})/i
   ]);
   const agentAuthority=first(page1,[
-    /Autorit(?:é|e)\s+dont\s+rel(?:è|e)ve\s+l['’]agent\s+asserment(?:é|e)\s*:\s*([\\s\\S]*?)(?=N[°ºo]?\s*d['’]identification)/i
+    /Autorit(?:é|e)\s+dont\s+rel(?:è|e)ve\s+l['’]agent\s+asserment(?:é|e)\s*:\s*([\s\S]*?)(?=N[°ºo]?\s*d['’]identification)/i
   ]);
   const collectivity=first(page1,[
-    /Nom\s+de\s+la\s+collectivit(?:é|e)\s*:\s*([^\\n\r]+)/i
+    /Nom\s+de\s+la\s+collectivit(?:é|e)\s*:\s*([^\n\r]+)/i
   ]);
   const amount=first(page1,[
     /Le\s+montant\s+du\s+FPS\s+est\s+égal\s+à\s*:\s*(\d+(?:[,.]\d{1,2})?)\s*euros?/i,
@@ -123,24 +123,24 @@ export function mapFpsText(text){
     /Date\s+limite\s+de\s+paiement\s+de\s+votre\s+FPS\s*:\s*(\d{1,2}[\/.-]\d{1,2}[\/.-]\d{2,4})/i
   ]);
   const rapoAuthority=first(page3,[
-    /Par\s+lettre\s+recommand(?:ée|e)[\\s\\S]{0,250}?l['’]adresse\s+suivante\s*:\s*([\\s\\S]*?)(?=Dans\s+quel\s+d(?:é|e)lai)/i,
-    /(?:recours|RAPO)[\\s\\S]{0,250}?aupr(?:è|e)s\s+de\s+([^\\n\\r]+)/i
+    /Par\s+lettre\s+recommand(?:ée|e)[\s\S]{0,250}?l['’]adresse\s+suivante\s*:\s*([\s\S]*?)(?=Dans\s+quel\s+d(?:é|e)lai)/i,
+    /(?:recours|RAPO)[\s\S]{0,250}?aupr(?:è|e)s\s+de\s+([^\n\r]+)/i
   ]);
   const deemedReceipt=first(page3,[
     /r(?:é|e)put(?:é|e)\s+avoir\s+re(?:ç|c)u[^.]{0,120}?5\s+jours\s+francs\s+[àa]\s+compter\s+de\s+la\s+date\s+d['’]envoi/i
   ]);
   const noticeNotificationDate=deemedReceipt&&sendDate?addClearDays(dateValue(sendDate),5):undefined;
 
-  const cleanedAuthority=agentAuthority?.replace(/\\s+/g," ").trim();
-  const cleanedLocation=location?.replace(/\\s+/g," ").trim();
-  const cleanedRapoAuthority=rapoAuthority?.replace(/\\s+/g," ").trim();
+  const cleanedAuthority=agentAuthority?.replace(/\s+/g," ").trim();
+  const cleanedLocation=location?.replace(/\s+/g," ").trim();
+  const cleanedRapoAuthority=rapoAuthority?.replace(/\s+/g," ").trim();
 
   return {
     fpsAmount:amount?amount.replace(",","."):undefined,
-    vehicleRegistration:registration?.replace(/\\s+/g,"").toUpperCase(),
+    vehicleRegistration:registration?.replace(/\s+/g,"").toUpperCase(),
     fpsAgentId:agentId,
-    fpsNoticeNumber:noticeNumber?.replace(/\\s+/g," ").trim(),
-    infractionDateTime:infractionDateTime?.replace(/\\s+/g," ").trim(),
+    fpsNoticeNumber:noticeNumber?.replace(/\s+/g," ").trim(),
+    infractionDateTime:infractionDateTime?.replace(/\s+/g," ").trim(),
     infractionDate:dateValue(infractionDate),
     noticeSendDate:dateValue(sendDate),
     noticeNotificationDate,
@@ -152,20 +152,20 @@ export function mapFpsText(text){
     fpsAgentAuthority:cleanedAuthority,
     rapoAuthority:cleanedRapoAuthority,
     vehicleBrand:brand?.trim(),
-    fpsEndTime:endTime?.replace(/\\s+/g," "),
+    fpsEndTime:endTime?.replace(/\s+/g," "),
     fpsSignature:yes(page1,/«?\s*Sign(?:é|e)\s*»?/i),
     fpsCollectivity:!!collectivity,
     paymentServiceCoordinates:yes(page2,/(?:Direction\s+G(?:é|e)n(?:é|e)rale\s+des\s+Finances\s+Publiques|Centre\s+d['’]encaissement|coordonn(?:é|e)es)/i),
     paymentMethods:yes(page2,/(?:smartphone|internet|t(?:é|e)l(?:é|e)phone|courrier|guichet|buraliste)/i),
-    nonPaymentConsequence:yes(page2,/(?:non-paiement|paiement\s+insuffisant)[\\s\\S]{0,180}(?:titre\s+ex(?:é|e)cutoire|majoration)/i),
+    nonPaymentConsequence:yes(page2,/(?:non-paiement|paiement\s+insuffisant)[\s\S]{0,180}(?:titre\s+ex(?:é|e)cutoire|majoration)/i),
     rapoMandatory:yes(page3,/recours\s+administratif\s+pr(?:é|e)alable\s+obligatoire/i),
-    rapoDeadlineAndMethod:yes(page3,/(?:dans\s+le\s+d(?:é|e)lai\s+d['’]un\s+mois|un\s+mois)[\\s\\S]{0,180}(?:voie\s+(?:é|e)lectronique|lettre\s+recommand(?:ée|e))/i),
-    rapoSilenceRejection:yes(page3,/(?:absence\s+de\s+r(?:é|e)ponse|silence)[\\s\\S]{0,120}(?:rejet|rejet\s+du\s+recours)/i),
+    rapoDeadlineAndMethod:yes(page3,/(?:dans\s+le\s+d(?:é|e)lai\s+d['’]un\s+mois|un\s+mois)[\s\S]{0,180}(?:voie\s+(?:é|e)lectronique|lettre\s+recommand(?:ée|e))/i),
+    rapoSilenceRejection:yes(page3,/(?:absence\s+de\s+r(?:é|e)ponse|silence)[\s\S]{0,120}(?:rejet|rejet\s+du\s+recours)/i),
     tribunalAppealInfo:yes(page3,/tribunal\s+du\s+stationnement\s+payant/i),
     dataAccessRectification:yes(page3,/(?:droits?\s+sur\s+les\s+donn(?:é|e)es|droit\s+d['’]acc(?:è|e)s\s+et\s+de\s+rectification)/i),
-    rapoRequiredDocuments:yes(page3,/(?:Pi(?:è|e)ces\s+[àa]\s+transmettre\s+obligatoirement|pi(?:è|e)ces\s+obligatoires)[\\s\\S]{0,200}(?:avis|certificat|cession)/i),
-    tribunalAppealDeadline:yes(page3,/tribunal\s+du\s+stationnement\s+payant[\\s\\S]{0,180}(?:d(?:é|e)lai\s+d['’]un\s+mois|un\s+mois)/i),
-    tribunalPriorPayment:yes(page3,/tribunal\s+du\s+stationnement\s+payant[\\s\\S]{0,220}(?:paiement\s+pr(?:é|e)alable|paiement\s+pr(?:é|e)alable\s+du\s+montant)/i),
+    rapoRequiredDocuments:yes(page3,/(?:Pi(?:è|e)ces\s+[àa]\s+transmettre\s+obligatoirement|pi(?:è|e)ces\s+obligatoires)[\s\S]{0,200}(?:avis|certificat|cession)/i),
+    tribunalAppealDeadline:yes(page3,/tribunal\s+du\s+stationnement\s+payant[\s\S]{0,180}(?:d(?:é|e)lai\s+d['’]un\s+mois|un\s+mois)/i),
+    tribunalPriorPayment:yes(page3,/tribunal\s+du\s+stationnement\s+payant[\s\S]{0,220}(?:paiement\s+pr(?:é|e)alable|paiement\s+pr(?:é|e)alable\s+du\s+montant)/i),
     fpsNoticePart1Complete:yes(page1,/Etablissement\s+de\s+l['’]avis\s+de\s+paiement/i),
     fpsNoticePart2Complete:yes(page2,/Modalit(?:é|e)s\s+de\s+paiement\s+et\s+contestation/i)
   };
