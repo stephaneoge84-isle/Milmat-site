@@ -94,7 +94,7 @@ export function mapFpsText(text){
     /Date\s+et\s+heure\s+de\s+constatation[\s\S]{0,180}?(\d{1,2}[\/.-]\d{1,2}[\/.-]\d{2,4})/i
   ]);
   const location=first(page1,[
-    /Lieu\s*:\s*([\s\S]*?)(?=N[°ºo]?\s*d['’]immatriculation)/i
+    /Lieu\s*:?\s*([\s\S]*?)(?=N[°ºo]?\s*d['’](?:identification|immatriculation))/i
   ]);
   const registration=first(page1,[
     /N[°ºo]?\s*d['’]immatriculation\s+du\s+v(?:é|e)hicule\s*:\s*([A-Z]{2}[- ]?\d{3}[- ]?[A-Z]{2})/i
@@ -115,9 +115,8 @@ export function mapFpsText(text){
     /Le\s+montant\s+du\s+FPS\s+est\s+égal\s+à\s*:\s*(\d+(?:[,.]\d{1,2})?)\s*euros?/i,
     /Le\s+montant\s+du\s+FPS[^0-9]{0,80}(\d+(?:[,.]\d{1,2})?)\s*(?:€|euros?)/i
   ]);
-  const endTime=first(page1,[
-    /cesse\s+de\s+produire\s+ses\s+effets[^0-9]{0,80}(\d{1,2}\s*[h:]\s*\d{2})/i
-  ]);
+  const endTimeMatch=page1.match(/cesse\s+de\s+produire\s+ses\s+effets[^0-9]{0,80}(\d{1,2}[\/.-]\d{1,2}[\/.-]\d{2,4}\s*(?:à|a)\s*(\d{1,2}\s*[h:]\s*\d{2}))/i);
+  const endTime=endTimeMatch?endTimeMatch[2]:undefined;
 
   const paymentDeadline=first(page2,[
     /Date\s+limite\s+de\s+paiement\s+de\s+votre\s+FPS\s*:\s*(\d{1,2}[\/.-]\d{1,2}[\/.-]\d{2,4})/i
