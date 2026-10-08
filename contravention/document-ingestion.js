@@ -195,8 +195,8 @@ export function mapFpsText(text){
     rapoRequiredDocuments:yes(page3,/(?:Pi(?:è|e)ces\s+[àa]\s+transmettre\s+obligatoirement|pi(?:è|e)ces\s+obligatoires)[\s\S]{0,200}(?:avis|certificat|cession)/i),
     tribunalAppealDeadline:yes(page3,/tribunal\s+du\s+stationnement\s+payant[\s\S]{0,180}(?:d(?:é|e)lai\s+d['’]un\s+mois|un\s+mois)/i),
     tribunalPriorPayment:yes(page3,/tribunal\s+du\s+stationnement\s+payant[\s\S]{0,220}(?:paiement\s+pr(?:é|e)alable|paiement\s+pr(?:é|e)alable\s+du\s+montant)/i),
-    fpsNoticePart1Complete:yes(page1,/Etablissement\s+de\s+l['’]avis\s+de\s+paiement/i),
-    fpsNoticePart2Complete:yes(page2,/Modalit(?:é|e)s\s+de\s+paiement\s+et\s+contestation/i)
+    fpsNoticePart1Complete:Boolean(noticeNumber&&sendDate&&infractionDateTime&&cleanedLocation&&registration&&brand&&cleanedAuthority&&agentId&&amount&&endTime&&collectivity&&yes(page1,/Sign(?:é|e)/i)),
+    fpsNoticePart2Complete:Boolean(paymentDeadline&&yes(page2,/(?:smartphone|internet|t(?:é|e)l(?:é|e)phone|courrier|guichet|buraliste)/i)&&yes(page2,/(?:non-paiement|paiement\s+insuffisant)[\s\S]{0,180}(?:titre\s+ex(?:é|e)cutoire|majoration)/i))
   };
 }
 
