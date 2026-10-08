@@ -82,10 +82,10 @@ export function mapFpsText(text){
   // The FPS form has fixed labels. Prefer label-scoped extraction over broad
   // keyword searches so amounts/dates from page 2 cannot overwrite page 1.
   const noticeNumber=first(page1,[
-    /Num(?:é|e)ro\s+de\s+l['’]avis\s+de\s+paiement\s*:\s*([0-9][0-9\s]{10,})\s*(?=Cl[eé])/i
+    /Num(?:é|e)ro\s+de\s+l['’]avis\s+de\s+paiement\s*:?\s*([0-9][0-9\s./|\[\]A-Za-z]{15,}[0-9])\s*(?=Cl[eé])/i
   ]);
   const sendDate=first(page1,[
-    /Date\s+d['’]envoi\s+de\s+l['’]avis\s+de\s+paiement\s*:\s*(\d{1,2}[\/.-]\d{1,2}[\/.-]\d{2,4})/i
+    /(?:Date|date|ate)\s+d['’]envoi\s+de\s+l['’]avis\s+de\s+paiement\s*:?\s*(\d{1,2}[\/.-]\d{1,2}[\/.-]\d{2,4})/i
   ]);
   const infractionDateTime=first(page1,[
     /Date\s+et\s+heure\s+de\s+constatation[\s\S]{0,180}?(\d{1,2}[\/.-]\d{1,2}[\/.-]\d{2,4}\s*(?:à|a)?\s*\d{1,2}\s*[h:]\s*\d{2})/i
@@ -97,22 +97,22 @@ export function mapFpsText(text){
     /Lieu\s*:?\s*([\s\S]*?)(?=N[°ºo]?\s*d['’](?:identification|immatriculation))/i
   ]);
   const registration=first(page1,[
-    /N[°ºo]?\s*d['’]immatriculation\s+du\s+v(?:é|e)hicule\s*:\s*([A-Z]{2}[- ]?\d{3}[- ]?[A-Z]{2})/i
+    /N[°ºo]?\s*d['’]immatriculation\s+du\s+v(?:é|e)hicule\s*:?\s*([A-Z]{2}[- ]?\d{3}[- ]?[A-Z]{2})/i
   ]);
   const brand=first(page1,[
-    /Marque\s+du\s+v(?:é|e)hicule\s*:\s*([A-Za-zÀ-ÿ][A-Za-zÀ-ÿ -]{2,40}?)(?=\s*$|\n|\[)/i
+    /Marque\s+du\s+v(?:é|e)hicule\s*:?\s*([A-Za-zÀ-ÿ][A-Za-zÀ-ÿ -]{2,40}?)(?=\s*$|\n|\[)/i
   ]);
   const agentId=first(page1,[
-    /N[°ºo]?\s*d['’]identification\s+de\s+l['’]agent\s+asserment(?:é|e)\s*:\s*(\d{1,8})/i
+    /N[°ºo]?\s*d['’]identification\s+de\s+l['’]agent\s+asserment(?:é|e)\s*:?\s*(\d{1,8})/i
   ]);
   const agentAuthority=first(page1,[
-    /Autorit(?:é|e)\s+dont\s+rel(?:è|e)ve\s+l['’]agent\s+asserment(?:é|e)\s*:\s*([\s\S]*?)(?=N[°ºo]?\s*d['’]identification)/i
+    /Autorit(?:é|e)\s+dont\s+rel(?:è|e)ve\s+l['’]agent\s+asserment(?:é|e)\s*:?\s*([\s\S]*?)(?=N[°ºo]?\s*d['’]identification)/i
   ]);
   const collectivity=first(page1,[
     /Nom\s+de\s+la\s+collectivit(?:é|e)\s*:\s*([^\n\r]+)/i
   ]);
   const amount=first(page1,[
-    /Le\s+montant\s+du\s+FPS\s+est\s+égal\s+à\s*:\s*(\d+(?:[,.]\d{1,2})?)\s*euros?/i,
+    /Le\s+montant\s+du\s+FPS\s+est\s+égal\s+à\s*:?\s*(\d+(?:[,.]\d{1,2})?)\s*euros?/i,
     /Le\s+montant\s+du\s+FPS[^0-9]{0,80}(\d+(?:[,.]\d{1,2})?)\s*(?:€|euros?)/i
   ]);
   const endTimeMatch=page1.match(/cess(?:e|é)\s+de\s+produire\s+ses\s+effets[^0-9]{0,80}(\d{1,2}[\/.-]\d{1,2}[\/.-]\d{2,4}\s*(?:à|a)\s*(\d{1,2}\s*[h:]\s*\d{2}))/i);
@@ -125,7 +125,7 @@ export function mapFpsText(text){
     /Par\s+lettre\s+recommand(?:ée|e)[\s\S]{0,250}?l['’]adresse\s+suivante\s*:\s*([\s\S]*?)(?=Dans\s+quel\s+d(?:é|e)lai)/i,
     /(?:recours|RAPO)[\s\S]{0,250}?aupr(?:è|e)s\s+de\s+([^\n\r]+)/i
   ]);
-  const deemedReceipt=/r(?:é|e)put(?:é|e)\s+avoir\s+re(?:ç|c)u[^.]{0,120}?5\s+jours\s+francs\s+[àa]\s+compter\s+de\s+la\s+date\s+d['’]envoi/i.test(page3);
+  const deemedReceipt=/r(?:é|e)put(?:é|e)\s+avoir\s+re(?:ç|c)u[^.]{0,120}?5\s+jours\s+francs\s+(?:[|làa])?\s*[àa]\s+compter\s+de\s+la\s+date\s+d['’]envoi/i.test(page3);
   const noticeNotificationDate=deemedReceipt&&sendDate?addClearDays(dateValue(sendDate),5):undefined;
 
   const cleanedAuthority=agentAuthority?.replace(/\s+/g," ").trim();
