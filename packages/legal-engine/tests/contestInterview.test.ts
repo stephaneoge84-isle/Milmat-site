@@ -15,6 +15,8 @@ describe("contest interview plan",()=>{
       "FPS_PAYMENT",
       "FPS_PAYMENT_PROOF",
       "FPS_PAYMENT_TIME",
+      "FPS_NOTIFICATION_ACCOUNT",
+      "FPS_NOTIFICATION_PROOF",
       "FPS_OTHER_FACT"
     ]);
     expect(plan.questions.find(q=>q.id==="FPS_PAYMENT_PROOF")?.evidenceKeys).toContain("paymentProof");
