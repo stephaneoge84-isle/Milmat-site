@@ -14,6 +14,7 @@ export interface ContestDossier {
  requests:string[];
  attachments:string[];
  deadline?:string;
+ paymentDeadline?:string;
  warnings:string[];
  humanReviewRequired:true;
 }
