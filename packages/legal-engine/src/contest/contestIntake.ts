@@ -28,7 +28,7 @@ export interface ContestIntakeResult {
 }
 export function analyzeContestIntake(input:ContestIntakeAnswers):ContestIntakeResult {
   const ground=classifyContestGround({regime:"FPS",selectedGround:input.ground,userExplanation:input.explanation,extractedData:input.extractedData});
-  const extractedData={...(input.extractedData??{}),fpsTopic:input.fpsTopic,declaredGround:input.ground};
+  const extractedData:Record<string,unknown>={...(input.extractedData??{}),fpsTopic:input.fpsTopic,declaredGround:input.ground};
   if(input.notificationMode)extractedData.declaredNotificationMode=input.notificationMode;
   const caseFile=buildCaseFile({
     caseId:input.caseId,regime:"FPS",infractionDate:input.infractionDate,notificationDate:input.notificationDate,fpsTopic:input.fpsTopic,
