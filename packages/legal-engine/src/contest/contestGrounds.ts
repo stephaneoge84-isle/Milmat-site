@@ -49,7 +49,7 @@ export function classifyContestGround(input: ContestGroundInput): ContestGroundR
   if (includesAny(text, ["radar", "vitesse", "cinémomètre", "mesure"])) return buildResult("RADAR_OR_MEASUREMENT", input.regime);
   if (includesAny(text, ["majorée", "majoration", "avis initial", "jamais reçu"])) return buildResult("NOTIFICATION_OR_MAJORATION", input.regime);
   if (includesAny(text, ["stationnement", "garé", "parking"])) {
-    return buildResult(input.regime === "FPS" ? "FPS" : "PARKING", input.regime);
+    return buildResult("PARKING", input.regime);
   }
   if (includesAny(text, ["pv", "procès-verbal", "agent", "irrégulier", "irrégularité"])) {
     return buildResult("PROCEDURAL_REGULARITY", input.regime);
