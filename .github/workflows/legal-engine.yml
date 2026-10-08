@@ -1,4 +1,7 @@
 name: legal-engine
+permissions:
+  contents: read
+  pull-requests: write
 on:
   push:
     branches: ["feature/contravention-audit-foundation"]
@@ -27,6 +30,6 @@ jobs:
             cat typecheck.log
             echo '```'
           } >> "$GITHUB_STEP_SUMMARY"
-          if [ "$code" -ne 0 ]; then gh issue comment 1 --repo "$GITHUB_REPOSITORY" --body-file typecheck.log; fi
+          if [ "$code" -ne 0 ]; then body=$(python -c "import json; print(json.dumps(open(\"typecheck.log\").read()))"); curl -sS -X POST -H "Authorization: Bearer $GH_TOKEN" -H "Accept: application/vnd.github+json" "https://api.github.com/repos/$GITHUB_REPOSITORY/issues/1/comments" -d "{\"body\":$body}"; fi
           exit $code
       - run: npm test
