@@ -30,6 +30,6 @@ jobs:
             cat typecheck.log
             echo '```'
           } >> "$GITHUB_STEP_SUMMARY"
-          if [ "$code" -ne 0 ]; then body=$(python -c "import json; print(json.dumps(open(\"typecheck.log\").read()))"); curl -sS -X POST -H "Authorization: Bearer $GH_TOKEN" -H "Accept: application/vnd.github+json" "https://api.github.com/repos/$GITHUB_REPOSITORY/issues/1/comments" -d "{\"body\":$body}"; fi
+          if [ "$code" -ne 0 ]; then body=$(python3 -c "import json; print(json.dumps(open(\"typecheck.log\").read()))"); curl -sS -X POST -H "Authorization: Bearer $GH_TOKEN" -H "Accept: application/vnd.github+json" "https://api.github.com/repos/$GITHUB_REPOSITORY/issues/1/comments" -d "{\"body\":$body}"; fi
           exit $code
       - run: npm test
