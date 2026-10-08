@@ -66,7 +66,7 @@ function relevantAttachmentText(factKeyValue:string,documents:CaseDocument[]):Ev
   const terms:Record<string,string[]> = {
     paymentDeclared:["paiement","payé","paye","ticket","stationnement"],
     paymentProof:["paiement","ticket","reçu","stationnement"],
-    paymentTimestamp:["heure","date","paiement"],
+    paymentTimestamp:["heure","date","paiement","h00","h","valable jusqu","durée","duree"],
     vehicleStatus:["cession","vente","vendu","véhicule","vehicule"],
     vehicleStatusProof:["cession","certificat","vente"],
     notificationDeclaration:["reçu","recu","notification","envoi","courrier"],
