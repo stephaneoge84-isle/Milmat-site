@@ -9,7 +9,7 @@ describe("CASE canonical dossier",()=>{
     expect(c.evidence.find(e=>e.key==="fpsNoticeComplete")?.status).toBe("VERIFIED");
     expect(input.documentEvidence.fpsNoticeComplete).toBe(true);
     expect(input.extractedData.fpsAmount).toBeUndefined();
-    expect(input.extractedData.contestAnswers.fpsAmount).toBe("33");
+    expect((input.extractedData.contestAnswers as Record<string, string>).fpsAmount).toBe("33");
   });
   it("creates immutable revision history when audit is attached",()=>{
     const c=buildCaseFile({regime:"FPS",infractionDate:"2026-09-23"});
