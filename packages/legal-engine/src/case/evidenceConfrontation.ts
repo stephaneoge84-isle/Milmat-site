@@ -121,7 +121,7 @@ export function confrontCaseEvidence(caseFile:CaseFile):EvidenceConfrontationRes
         corroborations.push(fact.key);
         draftingFacts.push(value);
         nextAction="Conserver la pièce source et vérifier sa portée juridique.";
-      }else if(textMatch){
+      }else if(textMatch || documentary.some(d=>d.source==="ATTACHMENT_OCR")){
         status="DOCUMENTED";
         finding="Un élément documentaire semble correspondre à la déclaration ; la correspondance doit être vérifiée.";
         nextAction="Contrôler la pièce originale et son contexte.";
