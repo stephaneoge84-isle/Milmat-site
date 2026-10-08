@@ -114,7 +114,8 @@ export function confrontCaseEvidence(caseFile:CaseFile):EvidenceConfrontationRes
     if(documentary.length){
       const direct=documentary.some(d=>d.key===fact.key);
       const textMatch=documentary.some(d=>comparable(d.value,value));
-      if(direct&&textMatch){
+      const yesDeclaration=["paymentDeclared","paymentProof"].includes(fact.key)&&/^oui$/i.test(value);
+      if((direct&&textMatch)||(yesDeclaration&&documentary.some(d=>d.source==="ATTACHMENT_OCR"))){
         status="CORROBORATED";
         finding="La déclaration utilisateur trouve un élément documentaire concordant.";
         corroborations.push(fact.key);
