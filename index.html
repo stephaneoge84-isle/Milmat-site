@@ -17,7 +17,7 @@
 
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Piazzolla:ital,wght@0,500;0,600;0,700;1,500;1,600&family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght,SOFT@0,9..144,500..800,100;1,9..144,500..700,100&family=DM+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
 
   <title>MILMAT — Formation & Conseil pour TPE et professionnels</title>
   <style>
@@ -31,8 +31,8 @@
       --white:#fff;
       --shadow:0 14px 36px rgba(31,56,100,.10);
       --shadow-lg:0 24px 60px rgba(31,56,100,.16);
-      --serif:'Piazzolla', Georgia, serif;
-      --sans:'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+      --serif:'Fraunces', Georgia, serif;
+      --sans:'DM Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
     }
     *{box-sizing:border-box;margin:0;padding:0}
     html{scroll-behavior:smooth}
@@ -40,7 +40,7 @@
     a{text-decoration:none;color:inherit}
     img{max-width:100%}
     .container{width:min(1140px,92%);margin:auto}
-    h1,h2,h3{font-family:var(--serif);letter-spacing:-.01em}
+    h1,h2,h3{font-family:var(--serif);letter-spacing:-.015em;font-variation-settings:'SOFT' 100}
     :focus-visible{outline:3px solid var(--gold);outline-offset:2px}
 
     @media (prefers-reduced-motion: reduce){
@@ -251,6 +251,113 @@
       .logo img{height:46px}
       .sim-box{padding:28px 18px}
     }
+
+    /* ===== Refonte dynamique ===== */
+    :root{--coral:#F08A6B;--coral-tint:#fdebe4;--r:24px}
+    html,body{overflow-x:clip}
+    .btn,.nav-cta{border-radius:999px}
+    .btn{padding:15px 28px}
+    .btn-primary:hover,.nav-cta:hover{transform:translateY(-3px) rotate(-1deg)}
+    .hero-card,.problem-card,.offer,.service,.sim-box,.confidentiality-box,.credentials,.faq-item{border-radius:var(--r)}
+    .sim-opt{border-radius:999px;padding:13px 16px}
+
+    /* Hero */
+    .hero{padding:90px 0 130px}
+    .blob{position:absolute;border-radius:50%;filter:blur(2px);pointer-events:none;will-change:transform}
+    .blob.b1{width:340px;height:340px;background:radial-gradient(circle at 30% 30%,rgba(227,174,79,.55),rgba(227,174,79,0) 70%);top:-90px;left:-80px;animation:float 14s ease-in-out infinite}
+    .blob.b2{width:420px;height:420px;background:radial-gradient(circle at 60% 40%,rgba(123,160,152,.55),rgba(123,160,152,0) 70%);bottom:-140px;left:35%;animation:float 18s ease-in-out infinite reverse}
+    .blob.b3{width:260px;height:260px;background:radial-gradient(circle,rgba(240,138,107,.35),rgba(240,138,107,0) 70%);top:20%;right:4%;animation:float 11s ease-in-out infinite}
+    @keyframes float{0%,100%{transform:translate(0,0) scale(1)}50%{transform:translate(24px,-30px) scale(1.08)}}
+    .hero h1{font-weight:700}
+    .hero h1 em{position:relative;display:inline-block}
+    .hero-grid{grid-template-columns:minmax(0,1.1fr) minmax(300px,.9fr)}
+    @media(max-width:850px){.hero-grid{grid-template-columns:1fr}}
+    .hero h1 em svg{position:absolute;left:0;bottom:-.18em;width:100%;height:.3em;overflow:visible}
+    .hero h1 em svg path{stroke:var(--coral);stroke-width:5;fill:none;stroke-linecap:round;stroke-dasharray:420;stroke-dashoffset:420;animation:draw 1.2s .6s ease forwards}
+    @keyframes draw{to{stroke-dashoffset:0}}
+    .rotator{display:inline-block;color:var(--gold);min-width:1ch;transition:opacity .35s,transform .35s}
+    .rotator.out{opacity:0;transform:translateY(.4em)}
+    .hero-lead{font-size:1.2rem;color:#fff;font-weight:500;margin-bottom:14px}
+    .hero-card{transform:rotate(2.2deg);transition:transform .4s cubic-bezier(.2,.7,.3,1);position:relative}
+    .hero-card:hover{transform:rotate(0) translateY(-6px)}
+    .sticker{position:absolute;top:-22px;right:-14px;background:var(--coral);color:#fff;font-weight:800;font-size:.8rem;padding:10px 16px;border-radius:999px;transform:rotate(8deg);box-shadow:0 8px 20px rgba(0,0,0,.2);animation:wiggle 4s ease-in-out infinite}
+    @keyframes wiggle{0%,100%{transform:rotate(8deg)}50%{transform:rotate(-4deg) scale(1.06)}}
+    .reveal.is-visible.hero-card{transform:rotate(2.2deg)}
+    .reveal.is-visible.hero-card:hover{transform:rotate(0) translateY(-6px)}
+
+    /* Wave dividers */
+    .wave{display:block;width:100%;height:60px;margin-top:-1px}
+    .wave-top{position:absolute;left:0;right:0;bottom:-1px;line-height:0}
+    section{position:relative}
+
+    /* Marquee */
+    .marquee{background:var(--gold);color:var(--navy-deep);overflow:hidden;white-space:nowrap;padding:16px 0;transform:rotate(-1.2deg);margin:-26px -2% 0;position:relative;z-index:3;box-shadow:0 10px 30px rgba(31,56,100,.18)}
+    .marquee-track{display:inline-flex;gap:34px;animation:scroll 28s linear infinite;font-family:var(--serif);font-weight:700;font-size:1.2rem}
+    .marquee-track span::after{content:"✦";margin-left:34px;color:var(--navy)}
+    @keyframes scroll{to{transform:translateX(-50%)}}
+
+    /* Stats */
+    .stats{padding-top:34px}
+    .stat-number,.stat-suffix{display:inline-block}
+
+    /* Problem */
+    .problem-card{border:2px solid transparent;position:relative}
+    .problem-card:nth-child(1){background:var(--coral-tint);transform:rotate(-1.4deg)}
+    .problem-card:nth-child(2){background:var(--gold-tint);transform:rotate(1deg)}
+    .problem-card:nth-child(3){background:var(--sage-tint);transform:rotate(-.6deg)}
+    .problem-card.is-visible:nth-child(1){transform:rotate(-1.4deg)}
+    .problem-card.is-visible:nth-child(2){transform:rotate(1deg)}
+    .problem-card.is-visible:nth-child(3){transform:rotate(-.6deg)}
+    .problem-card:hover,.problem-card.is-visible:hover{transform:rotate(0) translateY(-6px)}
+    .p-emoji{font-size:2rem;display:block;margin-bottom:10px}
+
+    /* Offers */
+    .offer{overflow:visible;border-width:2px}
+    .offer:nth-child(1){border-color:var(--steel)}
+    .offer:nth-child(3){border-color:var(--sage)}
+    .offer .btn{margin-top:auto}
+    .offer-emoji{font-size:1.8rem;display:block;margin-bottom:6px}
+    .badge{transform:rotate(-4deg);background:var(--coral);font-size:.8rem;padding:6px 15px}
+
+    /* Confidentiality */
+    .confidentiality-box{border:2px dashed var(--sage);box-shadow:none}
+
+    /* Timeline */
+    .number{box-shadow:0 0 0 6px #fff;transition:transform .3s}
+    .tl-step:hover .number{transform:scale(1.18) rotate(-8deg)}
+    .timeline::before{background:repeating-linear-gradient(90deg,var(--line) 0 8px,transparent 8px 16px);height:3px}
+
+    /* Services */
+    .service{border:2px solid transparent;transition:transform .3s,border-color .3s,box-shadow .3s}
+    .service:hover{transform:translateY(-5px) rotate(-.6deg);border-color:var(--gold);box-shadow:var(--shadow-lg)}
+    .s-emoji{display:inline-grid;place-items:center;width:46px;height:46px;border-radius:14px;background:var(--steel-tint);font-size:1.4rem;margin-bottom:12px}
+    .service:nth-child(2) .s-emoji{background:var(--gold-tint)}
+    .service:nth-child(3) .s-emoji{background:var(--sage-tint)}
+    .service:nth-child(4) .s-emoji{background:var(--coral-tint)}
+    .service h3::before{display:none}
+
+    /* About */
+    .about-photo{position:relative}
+    .about-photo::before{content:"";position:absolute;inset:-18px 6% -18px -6%;background:var(--gold);border-radius:58% 42% 55% 45%/48% 55% 45% 52%;transform:rotate(-6deg);opacity:.9;animation:morph 12s ease-in-out infinite}
+    .about-photo img{position:relative;border-radius:46% 54% 50% 50%/42% 46% 54% 58%;aspect-ratio:1/1.05;object-fit:cover;animation:morph2 12s ease-in-out infinite}
+    @keyframes morph{0%,100%{border-radius:58% 42% 55% 45%/48% 55% 45% 52%}50%{border-radius:42% 58% 45% 55%/55% 45% 55% 45%}}
+    @keyframes morph2{0%,100%{border-radius:46% 54% 50% 50%/42% 46% 54% 58%}50%{border-radius:54% 46% 56% 44%/50% 54% 46% 50%}}
+    .about-content h2{font-weight:700}
+
+    /* FAQ */
+    .faq-item{transition:transform .2s,box-shadow .2s}
+    .faq-item:hover{transform:translateX(4px);box-shadow:var(--shadow)}
+
+    /* Contact */
+    .contact{background:radial-gradient(100% 120% at 20% 0%,var(--navy-2),var(--navy-deep))}
+    .contact .blob.b1{top:auto;bottom:-120px;left:auto;right:-60px}
+    .contact-box{border-radius:999px;padding:16px 26px}
+    .contact h2{font-weight:700}
+    footer{border-radius:0}
+
+    .sticky-cta a{border-radius:999px}
+    @media(max-width:850px){.hero-card{transform:none}.reveal.is-visible.hero-card{transform:none}.marquee{margin-top:-16px}}
+    @media (prefers-reduced-motion: reduce){.blob,.sticker,.about-photo::before,.about-photo img,.marquee-track{animation:none !important}.hero h1 em svg path{stroke-dashoffset:0;animation:none}}
   </style>
 </head>
 <body>
@@ -276,18 +383,20 @@
           <path d="M60 108 C95 65 140 62 178 34 C198 20 214 30 214 48" stroke="#7BA098" stroke-width="3"/>
         </g>
       </svg>
+      <span class="blob b1"></span><span class="blob b2"></span><span class="blob b3"></span>
       <div class="container hero-grid">
         <div>
-          <div class="eyebrow reveal">Formation & Conseil — Provence</div>
-          <h1 class="reveal">Votre entreprise avance.<br><em>Votre administratif aussi.</em></h1>
+          <div class="eyebrow reveal">☀️ Formation & Conseil — Provence</div>
+          <h1 class="reveal">Votre entreprise avance.<br><em>Votre administratif aussi.<svg viewBox="0 0 300 12" preserveAspectRatio="none" aria-hidden="true"><path d="M3 8 Q40 1 80 7 T160 6 T240 7 T297 4"/></svg></em></h1>
           <div class="tagline reveal">« L'outil répond ; l'esprit questionne. »</div>
-          <p class="hero-copy reveal">MILMAT accompagne les TPE et artisans qui veulent gagner du temps, mieux suivre leur activité et rester concentrés sur leur métier — sans recruter immédiatement une fonction administrative à temps plein.</p>
+          <p class="hero-lead reveal">Je m'occupe des <span class="rotator" id="rotator">relances</span>, pour que vous restiez sur votre métier.</p>
+          <p class="hero-copy reveal">MILMAT accompagne les TPE et artisans qui veulent gagner du temps et mieux suivre leur activité — sans recruter une fonction administrative à temps plein.</p>
           <div class="actions reveal">
-            <a class="btn btn-primary" href="#tpe">Découvrir les forfaits TPE</a>
-            <a class="btn btn-light" href="#contact">Parler de mon entreprise</a>
+            <a class="btn btn-primary" href="#simulateur">Trouver mon forfait en 30 s →</a>
+            <a class="btn btn-light" href="#contact">On en parle ?</a>
           </div>
         </div>
-        <aside class="hero-card reveal">
+        <aside class="hero-card reveal"><div class="sticker">Dès 250 €/mois</div>
           <h3>Un appui extérieur, chaque mois</h3>
           <p>Relances, devis, suivi d'activité, administratif et communication selon le niveau d'accompagnement choisi.</p>
           <strong>250 €</strong><small>par mois — formule Essentiel</small>
@@ -300,6 +409,8 @@
       </div>
     </section>
 
+    <div class="marquee" aria-hidden="true"><div class="marquee-track"><span>Relances clients</span><span>Devis</span><span>Tableau de bord</span><span>Avis Google</span><span>Courriers pro</span><span>Réseaux sociaux</span><span>Trésorerie</span><span>Impayés</span><span>Relances clients</span><span>Devis</span><span>Tableau de bord</span><span>Avis Google</span><span>Courriers pro</span><span>Réseaux sociaux</span><span>Trésorerie</span><span>Impayés</span></div></div>
+
     <section class="stats">
       <div class="container stats-grid">
         <div class="stat reveal"><div class="stat-number" data-target="30">0</div><span class="stat-suffix">+</span><div class="stat-label">ans d'expérience terrain</div></div>
@@ -311,13 +422,13 @@
     <section class="problem">
       <div class="container">
         <div class="section-head reveal">
-          <h2>Le problème n'est pas toujours le manque de clients.</h2>
+          <h2>Le souci, ce n'est pas toujours les clients. C'est le temps.</h2>
           <p>Pour une TPE, quelques heures perdues chaque semaine dans l'administratif, les devis ou les relances finissent par coûter cher.</p>
         </div>
         <div class="problem-grid">
-          <article class="problem-card reveal"><h3>Les devis s'accumulent</h3><p>Vous avez vendu, mais le suivi des devis et des demandes passe après le travail urgent.</p></article>
-          <article class="problem-card reveal"><h3>Les relances attendent</h3><p>Les impayés et les clients à rappeler restent dans votre tête au lieu d'être suivis régulièrement.</p></article>
-          <article class="problem-card reveal"><h3>Vous pilotez à vue</h3><p>Sans point régulier sur le chiffre d'affaires, la marge, la trésorerie ou les impayés, décider devient plus difficile.</p></article>
+          <article class="problem-card reveal"><span class="p-emoji">📄</span><h3>Les devis s'accumulent</h3><p>Vous avez vendu, mais le suivi des devis et des demandes passe après le travail urgent.</p></article>
+          <article class="problem-card reveal"><span class="p-emoji">⏰</span><h3>Les relances attendent</h3><p>Les impayés et les clients à rappeler restent dans votre tête au lieu d'être suivis régulièrement.</p></article>
+          <article class="problem-card reveal"><span class="p-emoji">🧭</span><h3>Vous pilotez à vue</h3><p>Sans point régulier sur le chiffre d'affaires, la marge, la trésorerie ou les impayés, décider devient plus difficile.</p></article>
         </div>
       </div>
     </section>
@@ -360,12 +471,12 @@
       <div class="container">
         <div class="section-head reveal">
           <div class="eyebrow" style="color:var(--gold-dark)">Les forfaits TPE MILMAT</div>
-          <h2>Trois niveaux d'appui. Un objectif : vous faire gagner du temps.</h2>
+          <h2>Trois formules, un seul but : vous rendre du temps.</h2>
           <p>Choisissez le niveau d'intervention correspondant à votre besoin actuel. L'accompagnement est récurrent et concret.</p>
         </div>
         <div class="offer-grid">
           <article class="offer reveal" data-plan="essentiel">
-            <h3>Essentiel</h3>
+            <span class="offer-emoji">🌱</span><h3>Essentiel</h3>
             <div class="price">250 € <span>/ mois</span></div>
             <div class="hours">Environ 4 à 5 h / mois</div>
             <ul>
@@ -378,7 +489,7 @@
           </article>
           <article class="offer featured reveal" data-plan="pilotage">
             <div class="badge">PILOTER</div>
-            <h3>Pilotage</h3>
+            <span class="offer-emoji">🚀</span><h3>Pilotage</h3>
             <div class="price">450 € <span>/ mois</span></div>
             <div class="hours">Environ 6 à 8 h / mois</div>
             <ul>
@@ -390,7 +501,7 @@
             <a class="btn btn-primary" href="#contact">Choisir Pilotage</a>
           </article>
           <article class="offer reveal" data-plan="complet">
-            <h3>Complet</h3>
+            <span class="offer-emoji">🌟</span><h3>Complet</h3>
             <div class="price">650 € <span>/ mois</span></div>
             <div class="hours">Environ 10 à 12 h / mois</div>
             <ul>
@@ -409,7 +520,7 @@
     <section class="confidentiality">
       <div class="container">
         <div class="confidentiality-box reveal">
-          <h2>Confidentialité : une règle absolue</h2>
+          <h2>🔒 Ce que vous me confiez reste entre nous</h2>
           <p>Chez MILMAT, les informations auxquelles nous avons accès dans le cadre de notre mission restent strictement confidentielles. Données commerciales, marges, tarifs fournisseurs, devis, fichiers clients, informations internes ou documents administratifs ne sont ni communiqués ni utilisés en dehors de la mission confiée.</p>
           <p><strong>Un accord de confidentialité fait partie intégrante du contrat de chacune des trois formules MILMAT.</strong> Il encadre les informations confiées à MILMAT et protège les intérêts de l'entreprise accompagnée.</p>
           <p>Pour un restaurateur comme pour tout dirigeant de TPE, <strong>la confiance n'est pas une option : c'est la condition de notre intervention.</strong></p>
@@ -420,7 +531,7 @@
     <section class="how">
       <div class="container">
         <div class="section-head reveal">
-          <h2>Comment ça fonctionne ?</h2>
+          <h2>Concrètement, comment ça se passe ?</h2>
           <p>Un fonctionnement simple, pensé pour une petite entreprise qui n'a pas de temps à perdre.</p>
         </div>
         <div class="timeline reveal reveal-stagger">
@@ -440,10 +551,10 @@
           <p>Les forfaits TPE constituent une offre d'accompagnement. MILMAT développe également ses activités de formation et de microlearning.</p>
         </div>
         <div class="service-grid">
-          <article class="service reveal"><h3>Formations IA générative</h3><p>Des formations professionnelles pour comprendre, structurer et utiliser l'IA générative dans les usages professionnels.</p></article>
-          <article class="service reveal"><h3>Microlearning</h3><p>Des capsules courtes et ciblées pour travailler une compétence précise : relation client, négociation, appels professionnels ou gestion administrative.</p></article>
-          <article class="service reveal"><h3>Formation terrain</h3><p>Une approche centrée sur la pratique et les situations professionnelles réelles, avec l'objectif de rendre les compétences immédiatement utilisables.</p></article>
-          <article class="service reveal"><h3>Conseil TPE / artisans</h3><p>Un appui pragmatique sur l'organisation, le suivi commercial, l'administratif et le pilotage de l'activité.</p></article>
+          <article class="service reveal"><span class="s-emoji">🤖</span><h3>Formations IA générative</h3><p>Des formations professionnelles pour comprendre, structurer et utiliser l'IA générative dans les usages professionnels.</p></article>
+          <article class="service reveal"><span class="s-emoji">⚡</span><h3>Microlearning</h3><p>Des capsules courtes et ciblées pour travailler une compétence précise : relation client, négociation, appels professionnels ou gestion administrative.</p></article>
+          <article class="service reveal"><span class="s-emoji">🛠️</span><h3>Formation terrain</h3><p>Une approche centrée sur la pratique et les situations professionnelles réelles, avec l'objectif de rendre les compétences immédiatement utilisables.</p></article>
+          <article class="service reveal"><span class="s-emoji">🤝</span><h3>Conseil TPE / artisans</h3><p>Un appui pragmatique sur l'organisation, le suivi commercial, l'administratif et le pilotage de l'activité.</p></article>
         </div>
       </div>
     </section>
@@ -473,7 +584,7 @@
     <section class="faq">
       <div class="container">
         <div class="section-head reveal">
-          <h2>Quelques questions simples</h2>
+          <h2>Les questions qu'on me pose souvent</h2>
           <p>Avant de nous parler, voici l'essentiel.</p>
         </div>
         <div class="faq-list reveal">
@@ -487,7 +598,7 @@
     <section class="contact" id="contact">
       <div class="container reveal">
         <div class="eyebrow">Premier échange</div>
-        <h2>Parlons de votre entreprise.</h2>
+        <h2>Et si on en parlait autour d'un café ☕</h2>
         <p>Un échange de 15 minutes suffit pour savoir si un accompagnement MILMAT correspond à votre besoin. Écrivez ou appelez directement.</p>
         <div class="contact-grid">
           <a class="contact-box" href="mailto:stephane.oge@milmat-formations.com">📧 stephane.oge@milmat-formations.com<small>Réponse sous 24h ouvrées</small></a>
@@ -585,6 +696,26 @@
       }, { threshold: 0.2 });
       contactObserver.observe(contactSection);
     }
+
+
+    // Rotating words in hero
+    (function(){
+      const el=document.getElementById('rotator'); if(!el) return;
+      const words=['relances','devis','impayés','avis Google','courriers','tableaux de bord'];
+      let i=0;
+      if(window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+      setInterval(()=>{el.classList.add('out');setTimeout(()=>{i=(i+1)%words.length;el.textContent=words[i];el.classList.remove('out');},350);},2400);
+    })();
+
+    // Soft parallax on blobs
+    (function(){
+      if(window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+      const blobs=document.querySelectorAll('.hero .blob');
+      window.addEventListener('mousemove',e=>{
+        const x=(e.clientX/innerWidth-.5), y=(e.clientY/innerHeight-.5);
+        blobs.forEach((b,k)=>{const d=(k+1)*14;b.style.translate=(x*d)+'px '+(y*d)+'px';});
+      },{passive:true});
+    })();
 
     // Forfait simulator
     (function () {
