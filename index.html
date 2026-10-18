@@ -404,6 +404,16 @@
     #vid .vid-end .btn-light{background:transparent;color:#fff;border-color:rgba(255,255,255,.7);font-family:var(--sans);font-size:.98rem}
     #vid .vid-end .btn-light:hover{background:#fff;color:var(--navy)}
     #vid .vid-end .btn{margin:4px}
+    #vid2{position:fixed;inset:0;z-index:4000;display:none;place-items:center;background:rgba(21,39,68,.82);backdrop-filter:blur(8px);-webkit-backdrop-filter:blur(8px);padding:16px}
+    #vid2.open{display:grid}
+    #vid2 .deck-box{width:min(440px,100%)}
+    #vid2 video{display:block;width:100%;max-height:72vh;background:#000;object-fit:contain}
+    #vid2 .vid-end{display:none;position:absolute;inset:0;place-items:center;align-content:center;gap:14px;background:rgba(15,27,48,.72);color:#fff;text-align:center;font-weight:700;font-family:var(--serif);font-size:1.2rem;padding:20px}
+    #vid2 .vid-end.on{display:grid}
+    #vid2 .vid-wrap{position:relative}
+    #vid2 .vid-end .btn-light{background:transparent;color:#fff;border-color:rgba(255,255,255,.7);font-family:var(--sans);font-size:.98rem}
+    #vid2 .vid-end .btn-light:hover{background:#fff;color:var(--navy)}
+    #vid2 .vid-end .btn{margin:4px}
 
     /* Tableau de bord démo */
     #dash{position:fixed;inset:0;z-index:4000;display:none;place-items:center;background:rgba(21,39,68,.82);backdrop-filter:blur(8px);-webkit-backdrop-filter:blur(8px);padding:16px}
@@ -659,7 +669,7 @@
         <div class="service-grid">
           <article class="service service-live reveal" id="iaCapsule" role="button" tabindex="0" aria-haspopup="dialog" aria-label="Voir la présentation de la formation IA générative"><span class="s-emoji">🤖</span><h3>Formations IA générative</h3><p>Des formations professionnelles pour comprendre, structurer et utiliser l'IA générative dans les usages professionnels.</p><span class="play-pill"><span class="play-dot">▶</span> Voir la présentation (12 slides)</span></article>
           <article class="service service-live reveal" id="microCapsule" role="button" tabindex="0" aria-haspopup="dialog" aria-label="Voir un extrait vidéo du module microlearning"><span class="s-emoji">⚡</span><h3>Microlearning</h3><p>Des capsules courtes et ciblées pour travailler une compétence précise : relation client, négociation, appels professionnels ou gestion administrative.</p><span class="play-pill"><span class="play-dot">▶</span> Voir un extrait (12 s)</span></article>
-          <article class="service reveal"><span class="s-emoji">🛠️</span><h3>Formation terrain</h3><p>Une approche centrée sur la pratique et les situations professionnelles réelles, avec l'objectif de rendre les compétences immédiatement utilisables.</p></article>
+          <article class="service service-live reveal" id="terrainCapsule" role="button" tabindex="0" aria-haspopup="dialog" aria-label="Voir la présentation vidéo de la formation MILMAT"><span class="s-emoji">🛠️</span><h3>Formation terrain</h3><p>Une approche centrée sur la pratique et les situations professionnelles réelles, avec l'objectif de rendre les compétences immédiatement utilisables.</p><span class="play-pill"><span class="play-dot">▶</span> Voir la présentation (17,5 s)</span></article>
           <article class="service service-live reveal" id="conseilCapsule" role="button" tabindex="0" aria-haspopup="dialog" aria-label="Voir un exemple de tableau de bord MILMAT (données fictives)"><span class="s-emoji">🤝</span><h3>Conseil TPE / artisans</h3><p>Un appui pragmatique sur l'organisation, le suivi commercial, l'administratif et le pilotage de l'activité.</p><span class="play-pill"><span class="play-dot">▶</span> Voir le tableau de bord (démo)</span></article>
         </div>
       </div>
@@ -771,6 +781,16 @@
     </div>
   </div>
 
+
+  <div id="vid2" role="dialog" aria-modal="true" aria-label="Présentation de la formation MILMAT" aria-hidden="true">
+    <div class="deck-box">
+      <div class="deck-top"><div>Formation terrain <small>— Présentation MILMAT Formation</small></div><button class="deck-close" id="vid2Close" aria-label="Fermer">✕</button></div>
+      <div class="vid-wrap">
+        <video id="vid2El" src="formation-terrain/presentation-milmat.mp4" playsinline preload="none" controls controlsList="nodownload noremoteplayback"></video>
+        <div class="vid-end" id="vid2End"><div>Une formation pensée pour la pratique.<br>Parlons de vos besoins.</div><div><a class="btn btn-primary" href="#contact" id="vid2Cta">Parlons-en</a> <button class="btn btn-light" id="vid2Replay" type="button">↻ Revoir</button></div></div>
+      </div>
+    </div>
+  </div>
 
   <div id="dash" role="dialog" aria-modal="true" aria-label="Exemple de tableau de bord MILMAT, données fictives" aria-hidden="true">
     <div class="deck-box">
@@ -961,6 +981,25 @@
       document.getElementById('vidClose').addEventListener('click',close);
       document.getElementById('vidCta').addEventListener('click',close);
       document.getElementById('vidReplay').addEventListener('click',()=>{end.classList.remove('on');v.currentTime=0;v.play();});
+      modal.addEventListener('click',e=>{if(e.target===modal)close();});
+      document.addEventListener('keydown',e=>{if(e.key==='Escape'&&modal.classList.contains('open'))close();});
+    })();
+
+    // Présentation formation terrain : lecture normale, arrêt à 17,5 s
+    (function(){
+      const cap=document.getElementById('terrainCapsule'), modal=document.getElementById('vid2');
+      if(!cap||!modal) return;
+      const v=document.getElementById('vid2El'), end=document.getElementById('vid2End'), LIMIT=17.5;
+      const open=()=>{modal.classList.add('open');modal.setAttribute('aria-hidden','false');document.body.classList.add('intro-lock');end.classList.remove('on');v.currentTime=0;v.play().catch(()=>{});};
+      const close=()=>{v.pause();modal.classList.remove('open');modal.setAttribute('aria-hidden','true');document.body.classList.remove('intro-lock');cap.focus();};
+      const stopAtLimit=()=>{v.pause();end.classList.add('on');};
+      v.addEventListener('timeupdate',()=>{if(v.currentTime>=LIMIT) stopAtLimit();});
+      v.addEventListener('ended',stopAtLimit);
+      cap.addEventListener('click',open);
+      cap.addEventListener('keydown',e=>{if(e.key==='Enter'||e.key===' '){e.preventDefault();open();}});
+      document.getElementById('vid2Close').addEventListener('click',close);
+      document.getElementById('vid2Cta').addEventListener('click',close);
+      document.getElementById('vid2Replay').addEventListener('click',()=>{end.classList.remove('on');v.currentTime=0;v.play();});
       modal.addEventListener('click',e=>{if(e.target===modal)close();});
       document.addEventListener('keydown',e=>{if(e.key==='Escape'&&modal.classList.contains('open'))close();});
     })();
