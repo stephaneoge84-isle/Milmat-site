@@ -48,7 +48,7 @@
     }
 
     /* Reveal on scroll */
-    .reveal{opacity:0;transform:translateY(22px);transition:opacity .7s cubic-bezier(.2,.7,.3,1),transform .7s cubic-bezier(.2,.7,.3,1)}
+    .reveal{opacity:0;transform:translateY(14px);transition:opacity .45s cubic-bezier(.2,.7,.3,1),transform .45s cubic-bezier(.2,.7,.3,1)}
     .reveal.is-visible{opacity:1;transform:none}
     .reveal-stagger.is-visible > *{transition-delay:calc(var(--i,0) * 90ms)}
 
@@ -470,6 +470,43 @@
     .pilier.new{background:var(--gold-tint);position:relative}
     .pilier.new::after{content:"Nouveau";position:absolute;top:-14px;right:20px;background:var(--coral);color:#fff;font-weight:800;font-size:.75rem;padding:5px 13px;border-radius:999px;transform:rotate(4deg)}
     @media(max-width:850px){.pilier-grid{grid-template-columns:1fr}}
+  
+    /* ===== Contact visible + section artisans ===== */
+    .nav-inner{gap:1rem}
+    .nav-links{gap:1.3rem}.nav-links a{white-space:nowrap;font-size:.9rem}
+    .nav-tel{font-weight:700;font-size:.95rem;color:var(--navy);white-space:nowrap;padding:.5rem .3rem}
+    .nav-tel:hover{color:var(--gold-dark)}
+    @media(max-width:1250px){.nav-tel{display:none}}
+    .btn-call{background:transparent;color:#fff;border:2px solid rgba(255,255,255,.55)}
+    .btn-call:hover{background:rgba(255,255,255,.12)}
+    @media(max-width:850px){.sticky-cta{display:flex;gap:10px}.sticky-cta a{flex:1;font-size:.95rem}.sticky-cta a.sc-call{background:transparent;color:#fff;border:2px solid rgba(255,255,255,.6)}}
+    .float-contact{position:fixed;right:22px;bottom:22px;z-index:900;background:var(--gold);color:var(--navy-deep);font-weight:800;padding:14px 22px;border-radius:999px;box-shadow:0 10px 28px rgba(21,39,68,.28);transform:translateY(120px);opacity:0;transition:.3s}
+    .float-contact.visible{transform:none;opacity:1}
+    .float-contact:hover{background:var(--gold-dark)}
+    @media(max-width:850px){.float-contact{display:none}}
+    .artisans{background:linear-gradient(180deg,var(--paper),#f3ece1);padding:96px 0}
+    .artisans .section-head h2{max-width:820px;margin-left:auto;margin-right:auto}
+    .trade-chips{list-style:none;display:flex;flex-wrap:wrap;gap:10px;justify-content:center;margin:0 0 44px;padding:0}
+    .trade-chips li{background:#fff;border:1.5px solid rgba(31,56,100,.14);color:var(--navy);padding:9px 16px;border-radius:999px;font-weight:600;font-size:.92rem;box-shadow:0 2px 8px rgba(31,56,100,.06)}
+    .artisan-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:22px}
+    .artisan-card{background:#fff;border-radius:var(--r);padding:30px 26px;box-shadow:0 10px 30px rgba(31,56,100,.08);border-top:5px solid var(--gold)}
+    .artisan-card:nth-child(2){border-top-color:var(--sage)}
+    .artisan-card:nth-child(3){border-top-color:var(--steel)}
+    .artisan-tag{display:inline-block;font-size:.75rem;font-weight:800;letter-spacing:.08em;text-transform:uppercase;color:var(--gold-dark);margin-bottom:10px}
+    .artisan-card h3{font-family:'Fraunces',serif;color:var(--navy);font-size:1.3rem;margin-bottom:12px}
+    .artisan-card .before{color:#6b7280;font-size:.95rem;margin-bottom:14px;padding-left:12px;border-left:3px solid #e5e7eb}
+    .artisan-card .after{color:var(--navy);font-size:.97rem}
+    .artisan-steps{margin-top:48px;background:var(--navy-deep);color:#fff;border-radius:var(--r);padding:42px 36px;text-align:center}
+    .artisan-steps h3{font-family:'Fraunces',serif;font-size:1.6rem;margin-bottom:26px;color:#fff}
+    .artisan-steps ol{list-style:none;display:grid;grid-template-columns:repeat(3,1fr);gap:24px;counter-reset:st;text-align:left;margin:0 0 30px;padding:0}
+    .artisan-steps li{counter-increment:st;position:relative;padding-top:48px}
+    .artisan-steps li::before{content:counter(st);position:absolute;top:0;left:0;width:38px;height:38px;border-radius:50%;background:var(--gold);color:var(--navy-deep);font-weight:800;display:flex;align-items:center;justify-content:center}
+    .artisan-steps li strong{display:block;margin-bottom:6px;font-size:1.05rem}
+    .artisan-steps li span{color:#cdd5e3;font-size:.95rem}
+    .artisan-cta{display:flex;gap:14px;justify-content:center;flex-wrap:wrap;margin-bottom:20px}
+    .artisan-cta .btn-light{background:transparent;color:#fff;border:2px solid rgba(255,255,255,.55)}
+    .artisan-promise{font-family:'Fraunces',serif;font-style:italic;color:var(--gold);font-size:1.02rem}
+    @media(max-width:850px){.artisan-grid,.artisan-steps ol{grid-template-columns:1fr}.artisan-steps{padding:32px 20px}.artisans{padding:72px 0}}
   </style>
 </head>
 <body class="intro-lock">
@@ -481,11 +518,14 @@
       <ul class="nav-links">
         <li><a href="#accueil">Accueil</a></li>
         <li><a href="#tpe">Forfaits TPE</a></li>
+        <li><a href="#artisans">Artisans</a></li>
         <li><a href="#formations">Formations</a></li>
         <li><a href="particuliers/">Particuliers</a></li>
         <li><a href="#about">Qui suis-je</a></li>
+        <li><a href="#contact">Contact</a></li>
       </ul>
-      <a class="nav-cta" href="#contact">Parlons de votre entreprise</a>
+      <a class="nav-tel" href="tel:+33784374106" aria-label="Appeler MILMAT au 07 84 37 41 06">📞 07 84 37 41 06</a>
+      <a class="nav-cta" href="#contact">Diagnostic gratuit</a>
     </div>
   </nav>
 
@@ -509,6 +549,7 @@
           <div class="actions reveal">
             <a class="btn btn-primary" href="#simulateur">Trouver mon forfait en 30 s →</a>
             <a class="btn btn-light" href="#contact">On en parle ?</a>
+            <a class="btn btn-call" href="tel:+33784374106">📞 Appeler Stéphane</a>
           </div>
         </div>
         <aside class="hero-card reveal"><div class="sticker">Dès 250 €/mois</div>
@@ -598,7 +639,7 @@
             <ul>
               <li>Relances clients</li>
               <li>Suivi des devis</li>
-              <li>2 courriers ou emails professionnels / mois</li>
+              <li>10 courriers ou emails professionnels / mois</li>
               <li>Point WhatsApp hebdomadaire</li>
             </ul>
             <a class="btn btn-primary" href="#contact">Choisir Essentiel</a>
@@ -630,6 +671,57 @@
           </article>
         </div>
         <p class="note reveal"><strong>À noter :</strong> MILMAT ne fait pas de comptabilité. L'offre porte sur l'accompagnement administratif, commercial et le pilotage de l'activité.</p>
+      </div>
+    </section>
+
+    <section class="artisans" id="artisans">
+      <div class="container">
+        <div class="section-head reveal">
+          <div class="eyebrow">Artisans &amp; TPE du Vaucluse</div>
+          <h2>Vous êtes sur le chantier.<br>Votre administratif ne devrait pas vous suivre le soir.</h2>
+          <p>Devis à rédiger, clients à relancer, factures à suivre : MILMAT s'en occupe pour que vous gardiez votre énergie pour votre métier.</p>
+        </div>
+        <ul class="trade-chips reveal" aria-label="Métiers accompagnés">
+          <li>🔨 Bâtiment &amp; second œuvre</li>
+          <li>🌿 Paysage &amp; espaces verts</li>
+          <li>✂️ Coiffure &amp; beauté</li>
+          <li>🥖 Métiers de bouche</li>
+          <li>🔧 Mécanique &amp; auto</li>
+          <li>🏡 Services à domicile</li>
+        </ul>
+        <div class="artisan-grid reveal-stagger">
+          <article class="artisan-card reveal" style="--i:0">
+            <span class="artisan-tag">Devis</span>
+            <h3>« Je le fais ce soir… »</h3>
+            <p class="before">Le devis attend la fin de la journée, parfois la fin de la semaine.</p>
+            <p class="after"><strong>Avec MILMAT :</strong> vous me dictez l'essentiel, je prépare le devis pour que vous le validiez et l'envoyiez.</p>
+          </article>
+          <article class="artisan-card reveal" style="--i:1">
+            <span class="artisan-tag">Relances</span>
+            <h3>« Je n'ose pas relancer »</h3>
+            <p class="before">Un devis sans réponse ou une facture impayée, et personne pour y penser.</p>
+            <p class="after"><strong>Avec MILMAT :</strong> je suis vos devis et vos impayés, et je rédige des relances courtoises qui préservent la relation.</p>
+          </article>
+          <article class="artisan-card reveal" style="--i:2">
+            <span class="artisan-tag">Pilotage</span>
+            <h3>« Je ne sais pas où j'en suis »</h3>
+            <p class="before">Chiffre d'affaires, marge, trésorerie : tout reste dans la tête.</p>
+            <p class="after"><strong>Avec MILMAT :</strong> un tableau de bord mensuel simple, lisible en cinq minutes (formule Pilotage).</p>
+          </article>
+        </div>
+        <div class="artisan-steps reveal">
+          <h3>Comment ça démarre</h3>
+          <ol>
+            <li><strong>Un diagnostic gratuit de 30 minutes</strong><span>Par téléphone ou à l'atelier : on repère ce qui vous prend le plus de temps.</span></li>
+            <li><strong>On choisit 1 ou 2 irritants</strong><span>Pas de grand chambardement : on commence par ce qui soulage le plus vite.</span></li>
+            <li><strong>Vous retrouvez vos soirées</strong><span>Un accompagnement mensuel dès 250 €, avec 3 mois minimum. Pas de comptabilité, pas de jargon.</span></li>
+          </ol>
+          <div class="artisan-cta">
+            <a class="btn btn-primary" href="mailto:stephane.oge@milmat-formations.com?subject=Diagnostic%20gratuit%20artisan">Réserver mon diagnostic gratuit →</a>
+            <a class="btn btn-light" href="tel:+33784374106">📞 07 84 37 41 06</a>
+          </div>
+          <p class="artisan-promise">« Moins d'administratif = plus de chantiers. » — Basé à L'Isle-sur-la-Sorgue, j'interviens dans un rayon d'environ 40 km.</p>
+        </div>
       </div>
     </section>
 
@@ -730,7 +822,7 @@
       <div class="container reveal">
         <div class="eyebrow">Premier échange</div>
         <h2>Et si on en parlait autour d'un café ☕</h2>
-        <p>Un échange de 15 minutes suffit pour savoir si un accompagnement MILMAT correspond à votre besoin. Écrivez ou appelez directement.</p>
+        <p>Le diagnostic gratuit de 30 minutes suffit pour savoir si un accompagnement MILMAT correspond à votre besoin. Écrivez ou appelez directement.</p>
         <div class="contact-grid">
           <a class="contact-box" href="mailto:stephane.oge@milmat-formations.com">📧 stephane.oge@milmat-formations.com<small>Réponse sous 24h ouvrées</small></a>
           <a class="contact-box" href="tel:+33784374106">📞 07 84 37 41 06<small>Lun–Ven, 9h–18h</small></a>
@@ -746,6 +838,7 @@
       <div class="footer-sub">Formation &amp; Conseil</div>
       <div class="footer-links">
         <a href="#tpe">Forfaits TPE</a>
+        <a href="#artisans">Artisans</a>
         <a href="#formations">Formations</a>
         <a href="particuliers/">Particuliers</a>
         <a href="#about">Qui suis-je</a>
@@ -828,8 +921,10 @@
   </div>
 
   <div class="sticky-cta" id="stickyCta">
-    <a href="#contact">Parlons de votre entreprise</a>
+    <a class="sc-call" href="tel:+33784374106">📞 Appeler</a>
+    <a class="sc-mail" href="#contact">✉️ Diagnostic gratuit</a>
   </div>
+  <a class="float-contact" id="floatContact" href="#contact" aria-label="Contacter MILMAT">💬 Parlons-en</a>
 
   <script>
 
@@ -1127,6 +1222,18 @@
           }
         });
       });
+    })();
+  
+    (function(){
+      const f=document.getElementById('floatContact'); if(!f) return;
+      const c=document.getElementById('contact');
+      function upd(){
+        const past=window.scrollY>600;
+        const r=c?c.getBoundingClientRect():null;
+        const inContact=r&&r.top<window.innerHeight&&r.bottom>0;
+        f.classList.toggle('visible',past&&!inContact);
+      }
+      window.addEventListener('scroll',upd,{passive:true}); upd();
     })();
   </script>
 </body>
